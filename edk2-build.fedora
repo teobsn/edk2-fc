@@ -196,9 +196,12 @@ conf = OvmfPkg/RiscVVirt/RiscVVirtQemu.dsc
 arch = RISCV64
 plat = RiscVVirtQemu
 dest = Fedora/riscv
-cpy1 = FV/RISCV_VIRT.fd
-cpy2 = FV/RISCV_VIRT.fd RISCV_VIRT.raw
-pad1 = RISCV_VIRT.raw 32m
+cpy1 = FV/RISCV_VIRT_CODE.fd
+cpy2 = FV/RISCV_VIRT_CODE.fd RISCV_VIRT_CODE.raw
+cpy3 = FV/RISCV_VIRT_VARS.fd
+cpy4 = FV/RISCV_VIRT_VARS.fd RISCV_VIRT_VARS.raw
+pad1 = RISCV_VIRT_CODE.raw 32m
+pad2 = RISCV_VIRT_VARS.raw 32m
 
 
 #####################################################################

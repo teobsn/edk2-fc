@@ -426,6 +426,11 @@ done
 %if %{build_riscv64}
 ./edk2-build.py --config edk2-build.fedora --silent --release-date "$RELEASE_DATE" -m riscv
 ./edk2-build.py --config edk2-build.fedora.platforms --silent -m riscv
+for raw in */riscv/*.raw; do
+    qcow2="${raw%.raw}.qcow2"
+    qemu-img convert -f raw -O qcow2 -o cluster_size=4096 -S 4096 "$raw" "$qcow2"
+    rm -f "$raw"
+done
 %endif
 
 %install
@@ -688,7 +693,7 @@ done
 %files riscv64
 %common_files
 %{_datadir}/%{name}/riscv/*.fd
-%{_datadir}/%{name}/riscv/*.raw
+%{_datadir}/%{name}/riscv/*.qcow2
 
 %files ext4
 %common_files
