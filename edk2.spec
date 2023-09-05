@@ -426,6 +426,9 @@ done
 %else
 ./edk2-build.py --config edk2-build.fedora --silent --release-date "$RELEASE_DATE" -m armvirt
 ./edk2-build.py --config edk2-build.fedora.platforms --silent -m aa64
+virt-fw-vars --input   Fedora/aarch64/vars-template-pflash.raw \
+             --output  Fedora/experimental/vars-template-secboot-testonly-pflash.raw \
+             --enroll-redhat --secure-boot --distro-keys rhel
 %endif
 for raw in */aarch64/*.raw; do
     qcow2="${raw%.raw}.qcow2"
