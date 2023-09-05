@@ -236,12 +236,13 @@ BuildArch:      noarch
 EFI Development Kit II
 Open Virtual Machine Firmware (Xen build)
 
-%package ovmf-experimental
+%package experimental
 Summary:        Open Virtual Machine Firmware, experimental builds
 License:        BSD-2-Clause-Patent and Apache-2.0
 Provides:       bundled(openssl)
+Obsoletes:      edk2-ovmf-experimental < 20230825
 BuildArch:      noarch
-%description ovmf-experimental
+%description experimental
 EFI Development Kit II
 Open Virtual Machine Firmware (experimental builds)
 
@@ -689,7 +690,7 @@ done
 %{_datadir}/qemu/firmware/40-edk2-ovmf-ia32-sb.json
 %{_datadir}/qemu/firmware/50-edk2-ovmf-ia32-nosb.json
 
-%files ovmf-experimental
+%files experimental
 %common_files
 %dir %{_datadir}/%{name}/experimental
 %{_datadir}/%{name}/experimental/*.fd
