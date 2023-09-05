@@ -81,6 +81,8 @@ Source46: 51-edk2-ovmf-2m-raw-x64-nosb.json
 Source47: 60-edk2-ovmf-x64-amdsev.json
 Source48: 60-edk2-ovmf-x64-inteltdx.json
 
+Source50: 50-edk2-riscv-qcow2.json
+
 # https://gitlab.com/kraxel/edk2-build-config
 Source80: edk2-build.py
 Source81: edk2-build.fedora
@@ -303,6 +305,7 @@ cp -a -- \
    %{SOURCE30} %{SOURCE31} %{SOURCE32} \
    %{SOURCE40} %{SOURCE41} %{SOURCE42} %{SOURCE43} %{SOURCE44} \
    %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} \
+   %{SOURCE50} \
    %{SOURCE80} %{SOURCE81} %{SOURCE82} %{SOURCE83} \
    %{SOURCE90} %{SOURCE91} \
    .
@@ -529,6 +532,15 @@ install -m 0644 \
 # endif build_aarch64
 %endif
 
+%if %{build_riscv64}
+
+install -m 0644 \
+        50-edk2-riscv-qcow2.json \
+        %{buildroot}%{_datadir}/qemu/firmware
+
+# endif build_riscv64
+%endif
+
 %if %{defined fedora}
 
 # edk2-tools-python install
@@ -694,6 +706,7 @@ done
 %common_files
 %{_datadir}/%{name}/riscv/*.fd
 %{_datadir}/%{name}/riscv/*.qcow2
+%{_datadir}/qemu/firmware/50-edk2-riscv-qcow2.json
 
 %files ext4
 %common_files
