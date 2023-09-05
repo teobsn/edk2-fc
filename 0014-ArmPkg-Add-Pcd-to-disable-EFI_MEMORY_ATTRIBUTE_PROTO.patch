@@ -1,7 +1,7 @@
-From 40efdacf7f4f378c0acf95a73d1dcc5e200d42d8 Mon Sep 17 00:00:00 2001
+From 5068dd0dffb843c2fb8aad44471fcf56188af6a7 Mon Sep 17 00:00:00 2001
 From: Oliver Steffen <osteffen@redhat.com>
 Date: Mon, 19 Jun 2023 22:32:25 +0200
-Subject: [PATCH 28/28] ArmPkg: Add Pcd to disable
+Subject: [PATCH 14/14] ArmPkg: Add Pcd to disable
  EFI_MEMORY_ATTRIBUTE_PROTOCOL
 
 Recent versions of shim (15.6 and 15.7) crash when the newly added
@@ -21,10 +21,10 @@ Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
  3 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/ArmPkg/ArmPkg.dec b/ArmPkg/ArmPkg.dec
-index 2444457ae58a..625e45c3e0c0 100644
+index 1a16d044c94b..e8579c80bf08 100644
 --- a/ArmPkg/ArmPkg.dec
 +++ b/ArmPkg/ArmPkg.dec
-@@ -167,6 +167,9 @@ [PcdsFixedAtBuild.common]
+@@ -172,6 +172,9 @@ [PcdsFixedAtBuild.common]
    gArmTokenSpaceGuid.PcdCpuVectorBaseAddress|0xffff0000|UINT64|0x00000004
    gArmTokenSpaceGuid.PcdCpuResetAddress|0x00000000|UINT32|0x00000005
  
@@ -35,22 +35,22 @@ index 2444457ae58a..625e45c3e0c0 100644
    # ARM Secure Firmware PCDs
    #
 diff --git a/ArmPkg/Drivers/CpuDxe/CpuDxe.inf b/ArmPkg/Drivers/CpuDxe/CpuDxe.inf
-index e732e21cb94a..1bad4ae160af 100644
+index 7d8132200e64..c5878c1ecc2e 100644
 --- a/ArmPkg/Drivers/CpuDxe/CpuDxe.inf
 +++ b/ArmPkg/Drivers/CpuDxe/CpuDxe.inf
-@@ -64,6 +64,7 @@ [Guids]
- 
+@@ -66,6 +66,7 @@ [Guids]
  [Pcd.common]
    gArmTokenSpaceGuid.PcdVFPEnabled
+   gEfiMdeModulePkgTokenSpaceGuid.PcdDxeNxMemoryProtectionPolicy
 +  gArmTokenSpaceGuid.PcdEnableEfiMemoryAttributeProtocol
  
  [FeaturePcd.common]
    gArmTokenSpaceGuid.PcdDebuggerExceptionSupport
 diff --git a/ArmPkg/Drivers/CpuDxe/CpuDxe.c b/ArmPkg/Drivers/CpuDxe/CpuDxe.c
-index d04958e79e52..ff7d735b2bde 100644
+index fc63e527846a..30c5963276e4 100644
 --- a/ArmPkg/Drivers/CpuDxe/CpuDxe.c
 +++ b/ArmPkg/Drivers/CpuDxe/CpuDxe.c
-@@ -244,10 +244,19 @@ CpuDxeInitialize (
+@@ -331,10 +331,19 @@ CpuDxeInitialize (
                    &mCpuHandle,
                    &gEfiCpuArchProtocolGuid,
                    &mCpu,

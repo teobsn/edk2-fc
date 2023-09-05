@@ -1,4 +1,4 @@
-From 447b5540fdc12ff4ca74dc2dd183149732075c18 Mon Sep 17 00:00:00 2001
+From 6f1c7583bce90e89193ae40042923f16c6e16ca7 Mon Sep 17 00:00:00 2001
 From: Paolo Bonzini <pbonzini@redhat.com>
 Date: Tue, 21 Nov 2017 00:57:45 +0100
 Subject: [PATCH 06/14] OvmfPkg: enable DEBUG_VERBOSE (RHEL only)
@@ -65,10 +65,10 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  4 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/OvmfPkg/AmdSev/AmdSevX64.dsc b/OvmfPkg/AmdSev/AmdSevX64.dsc
-index bff9f166219e..14a5d10d2b67 100644
+index cf81a86c67dd..d8b1c4d9e8af 100644
 --- a/OvmfPkg/AmdSev/AmdSevX64.dsc
 +++ b/OvmfPkg/AmdSev/AmdSevX64.dsc
-@@ -426,7 +426,7 @@ [PcdsFixedAtBuild]
+@@ -427,7 +427,7 @@ [PcdsFixedAtBuild]
    # DEBUG_VERBOSE   0x00400000  // Detailed debug messages that may
    #                             // significantly impact boot performance
    # DEBUG_ERROR     0x80000000  // Error
@@ -78,10 +78,10 @@ index bff9f166219e..14a5d10d2b67 100644
  !if $(SOURCE_DEBUG_ENABLE) == TRUE
    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x17
 diff --git a/OvmfPkg/OvmfPkgIa32.dsc b/OvmfPkg/OvmfPkgIa32.dsc
-index f5390a30fb09..62c68d99165d 100644
+index 2395bcf6b8dc..21118b11f6b3 100644
 --- a/OvmfPkg/OvmfPkgIa32.dsc
 +++ b/OvmfPkg/OvmfPkgIa32.dsc
-@@ -535,7 +535,7 @@ [PcdsFixedAtBuild]
+@@ -537,7 +537,7 @@ [PcdsFixedAtBuild]
    # DEBUG_VERBOSE   0x00400000  // Detailed debug messages that may
    #                             // significantly impact boot performance
    # DEBUG_ERROR     0x80000000  // Error
@@ -91,10 +91,10 @@ index f5390a30fb09..62c68d99165d 100644
  !if $(SOURCE_DEBUG_ENABLE) == TRUE
    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x17
 diff --git a/OvmfPkg/OvmfPkgIa32X64.dsc b/OvmfPkg/OvmfPkgIa32X64.dsc
-index c43fb2d39910..b03af9cacd2b 100644
+index 9bf5ac0d143c..afb1afcceb61 100644
 --- a/OvmfPkg/OvmfPkgIa32X64.dsc
 +++ b/OvmfPkg/OvmfPkgIa32X64.dsc
-@@ -541,7 +541,7 @@ [PcdsFixedAtBuild]
+@@ -544,7 +544,7 @@ [PcdsFixedAtBuild]
    # DEBUG_VERBOSE   0x00400000  // Detailed debug messages that may
    #                             // significantly impact boot performance
    # DEBUG_ERROR     0x80000000  // Error
@@ -104,10 +104,10 @@ index c43fb2d39910..b03af9cacd2b 100644
  !if $(SOURCE_DEBUG_ENABLE) == TRUE
    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x17
 diff --git a/OvmfPkg/OvmfPkgX64.dsc b/OvmfPkg/OvmfPkgX64.dsc
-index ce49a3d3a54d..a9dad1b59ee8 100644
+index 69deaf8e08ec..45e0658e2b4a 100644
 --- a/OvmfPkg/OvmfPkgX64.dsc
 +++ b/OvmfPkg/OvmfPkgX64.dsc
-@@ -562,7 +562,7 @@ [PcdsFixedAtBuild]
+@@ -563,7 +563,7 @@ [PcdsFixedAtBuild]
    # DEBUG_VERBOSE   0x00400000  // Detailed debug messages that may
    #                             // significantly impact boot performance
    # DEBUG_ERROR     0x80000000  // Error
@@ -117,5 +117,5 @@ index ce49a3d3a54d..a9dad1b59ee8 100644
  !if $(SOURCE_DEBUG_ENABLE) == TRUE
    gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x17
 -- 
-2.40.1
+2.41.0
 

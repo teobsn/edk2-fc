@@ -1,4 +1,4 @@
-From 212665c3bc7c480d6dfa7df52c50457e83af149a Mon Sep 17 00:00:00 2001
+From e88e9ee342a168114a27c0fa09e807161bf54490 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Tue, 25 Feb 2014 22:40:01 +0100
 Subject: [PATCH 03/14] MdeModulePkg: TerminalDxe: set xterm resolution on mode
@@ -87,12 +87,12 @@ Signed-off-by: Laszlo Ersek <lersek@redhat.com>
  3 files changed, 35 insertions(+)
 
 diff --git a/MdeModulePkg/MdeModulePkg.dec b/MdeModulePkg/MdeModulePkg.dec
-index 1609b6d9c29e..c0d376bed1f0 100644
+index 2f8e49f87bcc..c1b10b38ef1d 100644
 --- a/MdeModulePkg/MdeModulePkg.dec
 +++ b/MdeModulePkg/MdeModulePkg.dec
-@@ -2127,6 +2127,10 @@ [PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
-   # @Prompt The shared bit mask when Intel Tdx is enabled.
-   gEfiMdeModulePkgTokenSpaceGuid.PcdTdxSharedBitMask|0x0|UINT64|0x10000025
+@@ -2148,6 +2148,10 @@ [PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
+   # @Prompt The value is use for Usb Network rate limiting supported.
+   gEfiMdeModulePkgTokenSpaceGuid.PcdUsbNetworkRateLimitingFactor|100|UINT32|0x10000028
  
 +  ## Controls whether TerminalDxe outputs an XTerm resize sequence on terminal
 +  #  mode change.
@@ -176,5 +176,5 @@ index 7809869e7d49..496849458db4 100644
  
    Status = This->ClearScreen (This);
 -- 
-2.40.1
+2.41.0
 

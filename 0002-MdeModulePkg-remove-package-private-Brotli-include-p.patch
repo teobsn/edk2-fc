@@ -1,4 +1,4 @@
-From f1996ce088098f8479eec2f0739978b9de7840fc Mon Sep 17 00:00:00 2001
+From d42cd3199b6a33ec9811e5cc42a6ef0647d6a597 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Thu, 4 Jun 2020 13:39:08 +0200
 Subject: [PATCH 02/14] MdeModulePkg: remove package-private Brotli include
@@ -32,7 +32,7 @@ Signed-off-by: Laszlo Ersek <lersek@redhat.com>
  1 file changed, 3 deletions(-)
 
 diff --git a/MdeModulePkg/MdeModulePkg.dec b/MdeModulePkg/MdeModulePkg.dec
-index 95dd077e19b3..1609b6d9c29e 100644
+index 0ff058b0a9da..2f8e49f87bcc 100644
 --- a/MdeModulePkg/MdeModulePkg.dec
 +++ b/MdeModulePkg/MdeModulePkg.dec
 @@ -26,9 +26,6 @@ [Includes]
@@ -46,5 +46,5 @@ index 95dd077e19b3..1609b6d9c29e 100644
    ##  @libraryclass  Defines a set of methods to reset whole system.
    ResetSystemLib|Include/Library/ResetSystemLib.h
 -- 
-2.40.1
+2.41.0
 
