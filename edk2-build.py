@@ -337,7 +337,8 @@ def main():
     parser.add_argument('-j', '--jobs', dest = 'jobs', type = str,
                         help = 'allow up to JOBS parallel build jobs',
                         metavar = 'JOBS')
-    parser.add_argument('-m', '--match', dest = 'match', type = str,
+    parser.add_argument('-m', '--match', dest = 'match',
+                        type = str, action = 'append',
                         help = 'only run builds matching INCLUDE (substring)',
                         metavar = 'INCLUDE')
     parser.add_argument('-x', '--exclude', dest = 'exclude',
@@ -408,9 +409,14 @@ def main():
     for build in cfg.sections():
         if not build.startswith('build.'):
             continue
-        if options.match and options.match not in build:
-            print(f'# skipping "{build}" (not matching "{options.match}")')
-            continue
+        if options.match:
+            matching = False
+            for item in options.match:
+                if item in build:
+                    matching = True
+            if not matching:
+                print(f'# skipping "{build}" (not matching "{"|".join(options.match)}")')
+                continue
         if options.exclude:
             exclude = False
             for item in options.exclude:
