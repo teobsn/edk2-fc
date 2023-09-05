@@ -16,6 +16,7 @@ FD_SIZE_4MB              = TRUE
 [opts.ovmf.2m]
 FD_SIZE_2MB              = TRUE
 NETWORK_ISCSI_ENABLE     = FALSE
+NETWORK_TLS_ENABLE       = FALSE
 
 [opts.ovmf.sb.smm]
 SECURE_BOOT_ENABLE       = TRUE
