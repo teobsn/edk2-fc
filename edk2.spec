@@ -399,7 +399,8 @@ done
 virt-fw-vars --input   Fedora/experimental/OVMF.stateless.fd \
              --output  Fedora/experimental/OVMF.stateless.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
-             --enroll-redhat --secure-boot
+             --enroll-redhat --secure-boot \
+             --set-fallback-no-reboot
 
 for image in \
 	Fedora/ovmf/OVMF_CODE.secboot.fd \
