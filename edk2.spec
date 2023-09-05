@@ -119,6 +119,13 @@ BuildRequires:  /usr/bin/iasl
 BuildRequires:  binutils gcc git gcc-c++ make
 BuildRequires:  qemu-img
 
+# openssl configure
+BuildRequires:  perl(FindBin)
+BuildRequires:  perl(IPC::Cmd)
+BuildRequires:  perl(File::Compare)
+BuildRequires:  perl(File::Copy)
+BuildRequires:  perl(JSON)
+
 %if %{build_ovmf}
 # Only OVMF includes 80x86 assembly files (*.nasm*).
 BuildRequires:  nasm
