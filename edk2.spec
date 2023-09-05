@@ -58,6 +58,7 @@ Source2: openssl-rhel-%{OPENSSL_COMMIT}.tar.xz
 Source3: softfloat-%{softfloat_version}.tar.xz
 Source4: edk2-platforms-%{PLATFORMS_COMMIT}.tar.xz
 Source5: jansson-2.13.1.tar.bz2
+Source6: README.experimental
 
 # json description files
 Source10: 50-edk2-aarch64-qcow2.json
@@ -308,6 +309,7 @@ mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
 chmod -Rf a+rX,u+w,g-w,o-w .
 
 cp -a -- \
+   %{SOURCE6} \
    %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} \
    %{SOURCE20} \
    %{SOURCE30} %{SOURCE31} %{SOURCE32} \
@@ -692,6 +694,7 @@ done
 
 %files experimental
 %common_files
+%doc README.experimental
 %dir %{_datadir}/%{name}/experimental
 %{_datadir}/%{name}/experimental/*.fd
 %{_datadir}/%{name}/experimental/*.raw
