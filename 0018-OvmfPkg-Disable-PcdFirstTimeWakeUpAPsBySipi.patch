@@ -1,0 +1,84 @@
+From 2dd5afb5f43f645041b91c8fa6f797121a384061 Mon Sep 17 00:00:00 2001
+From: YuanhaoXie <yuanhao.xie@intel.com>
+Date: Tue, 22 Aug 2023 09:52:14 +0800
+Subject: [PATCH 18/20] OvmfPkg: Disable PcdFirstTimeWakeUpAPsBySipi
+
+Disable PcdFirstTimeWakeUpAPsBySipi for IntelTdx, Microvm, and Xen to
+preserve the original execution of INIT-SIPI-SIPI.
+
+Cc: Eric Dong <eric.dong@intel.com>
+Cc: Ray Ni <ray.ni@intel.com>
+Cc: Rahul Kumar <rahul1.kumar@intel.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Ard Biesheuvel <ardb+tianocore@kernel.org>
+Cc: Jiewen Yao <jiewen.yao@intel.com>
+Cc: Jordan Justen <jordan.l.justen@intel.com>
+Signed-off-by: Yuanhao Xie <yuanhao.xie@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit 020cc9e2e7053bb62247b0babbbe80cb855592e5)
+---
+ OvmfPkg/IntelTdx/IntelTdxX64.dsc | 8 ++++++++
+ OvmfPkg/Microvm/MicrovmX64.dsc   | 8 ++++++++
+ OvmfPkg/OvmfXen.dsc              | 8 ++++++++
+ 3 files changed, 24 insertions(+)
+
+diff --git a/OvmfPkg/IntelTdx/IntelTdxX64.dsc b/OvmfPkg/IntelTdx/IntelTdxX64.dsc
+index bfcd486976cf..cfd5e8516ea4 100644
+--- a/OvmfPkg/IntelTdx/IntelTdxX64.dsc
++++ b/OvmfPkg/IntelTdx/IntelTdxX64.dsc
+@@ -463,6 +463,14 @@ [PcdsFixedAtBuild]
+   # Point to the MdeModulePkg/Application/UiApp/UiApp.inf
+   gEfiMdeModulePkgTokenSpaceGuid.PcdBootManagerMenuFile|{ 0x21, 0xaa, 0x2c, 0x46, 0x14, 0x76, 0x03, 0x45, 0x83, 0x6e, 0x8a, 0xb6, 0xf4, 0x66, 0x23, 0x31 }
+ 
++  #
++  # PcdFirstTimeWakeUpAPsBySipi determines whether to employ
++  # SIPI instead of the INIT-SIPI-SIPI sequence during APs
++  # initialization. Deactivate this parameter to preserve
++  # the original execution of INIT-SIPI-SIPI.
++  #
++  gUefiCpuPkgTokenSpaceGuid.PcdFirstTimeWakeUpAPsBySipi|FALSE
++
+ ################################################################################
+ #
+ # Pcd Dynamic Section - list of all EDK II PCD Entries defined by this Platform
+diff --git a/OvmfPkg/Microvm/MicrovmX64.dsc b/OvmfPkg/Microvm/MicrovmX64.dsc
+index 023b7b0fe959..3cb2b6ddc490 100644
+--- a/OvmfPkg/Microvm/MicrovmX64.dsc
++++ b/OvmfPkg/Microvm/MicrovmX64.dsc
+@@ -566,6 +566,14 @@ [PcdsFixedAtBuild]
+   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialPciDeviceInfo|{0xFF}
+   gEfiMdeModulePkgTokenSpaceGuid.PcdSerialRegisterBase|0x3f8
+ 
++  #
++  # PcdFirstTimeWakeUpAPsBySipi determines whether to employ
++  # SIPI instead of the INIT-SIPI-SIPI sequence during APs
++  # initialization. Deactivate this parameter to preserve
++  # the original execution of INIT-SIPI-SIPI.
++  #
++  gUefiCpuPkgTokenSpaceGuid.PcdFirstTimeWakeUpAPsBySipi|FALSE
++
+ ################################################################################
+ #
+ # Pcd Dynamic Section - list of all EDK II PCD Entries defined by this Platform
+diff --git a/OvmfPkg/OvmfXen.dsc b/OvmfPkg/OvmfXen.dsc
+index 210578c1d74d..dcb99d1f0bce 100644
+--- a/OvmfPkg/OvmfXen.dsc
++++ b/OvmfPkg/OvmfXen.dsc
+@@ -458,6 +458,14 @@ [PcdsFixedAtBuild]
+   # We populate DXE IPL tables with 1G pages preferably on Xen
+   gEfiMdeModulePkgTokenSpaceGuid.PcdUse1GPageTable|TRUE
+ 
++  #
++  # PcdFirstTimeWakeUpAPsBySipi determines whether to employ
++  # SIPI instead of the INIT-SIPI-SIPI sequence during APs
++  # initialization. Deactivate this parameter to preserve
++  # the original execution of INIT-SIPI-SIPI.
++  #
++  gUefiCpuPkgTokenSpaceGuid.PcdFirstTimeWakeUpAPsBySipi|FALSE
++
+ ################################################################################
+ #
+ # Pcd Dynamic Section - list of all EDK II PCD Entries defined by this Platform
+-- 
+2.41.0
+

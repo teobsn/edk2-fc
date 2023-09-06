@@ -1,0 +1,235 @@
+From bf2f6173802c709a84c36d43f414c815ad6aa2f6 Mon Sep 17 00:00:00 2001
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Thu, 20 Jul 2023 15:45:57 +0200
+Subject: [PATCH 17/20] OvmfPkg/IoMmuDxe: don't rely on TPLs to manage
+ concurrency
+
+Instead of relying on raising the TPL to protect the critical sections
+that manipulate the global bitmask that keeps track of bounce buffer
+allocations, use compare-and-exchange to manage the global variable, and
+tweak the logic to line up with that.
+
+Given that IoMmuDxe implements a singleton protocol that is shared
+between multiple drivers, and considering the elaborate and confusing
+requirements in the UEFP spec regarding TPL levels at which protocol
+methods may be invoked, not relying on TPL levels at all is a more
+robust approach in this case.
+
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2211060
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Pedro Falcato <pedro.falcato@gmail.com>
+(cherry picked from commit dfb941d32a2f38c9177729e39c6a6515abbbad48)
+---
+ OvmfPkg/IoMmuDxe/IoMmuDxe.inf  |   1 +
+ OvmfPkg/IoMmuDxe/IoMmuBuffer.c | 100 +++++++++++++++++++--------------
+ 2 files changed, 60 insertions(+), 41 deletions(-)
+
+diff --git a/OvmfPkg/IoMmuDxe/IoMmuDxe.inf b/OvmfPkg/IoMmuDxe/IoMmuDxe.inf
+index 17fca5285692..d08f7e59e2b6 100644
+--- a/OvmfPkg/IoMmuDxe/IoMmuDxe.inf
++++ b/OvmfPkg/IoMmuDxe/IoMmuDxe.inf
+@@ -35,6 +35,7 @@ [LibraryClasses]
+   MemEncryptSevLib
+   MemEncryptTdxLib
+   MemoryAllocationLib
++  SynchronizationLib
+   UefiBootServicesTableLib
+   UefiDriverEntryPoint
+ 
+diff --git a/OvmfPkg/IoMmuDxe/IoMmuBuffer.c b/OvmfPkg/IoMmuDxe/IoMmuBuffer.c
+index 103003cae376..f8dcd5b7ec92 100644
+--- a/OvmfPkg/IoMmuDxe/IoMmuBuffer.c
++++ b/OvmfPkg/IoMmuDxe/IoMmuBuffer.c
+@@ -12,6 +12,7 @@
+ #include <Library/MemEncryptSevLib.h>
+ #include <Library/MemEncryptTdxLib.h>
+ #include <Library/PcdLib.h>
++#include <Library/SynchronizationLib.h>
+ #include <Library/UefiBootServicesTableLib.h>
+ #include "IoMmuInternal.h"
+ 
+@@ -268,16 +269,17 @@ InternalAllocateBuffer (
+   IN  EFI_ALLOCATE_TYPE        Type,
+   IN  EFI_MEMORY_TYPE          MemoryType,
+   IN  UINTN                    Pages,
+-  IN OUT UINT32                *ReservedMemBitmap,
++  OUT UINT32                   *ReservedMemBit,
+   IN OUT EFI_PHYSICAL_ADDRESS  *PhysicalAddress
+   )
+ {
+   UINT32                    MemBitmap;
++  UINT32                    ReservedMemBitmap;
+   UINT8                     Index;
+   IOMMU_RESERVED_MEM_RANGE  *MemRange;
+   UINTN                     PagesOfLastMemRange;
+ 
+-  *ReservedMemBitmap = 0;
++  *ReservedMemBit = 0;
+ 
+   if (Pages == 0) {
+     ASSERT (FALSE);
+@@ -309,23 +311,31 @@ InternalAllocateBuffer (
+ 
+   MemRange = &mReservedMemRanges[Index];
+ 
+-  if ((mReservedMemBitmap & MemRange->BitmapMask) == MemRange->BitmapMask) {
+-    // The reserved memory is exausted. Turn to legacy allocate.
+-    goto LegacyAllocateBuffer;
+-  }
++  do {
++    ReservedMemBitmap = mReservedMemBitmap;
+ 
+-  MemBitmap = (mReservedMemBitmap & MemRange->BitmapMask) >> MemRange->Shift;
++    if ((ReservedMemBitmap & MemRange->BitmapMask) == MemRange->BitmapMask) {
++      // The reserved memory is exhausted. Turn to legacy allocate.
++      goto LegacyAllocateBuffer;
++    }
++
++    MemBitmap = (ReservedMemBitmap & MemRange->BitmapMask) >> MemRange->Shift;
+ 
+-  for (Index = 0; Index < MemRange->Slots; Index++) {
+-    if ((MemBitmap & (UINT8)(1<<Index)) == 0) {
+-      break;
++    for (Index = 0; Index < MemRange->Slots; Index++) {
++      if ((MemBitmap & (UINT8)(1<<Index)) == 0) {
++        break;
++      }
+     }
+-  }
+ 
+-  ASSERT (Index != MemRange->Slots);
++    ASSERT (Index != MemRange->Slots);
+ 
+-  *PhysicalAddress   = MemRange->StartAddressOfMemRange + Index * SIZE_OF_MEM_RANGE (MemRange) + MemRange->HeaderSize;
+-  *ReservedMemBitmap = (UINT32)(1 << (Index + MemRange->Shift));
++    *PhysicalAddress = MemRange->StartAddressOfMemRange + Index * SIZE_OF_MEM_RANGE (MemRange) + MemRange->HeaderSize;
++    *ReservedMemBit  = (UINT32)(1 << (Index + MemRange->Shift));
++  } while (ReservedMemBitmap != InterlockedCompareExchange32 (
++                                  &mReservedMemBitmap,
++                                  ReservedMemBitmap,
++                                  ReservedMemBitmap | *ReservedMemBit
++                                  ));
+ 
+   DEBUG ((
+     DEBUG_VERBOSE,
+@@ -334,16 +344,16 @@ InternalAllocateBuffer (
+     MemRange->DataSize,
+     *PhysicalAddress,
+     Pages,
+-    *ReservedMemBitmap,
+-    mReservedMemBitmap,
+-    mReservedMemBitmap | *ReservedMemBitmap
++    *ReservedMemBit,
++    ReservedMemBitmap,
++    ReservedMemBitmap | *ReservedMemBit
+     ));
+ 
+   return EFI_SUCCESS;
+ 
+ LegacyAllocateBuffer:
+ 
+-  *ReservedMemBitmap = 0;
++  *ReservedMemBit = 0;
+   return gBS->AllocatePages (Type, MemoryType, Pages, PhysicalAddress);
+ }
+ 
+@@ -366,27 +376,41 @@ IoMmuAllocateBounceBuffer (
+   )
+ {
+   EFI_STATUS  Status;
+-  UINT32      ReservedMemBitmap;
+-  EFI_TPL     OldTpl;
+-
+-  OldTpl            = gBS->RaiseTPL (TPL_NOTIFY);
+-  ReservedMemBitmap = 0;
+-  Status            = InternalAllocateBuffer (
+-                        Type,
+-                        MemoryType,
+-                        MapInfo->NumberOfPages,
+-                        &ReservedMemBitmap,
+-                        &MapInfo->PlainTextAddress
+-                        );
+-  MapInfo->ReservedMemBitmap = ReservedMemBitmap;
+-  mReservedMemBitmap        |= ReservedMemBitmap;
+-  gBS->RestoreTPL (OldTpl);
+ 
++  Status = InternalAllocateBuffer (
++             Type,
++             MemoryType,
++             MapInfo->NumberOfPages,
++             &MapInfo->ReservedMemBitmap,
++             &MapInfo->PlainTextAddress
++             );
+   ASSERT (Status == EFI_SUCCESS);
+ 
+   return Status;
+ }
+ 
++/**
++ * Clear a bit in the reserved memory bitmap in a thread safe manner
++ *
++ * @param ReservedMemBit  The bit to clear
++ */
++STATIC
++VOID
++ClearReservedMemBit (
++  IN  UINT32  ReservedMemBit
++  )
++{
++  UINT32  ReservedMemBitmap;
++
++  do {
++    ReservedMemBitmap = mReservedMemBitmap;
++  } while (ReservedMemBitmap != InterlockedCompareExchange32 (
++                                  &mReservedMemBitmap,
++                                  ReservedMemBitmap,
++                                  ReservedMemBitmap & ~ReservedMemBit
++                                  ));
++}
++
+ /**
+  * Free the bounce buffer allocated in IoMmuAllocateBounceBuffer.
+  *
+@@ -398,8 +422,6 @@ IoMmuFreeBounceBuffer (
+   IN OUT     MAP_INFO  *MapInfo
+   )
+ {
+-  EFI_TPL  OldTpl;
+-
+   if (MapInfo->ReservedMemBitmap == 0) {
+     gBS->FreePages (MapInfo->PlainTextAddress, MapInfo->NumberOfPages);
+   } else {
+@@ -412,11 +434,9 @@ IoMmuFreeBounceBuffer (
+       mReservedMemBitmap,
+       mReservedMemBitmap & ((UINT32)(~MapInfo->ReservedMemBitmap))
+       ));
+-    OldTpl                     = gBS->RaiseTPL (TPL_NOTIFY);
++    ClearReservedMemBit (MapInfo->ReservedMemBitmap);
+     MapInfo->PlainTextAddress  = 0;
+-    mReservedMemBitmap        &= (UINT32)(~MapInfo->ReservedMemBitmap);
+     MapInfo->ReservedMemBitmap = 0;
+-    gBS->RestoreTPL (OldTpl);
+   }
+ 
+   return EFI_SUCCESS;
+@@ -452,8 +472,6 @@ IoMmuAllocateCommonBuffer (
+              );
+   ASSERT (Status == EFI_SUCCESS);
+ 
+-  mReservedMemBitmap |= *ReservedMemBitmap;
+-
+   if (*ReservedMemBitmap != 0) {
+     *PhysicalAddress -= SIZE_4KB;
+   }
+@@ -494,7 +512,7 @@ IoMmuFreeCommonBuffer (
+     mReservedMemBitmap & ((UINT32)(~CommonBufferHeader->ReservedMemBitmap))
+     ));
+ 
+-  mReservedMemBitmap &= (UINT32)(~CommonBufferHeader->ReservedMemBitmap);
++  ClearReservedMemBit (CommonBufferHeader->ReservedMemBitmap);
+   return EFI_SUCCESS;
+ 
+ LegacyFreeCommonBuffer:
+-- 
+2.41.0
+

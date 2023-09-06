@@ -109,6 +109,10 @@ Patch0013: 0013-UefiCpuPkg-MpInitLib-fix-apic-mode-for-cpu-hotplug.patch
 Patch0014: 0014-ArmPkg-Add-Pcd-to-disable-EFI_MEMORY_ATTRIBUTE_PROTO.patch
 Patch0015: 0015-CryptoPkg-CrtLib-add-stat.h.patch
 Patch0016: 0016-CryptoPkg-CrtLib-add-access-open-read-write-close-sy.patch
+Patch0017: 0017-OvmfPkg-IoMmuDxe-don-t-rely-on-TPLs-to-manage-concur.patch
+Patch0018: 0018-OvmfPkg-Disable-PcdFirstTimeWakeUpAPsBySipi.patch
+Patch0019: 0019-OvmfPkg-AmdSev-Disable-PcdFirstTimeWakeUpAPsBySipi.patch
+Patch0020: 0020-OvmfPkg-AmdSev-fix-BdsPlatform.c-assertion-failure-d.patch
 
 
 # python3-devel and libuuid-devel are required for building tools.
