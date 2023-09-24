@@ -45,7 +45,7 @@ Name:       edk2
 Version:    %{GITDATE}
 Release:    %autorelease
 Summary:    UEFI firmware for 64-bit virtual machines
-License:    BSD-2-Clause-Patent and Apache-2.0 and MIT
+License:    BSD-2-Clause-Patent AND Apache-2.0 AND MIT
 URL:        http://www.tianocore.org
 
 # The source tarball is created using following commands:
@@ -169,7 +169,7 @@ Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
 # OVMF includes the Secure Boot and IPv6 features; it has a builtin OpenSSL
 # library.
 Provides:   bundled(openssl) = %{OPENSSL_VER}
-License:    BSD-2-Clause-Patent and Apache-2.0
+License:    BSD-2-Clause-Patent AND Apache-2.0
 
 # URL taken from the Maintainers.txt file.
 URL:        http://www.tianocore.org/ovmf/
@@ -191,7 +191,7 @@ Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
 
 # No Secure Boot for AAVMF yet, but we include OpenSSL for the IPv6 stack.
 Provides:   bundled(openssl) = %{OPENSSL_VER}
-License:    BSD-2-Clause-Patent and Apache-2.0
+License:    BSD-2-Clause-Patent AND Apache-2.0
 
 # URL taken from the Maintainers.txt file.
 URL:        https://github.com/tianocore/tianocore.github.io/wiki/ArmVirtPkg
@@ -228,7 +228,7 @@ environment for the UEFI and PI specifications. This package contains sample
 %if %{defined fedora}
 %package ovmf-ia32
 Summary:        Open Virtual Machine Firmware
-License:        BSD-2-Clause-Patent and Apache-2.0
+License:        BSD-2-Clause-Patent AND Apache-2.0
 Provides:       bundled(openssl)
 BuildArch:      noarch
 %description ovmf-ia32
@@ -237,7 +237,7 @@ Open Virtual Machine Firmware (ia32)
 
 %package ovmf-xen
 Summary:        Open Virtual Machine Firmware, Xen build
-License:        BSD-2-Clause-Patent and Apache-2.0
+License:        BSD-2-Clause-Patent AND Apache-2.0
 Provides:       bundled(openssl)
 BuildArch:      noarch
 %description ovmf-xen
@@ -246,7 +246,7 @@ Open Virtual Machine Firmware (Xen build)
 
 %package experimental
 Summary:        Open Virtual Machine Firmware, experimental builds
-License:        BSD-2-Clause-Patent and Apache-2.0
+License:        BSD-2-Clause-Patent AND Apache-2.0
 Provides:       bundled(openssl)
 Obsoletes:      edk2-ovmf-experimental < 20230825
 BuildArch:      noarch
@@ -257,7 +257,7 @@ Open Virtual Machine Firmware (experimental builds)
 %package arm
 Summary:        ARM Virtual Machine Firmware
 BuildArch:      noarch
-License:        BSD-2-Clause-Patent and Apache-2.0
+License:        BSD-2-Clause-Patent AND Apache-2.0
 %description arm
 EFI Development Kit II
 ARMv7 UEFI Firmware
@@ -265,7 +265,7 @@ ARMv7 UEFI Firmware
 %package riscv64
 Summary:        RISC-V Virtual Machine Firmware
 BuildArch:      noarch
-License:        BSD-2-Clause-Patent and Apache-2.0
+License:        BSD-2-Clause-Patent AND Apache-2.0
 
 # need libvirt version with qcow2 support
 Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
@@ -276,7 +276,7 @@ RISC-V UEFI Firmware
 
 %package ext4
 Summary:        Ext4 filesystem driver
-License:        BSD-2-Clause-Patent and Apache-2.0
+License:        BSD-2-Clause-Patent AND Apache-2.0
 BuildArch:      noarch
 %description ext4
 EFI Development Kit II
