@@ -48,7 +48,7 @@ Name:       edk2
 Version:    %{GITDATE}
 Release:    %autorelease
 Summary:    UEFI firmware for 64-bit virtual machines
-License:    Apache-2.0 AND BSD-2-Clause-Patent AND MIT AND LicenseRef-Fedora-Public-Domain
+License:    Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND MIT AND LicenseRef-Fedora-Public-Domain
 URL:        http://www.tianocore.org
 
 # The source tarball is created using following commands:
@@ -173,7 +173,7 @@ Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
 # OVMF includes the Secure Boot and IPv6 features; it has a builtin OpenSSL
 # library.
 Provides:   bundled(openssl) = %{OPENSSL_VER}
-License:    Apache-2.0 AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+License:    Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 
 # URL taken from the Maintainers.txt file.
 URL:        http://www.tianocore.org/ovmf/
@@ -195,7 +195,7 @@ Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
 
 # No Secure Boot for AAVMF yet, but we include OpenSSL for the IPv6 stack.
 Provides:   bundled(openssl) = %{OPENSSL_VER}
-License:    Apache-2.0 AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+License:    Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 
 # URL taken from the Maintainers.txt file.
 URL:        https://github.com/tianocore/tianocore.github.io/wiki/ArmVirtPkg
@@ -232,7 +232,7 @@ environment for the UEFI and PI specifications. This package contains sample
 %if %{defined fedora}
 %package ovmf-ia32
 Summary:        Open Virtual Machine Firmware
-License:        Apache-2.0 AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+License:        Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 Provides:       bundled(openssl)
 BuildArch:      noarch
 %description ovmf-ia32
@@ -241,7 +241,7 @@ Open Virtual Machine Firmware (ia32)
 
 %package ovmf-xen
 Summary:        Open Virtual Machine Firmware, Xen build
-License:        Apache-2.0 AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+License:        Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 Provides:       bundled(openssl)
 BuildArch:      noarch
 %description ovmf-xen
@@ -250,7 +250,7 @@ Open Virtual Machine Firmware (Xen build)
 
 %package experimental
 Summary:        Open Virtual Machine Firmware, experimental builds
-License:        Apache-2.0 AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+License:        Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 Provides:       bundled(openssl)
 Obsoletes:      edk2-ovmf-experimental < 20230825
 BuildArch:      noarch
@@ -261,7 +261,7 @@ Open Virtual Machine Firmware (experimental builds)
 %package arm
 Summary:        ARM Virtual Machine Firmware
 BuildArch:      noarch
-License:        Apache-2.0 AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+License:        Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 %description arm
 EFI Development Kit II
 ARMv7 UEFI Firmware
