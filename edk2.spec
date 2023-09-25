@@ -20,6 +20,9 @@ ExclusiveArch: x86_64 aarch64 riscv64
 
 %define DBXDATE        20230509
 
+# Undefine this to get *HUGE* (50MB+) verbose build logs
+%define silent --silent
+
 %if %{defined rhel}
 %define build_ovmf 0
 %define build_aarch64 0
@@ -378,7 +381,7 @@ python3 CryptoPkg/Library/OpensslLib/configure.py
 %if %{build_ovmf}
 %if %{defined rhel}
 
-./edk2-build.py --config edk2-build.rhel-9 --silent --release-date "$RELEASE_DATE" -m ovmf
+./edk2-build.py --config edk2-build.rhel-9 %{?silent} --release-date "$RELEASE_DATE" -m ovmf
 virt-fw-vars --input   RHEL-9/ovmf/OVMF_VARS.fd \
              --output  RHEL-9/ovmf/OVMF_VARS.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
@@ -387,8 +390,8 @@ build_iso RHEL-9/ovmf
 
 %else
 
-./edk2-build.py --config edk2-build.fedora --silent --release-date "$RELEASE_DATE" -m ovmf
-./edk2-build.py --config edk2-build.fedora.platforms --silent -m x64
+./edk2-build.py --config edk2-build.fedora %{?silent} --release-date "$RELEASE_DATE" -m ovmf
+./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m x64
 virt-fw-vars --input   Fedora/ovmf/OVMF_VARS.fd \
              --output  Fedora/ovmf/OVMF_VARS.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
@@ -438,10 +441,10 @@ done
 
 %if %{build_aarch64}
 %if %{defined rhel}
-./edk2-build.py --config edk2-build.rhel-9 --silent --release-date "$RELEASE_DATE" -m armvirt
+./edk2-build.py --config edk2-build.rhel-9 %{?silent} --release-date "$RELEASE_DATE" -m armvirt
 %else
-./edk2-build.py --config edk2-build.fedora --silent --release-date "$RELEASE_DATE" -m armvirt
-./edk2-build.py --config edk2-build.fedora.platforms --silent -m aa64
+./edk2-build.py --config edk2-build.fedora %{?silent} --release-date "$RELEASE_DATE" -m armvirt
+./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m aa64
 virt-fw-vars --input   Fedora/aarch64/vars-template-pflash.raw \
              --output  Fedora/experimental/vars-template-secboot-testonly-pflash.raw \
              --enroll-redhat --secure-boot --distro-keys rhel
@@ -453,8 +456,8 @@ done
 %endif
 
 %if %{build_riscv64}
-./edk2-build.py --config edk2-build.fedora --silent --release-date "$RELEASE_DATE" -m riscv
-./edk2-build.py --config edk2-build.fedora.platforms --silent -m riscv
+./edk2-build.py --config edk2-build.fedora %{?silent} --release-date "$RELEASE_DATE" -m riscv
+./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m riscv
 for raw in */riscv/*.raw; do
     qcow2="${raw%.raw}.qcow2"
     qemu-img convert -f raw -O qcow2 -o cluster_size=4096 -S 4096 "$raw" "$qcow2"
