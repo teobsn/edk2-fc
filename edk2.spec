@@ -113,6 +113,7 @@ Patch0017: 0017-OvmfPkg-IoMmuDxe-don-t-rely-on-TPLs-to-manage-concur.patch
 Patch0018: 0018-OvmfPkg-Disable-PcdFirstTimeWakeUpAPsBySipi.patch
 Patch0019: 0019-OvmfPkg-AmdSev-Disable-PcdFirstTimeWakeUpAPsBySipi.patch
 Patch0020: 0020-OvmfPkg-AmdSev-fix-BdsPlatform.c-assertion-failure-d.patch
+Patch0021: 0021-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
 
 
 # python3-devel and libuuid-devel are required for building tools.
