@@ -387,6 +387,7 @@ virt-fw-vars --input   RHEL-9/ovmf/OVMF_VARS.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
              --enroll-redhat --secure-boot
 build_iso RHEL-9/ovmf
+cp DBXUpdate-%{DBXDATE}.x64.bin RHEL-9/ovmf
 
 %else
 
@@ -406,6 +407,8 @@ virt-fw-vars --input   Fedora/ovmf-ia32/OVMF_VARS.fd \
              --enroll-redhat --secure-boot
 build_iso Fedora/ovmf
 build_iso Fedora/ovmf-ia32
+cp DBXUpdate-%{DBXDATE}.x64.bin Fedora/ovmf
+cp DBXUpdate-%{DBXDATE}.ia32.bin Fedora/ovmf-ia32
 
 for raw in */ovmf/*_4M*.fd; do
     qcow2="${raw%.fd}.qcow2"
@@ -622,6 +625,7 @@ done
 %{_datadir}/%{name}/ovmf/UefiShell.iso
 %{_datadir}/%{name}/ovmf/Shell.efi
 %{_datadir}/%{name}/ovmf/EnrollDefaultKeys.efi
+%{_datadir}/%{name}/ovmf/DBXUpdate*.bin
 %{_datadir}/qemu/firmware/30-edk2-ovmf-4m-qcow2-x64-sb-enrolled.json
 %{_datadir}/qemu/firmware/31-edk2-ovmf-2m-raw-x64-sb-enrolled.json
 %{_datadir}/qemu/firmware/40-edk2-ovmf-4m-qcow2-x64-sb.json
@@ -703,6 +707,7 @@ done
 %{_datadir}/%{name}/ovmf-ia32/OVMF_VARS.secboot.fd
 %{_datadir}/%{name}/ovmf-ia32/Shell.efi
 %{_datadir}/%{name}/ovmf-ia32/UefiShell.iso
+%{_datadir}/%{name}/ovmf-ia32/DBXUpdate*.bin
 %{_datadir}/qemu/firmware/30-edk2-ovmf-ia32-sb-enrolled.json
 %{_datadir}/qemu/firmware/40-edk2-ovmf-ia32-sb.json
 %{_datadir}/qemu/firmware/50-edk2-ovmf-ia32-nosb.json
