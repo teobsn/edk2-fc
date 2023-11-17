@@ -1,7 +1,7 @@
-From 5aa243d95f64d6febe7724d7281471b3528e0961 Mon Sep 17 00:00:00 2001
+From d33fa1e334e7dc75a3cd43728e1c825acd52f5c3 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 25 Sep 2023 09:48:46 +0200
-Subject: [PATCH 21/21] OvmfPkg: set PcdVariableStoreSize +
+Subject: [PATCH 17/17] OvmfPkg: set PcdVariableStoreSize +
  PcdMaxVolatileVariableSize unconditionally
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
@@ -12,7 +12,7 @@ Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
  3 files changed, 30 deletions(-)
 
 diff --git a/OvmfPkg/OvmfPkgIa32.dsc b/OvmfPkg/OvmfPkgIa32.dsc
-index 9cd981ae7be8..1f610b00eb0b 100644
+index d20afa771c36..1c3437e7437c 100644
 --- a/OvmfPkg/OvmfPkgIa32.dsc
 +++ b/OvmfPkg/OvmfPkgIa32.dsc
 @@ -493,23 +493,13 @@ [PcdsFixedAtBuild]
@@ -40,7 +40,7 @@ index 9cd981ae7be8..1f610b00eb0b 100644
    gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress|0x0
    gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial|FALSE
 diff --git a/OvmfPkg/OvmfPkgIa32X64.dsc b/OvmfPkg/OvmfPkgIa32X64.dsc
-index 9186ab2ba83b..d68acc88d702 100644
+index 52a8ac2a5592..87067f468285 100644
 --- a/OvmfPkg/OvmfPkgIa32X64.dsc
 +++ b/OvmfPkg/OvmfPkgIa32X64.dsc
 @@ -500,23 +500,13 @@ [PcdsFixedAtBuild]
@@ -68,7 +68,7 @@ index 9186ab2ba83b..d68acc88d702 100644
    gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress|0x0
    gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial|FALSE
 diff --git a/OvmfPkg/OvmfPkgX64.dsc b/OvmfPkg/OvmfPkgX64.dsc
-index a059f143f5be..1e6363e0de2e 100644
+index 4e2459d34e2e..a625399d8246 100644
 --- a/OvmfPkg/OvmfPkgX64.dsc
 +++ b/OvmfPkg/OvmfPkgX64.dsc
 @@ -519,23 +519,13 @@ [PcdsFixedAtBuild]
@@ -96,5 +96,5 @@ index a059f143f5be..1e6363e0de2e 100644
    gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress|0x0
    gEfiMdeModulePkgTokenSpaceGuid.PcdStatusCodeUseSerial|FALSE
 -- 
-2.41.0
+2.42.0
 
