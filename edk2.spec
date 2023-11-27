@@ -385,6 +385,10 @@ virt-fw-vars --input   RHEL-9/ovmf/OVMF_VARS.fd \
              --output  RHEL-9/ovmf/OVMF_VARS.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
              --enroll-redhat --secure-boot
+virt-fw-vars --input   RHEL-9/ovmf/OVMF.inteltdx.fd \
+             --output  RHEL-9/ovmf/OVMF.inteltdx.secboot.fd \
+             --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
+             --enroll-redhat --secure-boot
 build_iso RHEL-9/ovmf
 cp DBXUpdate-%{DBXDATE}.x64.bin RHEL-9/ovmf
 
@@ -398,6 +402,10 @@ virt-fw-vars --input   Fedora/ovmf/OVMF_VARS.fd \
              --enroll-redhat --secure-boot
 virt-fw-vars --input   Fedora/ovmf/OVMF_VARS_4M.fd \
              --output  Fedora/ovmf/OVMF_VARS_4M.secboot.fd \
+             --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
+             --enroll-redhat --secure-boot
+virt-fw-vars --input   Fedora/ovmf/OVMF.inteltdx.fd \
+             --output  Fedora/ovmf/OVMF.inteltdx.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
              --enroll-redhat --secure-boot
 virt-fw-vars --input   Fedora/ovmf-ia32/OVMF_VARS.fd \
@@ -621,6 +629,7 @@ done
 %{_datadir}/%{name}/ovmf/OVMF_VARS.secboot.fd
 %{_datadir}/%{name}/ovmf/OVMF.amdsev.fd
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.fd
+%{_datadir}/%{name}/ovmf/OVMF.inteltdx.secboot.fd
 %{_datadir}/%{name}/ovmf/UefiShell.iso
 %{_datadir}/%{name}/ovmf/Shell.efi
 %{_datadir}/%{name}/ovmf/EnrollDefaultKeys.efi
