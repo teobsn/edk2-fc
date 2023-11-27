@@ -113,6 +113,9 @@ Patch0014: 0014-ArmPkg-Add-Pcd-to-disable-EFI_MEMORY_ATTRIBUTE_PROTO.patch
 Patch0015: 0015-CryptoPkg-CrtLib-add-stat.h.patch
 Patch0016: 0016-CryptoPkg-CrtLib-add-access-open-read-write-close-sy.patch
 Patch0017: 0017-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
+%if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
+Patch0018: 0018-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
+%endif
 
 
 # python3-devel and libuuid-devel are required for building tools.
