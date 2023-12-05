@@ -80,25 +80,25 @@ cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.fd
 cpy2 = FV/OVMF_VARS.fd OVMF_VARS_4M.fd
 
 [build.ovmf.2m.sb.smm]
-desc = ovmf build (32/64-bit, 2MB, q35 only, needs smm, secure boot)
-conf = OvmfPkg/OvmfPkgIa32X64.dsc
-arch = IA32 X64
+desc = ovmf build (64-bit, 2MB, q35 only, needs smm, secure boot)
+conf = OvmfPkg/OvmfPkgX64.dsc
+arch = X64
 opts = ovmf.common
        ovmf.2m
        ovmf.sb.smm
-plat = Ovmf3264
+plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE.secboot.fd
 cpy2 = X64/EnrollDefaultKeys.efi
 
 [build.ovmf.4m.sb.smm]
-desc = ovmf build (32/64-bit, 4MB, q35 only, needs smm, secure boot)
-conf = OvmfPkg/OvmfPkgIa32X64.dsc
-arch = IA32 X64
+desc = ovmf build (64-bit, 4MB, q35 only, needs smm, secure boot)
+conf = OvmfPkg/OvmfPkgX64.dsc
+arch = X64
 opts = ovmf.common
        ovmf.4m
        ovmf.sb.smm
-plat = Ovmf3264
+plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.fd
 
@@ -140,7 +140,9 @@ cpy1 = FV/OVMF.fd OVMF.amdsev.fd
 desc = ovmf build for IntelTdx (2MB)
 conf = OvmfPkg/IntelTdx/IntelTdxX64.dsc
 arch = X64
-opts = ovmf.common ovmf.2m
+opts = ovmf.common
+       ovmf.2m
+       ovmf.sb.stateless
 plat = IntelTdx
 dest = Fedora/ovmf
 cpy1 = FV/OVMF.fd OVMF.inteltdx.fd
@@ -265,14 +267,14 @@ dest = Fedora/experimental
 cpy1 = FV/OVMF.fd OVMF.stateless.fd
 
 [build.ovmf.strict.nx]
-desc = ovmf build (32/64-bit, 4MB, q35 only, needs smm, secure boot, strict nx)
-conf = OvmfPkg/OvmfPkgIa32X64.dsc
-arch = IA32 X64
+desc = ovmf build (64-bit, 4MB, q35 only, needs smm, secure boot, strict nx)
+conf = OvmfPkg/OvmfPkgX64.dsc
+arch = X64
 opts = ovmf.common
        ovmf.4m
        ovmf.sb.smm
 pcds = nx.strict
-plat = Ovmf3264
+plat = OvmfX64
 dest = Fedora/experimental
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE.4m.secboot.strictnx.fd
 
