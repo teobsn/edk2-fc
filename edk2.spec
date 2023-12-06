@@ -16,7 +16,7 @@ ExclusiveArch: x86_64 aarch64 riscv64
 %define PLATFORMS_COMMIT 10e2eb030de3
 
 %define OPENSSL_VER    3.0.7
-%define OPENSSL_COMMIT 3adb22b68e9fe61fc4863c2d2dc6cc6fc094b005
+%define OPENSSL_COMMIT db0287935122edceb91dcda8dfb53b4090734e22
 
 %define DBXDATE        20230509
 
