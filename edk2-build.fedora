@@ -47,10 +47,14 @@ TPM2_CONFIG_ENABLE       = FALSE
 
 [pcds.nx.strict]
 PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD5
+# Default is FALSE, so there no need to actually set it.
+#PcdUninstallMemAttrProtocol    = FALSE
 
-[pcds.nx.broken.grub]
+[pcds.nx.broken.shim.grub]
 # grub.efi uses EfiLoaderData for code
 PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD1
+# shim.efi has broken MemAttr code
+PcdUninstallMemAttrProtocol    = TRUE
 
 
 #####################################################################
@@ -157,7 +161,7 @@ conf = ArmVirtPkg/ArmVirtQemu.dsc
 arch = AARCH64
 opts = ovmf.common
        armvirt.verbose
-pcds = nx.broken.grub
+pcds = nx.broken.shim.grub
 plat = ArmVirtQemu-AARCH64
 dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd
@@ -173,7 +177,7 @@ conf = ArmVirtPkg/ArmVirtQemu.dsc
 arch = AARCH64
 opts = ovmf.common
        armvirt.silent
-pcds = nx.broken.grub
+pcds = nx.broken.shim.grub
 plat = ArmVirtQemu-AARCH64
 dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.silent.fd
@@ -187,7 +191,7 @@ arch = AARCH64
 opts = ovmf.common
        armvirt.silent
        armvirt.kernel
-pcds = nx.broken.grub
+pcds = nx.broken.shim.grub
 plat = ArmVirtQemuKernel-AARCH64
 dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.kernel.fd
@@ -241,7 +245,7 @@ desc = ArmVirt build for qemu, 32-bit (arm v7)
 conf = ArmVirtPkg/ArmVirtQemu.dsc
 arch = ARM
 opts = ovmf.common
-pcds = nx.broken.grub
+pcds = nx.broken.shim.grub
 plat = ArmVirtQemu-ARM
 dest = Fedora/arm
 cpy1 = FV/QEMU_EFI.fd
