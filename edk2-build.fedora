@@ -280,7 +280,7 @@ opts = ovmf.common
 pcds = nx.strict
 plat = OvmfX64
 dest = Fedora/experimental
-cpy1 = FV/OVMF_CODE.fd OVMF_CODE.4m.secboot.strictnx.fd
+cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.strictnx.fd
 
 [build.armvirt.aa64.strict.nx]
 desc = ArmVirt build for qemu, 64-bit (arm v8), verbose
