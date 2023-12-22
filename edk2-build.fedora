@@ -48,6 +48,7 @@ TPM2_CONFIG_ENABLE       = FALSE
 [pcds.nx.strict]
 PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD5
 PcdImageProtectionPolicy       = 0x03
+PcdSetNxForStack               = TRUE
 # Default is FALSE, so there no need to actually set it.
 #PcdUninstallMemAttrProtocol    = FALSE
 
