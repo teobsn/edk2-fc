@@ -1,7 +1,7 @@
-From f34c799475de60e399463953870c182a08c39f81 Mon Sep 17 00:00:00 2001
+From 0e6f7dac11cc04d012c99452c966188c401e1b2a Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 27 Nov 2023 11:04:08 +0100
-Subject: [PATCH 18/18] silence '... has a LOAD segment with RWX permissions'
+Subject: [PATCH 17/17] silence '... has a LOAD segment with RWX permissions'
  warning
 
 ---
@@ -22,5 +22,5 @@ index c34ecfd557c5..53ac3baa6be3 100755
  DEFINE GCC_ARM_AARCH64_DLINK_COMMON= -Wl,--emit-relocs -nostdlib -Wl,--gc-sections -u $(IMAGE_ENTRY_POINT) -Wl,-e,$(IMAGE_ENTRY_POINT),-Map,$(DEST_DIR_DEBUG)/$(BASE_NAME).map
  DEFINE GCC_LOONGARCH64_DLINK_COMMON= -Wl,--emit-relocs -nostdlib -Wl,--gc-sections -u $(IMAGE_ENTRY_POINT) -Wl,-e,$(IMAGE_ENTRY_POINT),-Map,$(DEST_DIR_DEBUG)/$(BASE_NAME).map
 -- 
-2.43.0
+2.43.1
 

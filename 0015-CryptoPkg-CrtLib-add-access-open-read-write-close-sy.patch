@@ -1,7 +1,7 @@
-From dc0c929b8e17eefd7931ba21705eb0ec90c49714 Mon Sep 17 00:00:00 2001
+From c3ea169e825a03c54c846ca3edf256a9ad045b81 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 28 Aug 2023 13:27:09 +0200
-Subject: [PATCH 16/16] CryptoPkg/CrtLib: add access/open/read/write/close
+Subject: [PATCH 15/17] CryptoPkg/CrtLib: add access/open/read/write/close
  syscalls
 
 needed by rhel downstream openssl patches
@@ -134,5 +134,5 @@ index 37cdecc9bd1d..dfdb63553667 100644
  getuid (
    void
 -- 
-2.41.0
+2.43.1
 
