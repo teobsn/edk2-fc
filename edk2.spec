@@ -145,7 +145,7 @@ BuildRequires:  xorriso
 
 # For generating the variable store template with the default certificates
 # enrolled.
-BuildRequires:  python3-virt-firmware >= 23.5
+BuildRequires:  python3-virt-firmware >= 24.2
 
 # endif build_ovmf
 %endif
@@ -440,11 +440,12 @@ for image in \
 	pcr="${image}"
 	pcr="${pcr%.fd}"
 	pcr="${pcr%.qcow2}"
-	pcr="${pcr}.pcr"
+	pcr="${pcr}.pcrlock"
 	python3 /usr/share/doc/python3-virt-firmware/experimental/measure.py \
 		--image "$image" \
 		--version "%{name}-%{version}-%{release}" \
-                --no-shim \
+                --no-shim --pcrlock \
+                --bank sha256 --bank sha384 \
 		> "$pcr"
 done
 
@@ -651,7 +652,7 @@ done
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.secboot.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_VARS_4M.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_VARS_4M.secboot.qcow2
-%{_datadir}/%{name}/ovmf/*.pcr
+%{_datadir}/%{name}/ovmf/*.pcrlock
 %endif
 # endif build_ovmf
 %endif
@@ -729,7 +730,7 @@ done
 %{_datadir}/%{name}/experimental/*.fd
 %{_datadir}/%{name}/experimental/*.raw
 %{_datadir}/%{name}/experimental/*.qcow2
-%{_datadir}/%{name}/experimental/*.pcr
+%{_datadir}/%{name}/experimental/*.pcrlock
 
 %files ovmf-xen
 %common_files
