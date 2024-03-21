@@ -33,10 +33,12 @@ ExclusiveArch: x86_64 aarch64 riscv64
   %define build_aarch64 1
 %endif
 %define build_riscv64 0
+%define build_loongarch64 0
 %else
 %define build_ovmf 1
 %define build_aarch64 1
 %define build_riscv64 1
+%define build_loongarch64 1
 %endif
 
 %global softfloat_version 20180726-gitb64af41
@@ -155,6 +157,7 @@ BuildRequires:  gcc-aarch64-linux-gnu
 BuildRequires:  gcc-arm-linux-gnu
 BuildRequires:  gcc-x86_64-linux-gnu
 BuildRequires:  gcc-riscv64-linux-gnu
+BuildRequires:  gcc-loongarch64-linux-gnu
 %endif
 
 
@@ -275,6 +278,15 @@ Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
 %description riscv64
 EFI Development Kit II
 RISC-V UEFI Firmware
+
+%package loongarch64
+Summary:        loongarch Virtual Machine Firmware
+BuildArch:      noarch
+License:        Apache-2.0 AND (BSD-2-Clause OR GPL-2.0-or-later) AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+
+%description loongarch64
+EFI Development Kit II
+loongarch UEFI Firmware
 
 %package ext4
 Summary:        Ext4 filesystem driver
@@ -476,6 +488,10 @@ for raw in */riscv/*.raw; do
     qemu-img convert -f raw -O qcow2 -o cluster_size=4096 -S 4096 "$raw" "$qcow2"
     rm -f "$raw"
 done
+%endif
+
+%if %{build_loongarch64}
+./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m loongarch
 %endif
 
 %install
@@ -754,6 +770,10 @@ done
 %{_datadir}/%{name}/riscv/*.fd
 %{_datadir}/%{name}/riscv/*.qcow2
 %{_datadir}/qemu/firmware/50-edk2-riscv-qcow2.json
+
+%files loongarch64
+%common_files
+%{_datadir}/%{name}/loongarch64/*.fd
 
 %files ext4
 %common_files
