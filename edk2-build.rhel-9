@@ -16,14 +16,12 @@ FD_SIZE_4MB              = TRUE
 [opts.ovmf.sb.smm]
 SECURE_BOOT_ENABLE       = TRUE
 SMM_REQUIRE              = TRUE
-# old downstream
-EXCLUDE_SHELL_FROM_FD    = TRUE
-# new upstream
 BUILD_SHELL              = FALSE
 
 [opts.ovmf.sb.stateless]
 SECURE_BOOT_ENABLE       = TRUE
 SMM_REQUIRE              = FALSE
+BUILD_SHELL              = FALSE
 
 [opts.armvirt.verbose]
 DEBUG_PRINT_ERROR_LEVEL  = 0x8040004F
