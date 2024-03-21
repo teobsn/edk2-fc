@@ -13,7 +13,7 @@ ExclusiveArch: x86_64 aarch64 riscv64
 %define GITCOMMIT      edc6681206c1
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT b5fa396700e7
+%define PLATFORMS_COMMIT 7f42d4034c8f
 
 %define OPENSSL_VER    3.0.7
 %define OPENSSL_COMMIT db0287935122edceb91dcda8dfb53b4090734e22
@@ -88,6 +88,8 @@ Source47: 60-edk2-ovmf-x64-amdsev.json
 Source48: 60-edk2-ovmf-x64-inteltdx.json
 
 Source50: 50-edk2-riscv-qcow2.json
+
+Source60: 50-edk2-loongarch64.json
 
 # https://gitlab.com/kraxel/edk2-build-config
 Source80: edk2-build.py
@@ -344,6 +346,7 @@ cp -a -- \
    %{SOURCE40} %{SOURCE41} %{SOURCE42} %{SOURCE43} %{SOURCE44} \
    %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} \
    %{SOURCE50} \
+   %{SOURCE60} \
    %{SOURCE80} %{SOURCE81} %{SOURCE82} %{SOURCE83} \
    %{SOURCE90} %{SOURCE91} \
    .
@@ -599,6 +602,15 @@ install -m 0644 \
 # endif build_riscv64
 %endif
 
+%if %{build_loongarch64}
+
+install -m 0644 \
+        50-edk2-loongarch64.json \
+        %{buildroot}%{_datadir}/qemu/firmware
+
+# endif build_loongarch64
+%endif
+
 %if %{defined fedora}
 
 # edk2-tools-python install
@@ -774,6 +786,7 @@ done
 %files loongarch64
 %common_files
 %{_datadir}/%{name}/loongarch64/*.fd
+%{_datadir}/qemu/firmware/50-edk2-loongarch64.json
 
 %files ext4
 %common_files
