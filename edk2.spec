@@ -9,11 +9,11 @@
 ExclusiveArch: x86_64 aarch64 riscv64
 
 # edk2-stable202402
-%define GITDATE        20240214
-%define GITCOMMIT      edc6681206c1
+%define GITDATE        20240524
+%define GITCOMMIT      3e722403cd16
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT 7f42d4034c8f
+%define PLATFORMS_COMMIT a912d9fcf7d1
 
 %define OPENSSL_VER    3.0.7
 %define OPENSSL_COMMIT db0287935122edceb91dcda8dfb53b4090734e22
@@ -334,6 +334,7 @@ mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include/mbedtls
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
+mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 
 # Done by %setup, but we do not use it for the auxiliary tarballs
 chmod -Rf a+rX,u+w,g-w,o-w .
