@@ -336,7 +336,7 @@ mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include/mbedtls
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/library
 mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 
-# Done by %setup, but we do not use it for the auxiliary tarballs
+# Done by %%setup, but we do not use it for the auxiliary tarballs
 chmod -Rf a+rX,u+w,g-w,o-w .
 
 cp -a -- \
