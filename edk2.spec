@@ -6,7 +6,15 @@
 # in theory should build everywhere without much trouble, but
 # in practice the edk2 build system barfs on archs it doesn't know
 # (such as ppc), so lets limit things to the known-good ones.
-ExclusiveArch: x86_64 aarch64 riscv64
+#
+# We allow rpm builds on all arches (so the noarch rpms with the
+# firmware binaries land in all arch repos).  On unsupported archs
+# the 'build' and 'install' phases do nothing though.
+#
+%define build_arches x86_64 aarch64 riscv64
+%ifnarch %{build_arches}
+%global debug_package %{nil}
+%endif
 
 # edk2-stable202402
 %define GITDATE        20240524
@@ -123,13 +131,17 @@ Patch0018: 0018-NetworkPkg-TcpDxe-Fixed-system-stuck-on-PXE-boot-flo.patch
 Patch0019: 0019-NetworkPkg-DxeNetLib-adjust-PseudoRandom-error-loggi.patch
 
 
+# needed by %prep
+BuildRequires:  git
+
+%ifarch %{build_arches}
 # python3-devel and libuuid-devel are required for building tools.
 # python3-devel is also needed for varstore template generation and
 # verification with "ovmf-vars-generator".
 BuildRequires:  python3-devel
 BuildRequires:  libuuid-devel
 BuildRequires:  /usr/bin/iasl
-BuildRequires:  binutils gcc git gcc-c++ make
+BuildRequires:  binutils gcc gcc-c++ make
 BuildRequires:  qemu-img
 
 # openssl configure
@@ -164,7 +176,15 @@ BuildRequires:  gcc-riscv64-linux-gnu
 BuildRequires:  gcc-loongarch64-linux-gnu
 %endif
 
+%endif
 
+%description
+EDK II is a modern, feature-rich, cross-platform firmware development
+environment for the UEFI and PI specifications. This package contains sample
+64-bit UEFI firmware builds for QEMU and KVM.
+
+
+%ifarch %{build_arches}
 
 %package ovmf
 Summary:    UEFI firmware for x86_64 virtual machines
@@ -227,11 +247,6 @@ URL:            https://github.com/tianocore/tianocore.github.io/wiki/BaseTools
 %description tools-doc
 This package documents the tools that are needed to
 build EFI executables and ROMs using the GNU tools.
-
-%description
-EDK II is a modern, feature-rich, cross-platform firmware development
-environment for the UEFI and PI specifications. This package contains sample
-64-bit UEFI firmware builds for QEMU and KVM.
 
 
 %if %{defined fedora}
@@ -312,6 +327,7 @@ you probably want to install edk2-tools only.
 # endif fedora
 %endif
 
+%endif
 
 
 %prep
@@ -355,6 +371,7 @@ cp -a -- \
    .
 
 %build
+%ifarch %{build_arches}
 
 build_iso() {
   dir="$1"
@@ -499,8 +516,10 @@ done
 %if %{build_loongarch64}
 ./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m loongarch
 %endif
+%endif
 
 %install
+%ifarch %{build_arches}
 
 cp -a OvmfPkg/License.txt License.OvmfPkg.txt
 cp -a CryptoPkg/Library/OpensslLib/openssl/LICENSE.txt LICENSE.openssl
@@ -631,12 +650,15 @@ done
 %endif
 
 %endif
+%endif
 
 %check
+%ifarch %{build_arches}
 for file in %{buildroot}%{_datadir}/%{name}/*/*VARS.secboot.fd; do
     test -f "$file" || continue
     virt-fw-vars --input $file --print | grep "SecureBootEnable.*ON" || exit 1
 done
+%endif
 
 %global common_files \
   %%license License.txt License.OvmfPkg.txt License-History.txt LICENSE.openssl \
@@ -644,6 +666,7 @@ done
   %%dir %%{_datadir}/qemu \
   %%dir %%{_datadir}/qemu/firmware
 
+%ifarch %{build_arches}
 %if %{build_ovmf}
 %files ovmf
 %common_files
@@ -820,6 +843,7 @@ done
 %{_datadir}/%{name}/Python
 
 # endif fedora
+%endif
 %endif
 
 
