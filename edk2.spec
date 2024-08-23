@@ -810,6 +810,7 @@ done
 %if %{build_riscv64}
 %files riscv64
 %common_files
+%dir %{_datadir}/%{name}/riscv
 %{_datadir}/%{name}/riscv/*.fd
 %{_datadir}/%{name}/riscv/*.qcow2
 %{_datadir}/qemu/firmware/50-edk2-riscv-qcow2.json
@@ -818,6 +819,7 @@ done
 %if %{build_loongarch64}
 %files loongarch64
 %common_files
+%dir %{_datadir}/%{name}/loongarch64
 %{_datadir}/%{name}/loongarch64/*.fd
 %{_datadir}/qemu/firmware/50-edk2-loongarch64.json
 %endif
