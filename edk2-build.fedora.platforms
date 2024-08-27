@@ -39,13 +39,13 @@ cpy1 = FV/BL32_AP_MM.fd
 
 
 #####################################################################
-# loongarch builds
+# loongarch builds (moved to main repo)
 
-[build.loongarch]
-desc = Loongarch build
-conf = Platform/Loongson/LoongArchQemuPkg/Loongson.dsc
-arch = LOONGARCH64
-plat = LoongArchQemu
-dest = Fedora/loongarch64
-cpy1 = FV/QEMU_EFI.fd
-cpy2 = FV/QEMU_VARS.fd
+#[build.loongarch]
+#desc = Loongarch build
+#conf = Platform/Loongson/LoongArchQemuPkg/Loongson.dsc
+#arch = LOONGARCH64
+#plat = LoongArchQemu
+#dest = Fedora/loongarch64
+#cpy1 = FV/QEMU_EFI.fd
+#cpy2 = FV/QEMU_VARS.fd

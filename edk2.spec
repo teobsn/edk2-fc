@@ -16,12 +16,12 @@
 %global debug_package %{nil}
 %endif
 
-# edk2-stable202402
-%define GITDATE        20240524
-%define GITCOMMIT      3e722403cd16
+# edk2-stable202408
+%define GITDATE        20240813
+%define GITCOMMIT      b158dad150bf
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT a912d9fcf7d1
+%define PLATFORMS_COMMIT 7dad9da43942
 
 %define OPENSSL_VER    3.0.7
 %define OPENSSL_COMMIT db0287935122edceb91dcda8dfb53b4090734e22
@@ -71,7 +71,8 @@ Source2: openssl-rhel-%{OPENSSL_COMMIT}.tar.xz
 Source3: softfloat-%{softfloat_version}.tar.xz
 Source4: edk2-platforms-%{PLATFORMS_COMMIT}.tar.xz
 Source5: jansson-2.13.1.tar.bz2
-Source6: README.experimental
+Source6: dtc-1.7.0.tar.xz
+Source9: README.experimental
 
 # json description files
 Source10: 50-edk2-aarch64-qcow2.json
@@ -127,8 +128,7 @@ Patch0016: 0016-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
 Patch0017: 0017-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
-Patch0018: 0018-NetworkPkg-TcpDxe-Fixed-system-stuck-on-PXE-boot-flo.patch
-Patch0019: 0019-NetworkPkg-DxeNetLib-adjust-PseudoRandom-error-loggi.patch
+Patch0099: edk2-platform-build-fix.patch
 
 
 # needed by %prep
@@ -334,6 +334,7 @@ you probably want to install edk2-tools only.
 # We needs some special git config options that %%autosetup won't give us.
 # We init the git dir ourselves, then tell %%autosetup not to blow it away.
 %setup -q -n edk2-%{GITCOMMIT}
+tar -xf %{SOURCE4} --strip-components=1 "*/Drivers" "*/Features" "*/Platform" "*/Silicon"
 git init -q
 git config core.whitespace cr-at-eol
 git config am.keepcr true
@@ -345,8 +346,8 @@ cp -a -- %{SOURCE1} .
 tar -C CryptoPkg/Library/OpensslLib -a -f %{SOURCE2} -x
 # extract softfloat into place
 tar -xf %{SOURCE3} --strip-components=1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3/
-tar -xf %{SOURCE4} --strip-components=1 "*/Drivers" "*/Features" "*/Platform" "*/Silicon"
 tar -xf %{SOURCE5} --strip-components=1 --directory RedfishPkg/Library/JsonLib/jansson
+tar -xf %{SOURCE6} --strip-components=1 --directory MdePkg/Library/BaseFdtLib/libfdt
 # include paths pointing to unused submodules
 mkdir -p MdePkg/Library/MipiSysTLib/mipisyst/library/include
 mkdir -p CryptoPkg/Library/MbedTlsLib/mbedtls/include
@@ -358,7 +359,7 @@ mkdir -p SecurityPkg/DeviceSecurity/SpdmLib/libspdm/include
 chmod -Rf a+rX,u+w,g-w,o-w .
 
 cp -a -- \
-   %{SOURCE6} \
+   %{SOURCE9} \
    %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} \
    %{SOURCE20} \
    %{SOURCE30} %{SOURCE31} %{SOURCE32} \
@@ -514,7 +515,8 @@ done
 %endif
 
 %if %{build_loongarch64}
-./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m loongarch
+./edk2-build.py --config edk2-build.fedora %{?silent} -m loongarch
+find Build -name *.fd
 %endif
 %endif
 

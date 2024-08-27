@@ -215,6 +215,19 @@ pad2 = RISCV_VIRT_VARS.raw 32m
 
 
 #####################################################################
+# loongarch
+
+[build.loongarch.qemu]
+desc = Loongarch build
+conf = OvmfPkg/LoongArchVirt/LoongArchVirtQemu.dsc
+arch = LOONGARCH64
+plat = LoongArchVirtQemu
+dest = Fedora/loongarch64
+cpy1 = FV/QEMU_EFI.fd
+cpy2 = FV/QEMU_VARS.fd
+
+
+#####################################################################
 # 32-bit builds
 
 [build.ovmf.ia32.default]
