@@ -16,12 +16,12 @@
 %global debug_package %{nil}
 %endif
 
-# edk2-stable202408
-%define GITDATE        20240813
-%define GITCOMMIT      b158dad150bf
+# edk2-stable202411
+%define GITDATE        20241117
+%define GITCOMMIT      0f3867fa6ef0
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT 7dad9da43942
+%define PLATFORMS_COMMIT 4b3530dfbbda
 
 %define OPENSSL_VER    3.0.7
 %define OPENSSL_COMMIT 8e5beb77088bfec064d60506b1e76ddb0ac417fe
@@ -121,14 +121,13 @@ Patch0009: 0009-OvmfPkg-QemuRamfbDxe-Do-not-report-DXE-failure-on-Aa.patch
 Patch0010: 0010-OvmfPkg-silence-EFI_D_VERBOSE-0x00400000-in-NvmExpre.patch
 Patch0011: 0011-OvmfPkg-QemuKernelLoaderFsDxe-suppress-error-on-no-k.patch
 Patch0012: 0012-SecurityPkg-Tcg2Dxe-suppress-error-on-no-swtpm-in-si.patch
-Patch0013: 0013-UefiCpuPkg-MpInitLib-fix-apic-mode-for-cpu-hotplug.patch
-Patch0014: 0014-CryptoPkg-CrtLib-add-stat.h.patch
-Patch0015: 0015-CryptoPkg-CrtLib-add-access-open-read-write-close-sy.patch
-Patch0016: 0016-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
+Patch0013: 0013-CryptoPkg-CrtLib-add-stat.h.patch
+Patch0014: 0014-CryptoPkg-CrtLib-add-access-open-read-write-close-sy.patch
+Patch0015: 0015-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
+Patch0016: 0016-OvmfPkg-PlatformInitLib-enable-x2apic-mode-if-needed.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
 Patch0017: 0017-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
-Patch0099: edk2-platform-build-fix.patch
 
 
 # needed by %prep

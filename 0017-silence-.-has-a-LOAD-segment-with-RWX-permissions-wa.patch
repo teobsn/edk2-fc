@@ -1,4 +1,4 @@
-From 7abc0fa61b35a7ac6335175451c429f04671e02e Mon Sep 17 00:00:00 2001
+From b595c26e478f955935408156019faffd8bf17710 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 27 Nov 2023 11:04:08 +0100
 Subject: [PATCH 17/17] silence '... has a LOAD segment with RWX permissions'
@@ -9,10 +9,10 @@ Subject: [PATCH 17/17] silence '... has a LOAD segment with RWX permissions'
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/BaseTools/Conf/tools_def.template b/BaseTools/Conf/tools_def.template
-index c34ecfd557c5..53ac3baa6be3 100755
+index 14f3b643c43d..4206a7df20cd 100755
 --- a/BaseTools/Conf/tools_def.template
 +++ b/BaseTools/Conf/tools_def.template
-@@ -747,7 +747,7 @@ DEFINE GCC_AARCH64_CC_FLAGS        = DEF(GCC_ALL_CC_FLAGS) -mlittle-endian -fno-
+@@ -905,7 +905,7 @@ DEFINE GCC_AARCH64_CC_FLAGS        = DEF(GCC_ALL_CC_FLAGS) -mlittle-endian -fno-
  DEFINE GCC_AARCH64_CC_XIPFLAGS     = -mstrict-align -mgeneral-regs-only
  DEFINE GCC_RISCV64_CC_XIPFLAGS     = -mstrict-align -mgeneral-regs-only
  DEFINE GCC_DLINK_FLAGS_COMMON      = -nostdlib --pie
@@ -22,5 +22,5 @@ index c34ecfd557c5..53ac3baa6be3 100755
  DEFINE GCC_ARM_AARCH64_DLINK_COMMON= -Wl,--emit-relocs -nostdlib -Wl,--gc-sections -u $(IMAGE_ENTRY_POINT) -Wl,-e,$(IMAGE_ENTRY_POINT),-Map,$(DEST_DIR_DEBUG)/$(BASE_NAME).map
  DEFINE GCC_LOONGARCH64_DLINK_COMMON= -Wl,--emit-relocs -nostdlib -Wl,--gc-sections -u $(IMAGE_ENTRY_POINT) -Wl,-e,$(IMAGE_ENTRY_POINT),-Map,$(DEST_DIR_DEBUG)/$(BASE_NAME).map
 -- 
-2.45.0
+2.47.0
 
