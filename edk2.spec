@@ -703,7 +703,6 @@ done
 %{_datadir}/%{name}/aarch64/QEMU_EFI.silent.fd
 %{_datadir}/%{name}/aarch64/QEMU_VARS.fd
 %if %{defined fedora}
-%{_datadir}/%{name}/aarch64/BL32_AP_MM.fd
 %{_datadir}/%{name}/aarch64/QEMU_EFI.kernel.fd
 %endif
 %{_datadir}/qemu/firmware/50-edk2-aarch64-qcow2.json
