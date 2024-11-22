@@ -49,7 +49,6 @@
 %define build_loongarch64 1
 %endif
 
-%global softfloat_version 20180726-gitb64af41
 %define cross %{defined fedora}
 %define disable_werror %{defined fedora}
 
@@ -68,7 +67,6 @@ URL:        http://www.tianocore.org
 Source0: edk2-%{GITCOMMIT}.tar.xz
 Source1: ovmf-whitepaper-c770f8c.txt
 Source2: openssl-rhel-%{OPENSSL_COMMIT}.tar.xz
-Source3: softfloat-%{softfloat_version}.tar.xz
 Source4: edk2-platforms-%{PLATFORMS_COMMIT}.tar.xz
 Source5: jansson-2.13.1.tar.bz2
 Source6: dtc-1.7.0.tar.xz
@@ -79,8 +77,6 @@ Source10: 50-edk2-aarch64-qcow2.json
 Source11: 51-edk2-aarch64-raw.json
 Source12: 52-edk2-aarch64-verbose-qcow2.json
 Source13: 53-edk2-aarch64-verbose-raw.json
-
-Source20: 50-edk2-arm-verbose.json
 
 Source30: 30-edk2-ovmf-ia32-sb-enrolled.json
 Source31: 40-edk2-ovmf-ia32-sb.json
@@ -169,7 +165,6 @@ BuildRequires:  python3-virt-firmware >= 24.2
 
 %if %{cross}
 BuildRequires:  gcc-aarch64-linux-gnu
-BuildRequires:  gcc-arm-linux-gnu
 BuildRequires:  gcc-x86_64-linux-gnu
 BuildRequires:  gcc-riscv64-linux-gnu
 BuildRequires:  gcc-loongarch64-linux-gnu
@@ -277,14 +272,6 @@ BuildArch:      noarch
 EFI Development Kit II
 Open Virtual Machine Firmware (experimental builds)
 
-%package arm
-Summary:        ARM Virtual Machine Firmware
-BuildArch:      noarch
-License:        Apache-2.0 AND (BSD-2-Clause OR GPL-2.0-or-later) AND BSD-2-Clause-Patent AND BSD-3-Clause AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
-%description arm
-EFI Development Kit II
-ARMv7 UEFI Firmware
-
 %package riscv64
 Summary:        RISC-V Virtual Machine Firmware
 BuildArch:      noarch
@@ -344,7 +331,6 @@ git config am.keepcr true
 cp -a -- %{SOURCE1} .
 tar -C CryptoPkg/Library/OpensslLib -a -f %{SOURCE2} -x
 # extract softfloat into place
-tar -xf %{SOURCE3} --strip-components=1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3/
 tar -xf %{SOURCE5} --strip-components=1 --directory RedfishPkg/Library/JsonLib/jansson
 tar -xf %{SOURCE6} --strip-components=1 --directory MdePkg/Library/BaseFdtLib/libfdt
 # include paths pointing to unused submodules
@@ -360,7 +346,6 @@ chmod -Rf a+rX,u+w,g-w,o-w .
 cp -a -- \
    %{SOURCE9} \
    %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} \
-   %{SOURCE20} \
    %{SOURCE30} %{SOURCE31} %{SOURCE32} \
    %{SOURCE40} %{SOURCE41} %{SOURCE42} %{SOURCE43} %{SOURCE44} \
    %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} \
@@ -595,10 +580,6 @@ ln -s ../%{name}/aarch64/QEMU_EFI-silent-pflash.raw \
   %{buildroot}%{_datadir}/AAVMF/AAVMF_CODE.fd
 ln -s ../%{name}/aarch64/vars-template-pflash.raw \
   %{buildroot}%{_datadir}/AAVMF/AAVMF_VARS.fd
-%if %{defined fedora}
-ln -s ../%{name}/arm/QEMU_EFI-pflash.raw \
-   %{buildroot}%{_datadir}/AAVMF/AAVMF32_CODE.fd
-%endif
 
 # json description files
 install -m 0644 \
@@ -607,11 +588,6 @@ install -m 0644 \
         52-edk2-aarch64-verbose-qcow2.json \
         53-edk2-aarch64-verbose-raw.json \
         %{buildroot}%{_datadir}/qemu/firmware
-%if %{defined fedora}
-install -m 0644 \
-        50-edk2-arm-verbose.json \
-        %{buildroot}%{_datadir}/qemu/firmware
-%endif
 
 # endif build_aarch64
 %endif
@@ -793,19 +769,6 @@ done
 %common_files
 %dir %{_datadir}/%{name}/xen
 %{_datadir}/%{name}/xen/*.fd
-%endif
-
-%if %{build_aarch64}
-%files arm
-%common_files
-%dir %{_datadir}/AAVMF/
-%{_datadir}/AAVMF/AAVMF32_CODE.fd
-%dir %{_datadir}/%{name}/arm
-%{_datadir}/%{name}/arm/QEMU_EFI-pflash.raw
-%{_datadir}/%{name}/arm/QEMU_EFI.fd
-%{_datadir}/%{name}/arm/QEMU_VARS.fd
-%{_datadir}/%{name}/arm/vars-template-pflash.raw
-%{_datadir}/qemu/firmware/50-edk2-arm-verbose.json
 %endif
 
 %if %{build_riscv64}
