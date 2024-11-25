@@ -43,6 +43,8 @@ BUILD_SHELL              = FALSE
 TPM2_ENABLE              = FALSE
 TPM2_CONFIG_ENABLE       = FALSE
 
+[pcds.la57]
+PcdUse5LevelPageTable    = TRUE
 
 [pcds.nx.strict]
 PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD5
@@ -67,6 +69,7 @@ conf = OvmfPkg/OvmfPkgX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.2m
+pcds = la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd
@@ -79,6 +82,7 @@ conf = OvmfPkg/OvmfPkgX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.4m
+pcds = la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.fd
@@ -91,6 +95,7 @@ arch = X64
 opts = ovmf.common
        ovmf.2m
        ovmf.sb.smm
+pcds = la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE.secboot.fd
@@ -103,6 +108,7 @@ arch = X64
 opts = ovmf.common
        ovmf.4m
        ovmf.sb.smm
+pcds = la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.fd
@@ -117,6 +123,7 @@ conf = OvmfPkg/Microvm/MicrovmX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.2m
+pcds = la57
 plat = MicrovmX64
 dest = Fedora/ovmf
 cpy1 = FV/MICROVM.fd
@@ -148,6 +155,7 @@ arch = X64
 opts = ovmf.common
        ovmf.2m
        ovmf.sb.stateless
+pcds = la57
 plat = IntelTdx
 dest = Fedora/ovmf
 cpy1 = FV/OVMF.fd OVMF.inteltdx.fd
@@ -265,6 +273,7 @@ arch = X64
 opts = ovmf.common
        ovmf.4m
        ovmf.sb.stateless
+pcds = la57
 plat = OvmfX64
 dest = Fedora/experimental
 cpy1 = FV/OVMF.fd OVMF.stateless.fd
@@ -277,6 +286,7 @@ opts = ovmf.common
        ovmf.4m
        ovmf.sb.smm
 pcds = nx.strict
+       la57
 plat = OvmfX64
 dest = Fedora/experimental
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.strictnx.fd
