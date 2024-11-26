@@ -124,6 +124,7 @@ Patch0016: 0016-OvmfPkg-PlatformInitLib-enable-x2apic-mode-if-needed.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
 Patch0017: 0017-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
+Patch0018: 0018-xen-pcd-lib-override.patch
 
 
 # needed by %prep

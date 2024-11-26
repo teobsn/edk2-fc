@@ -1,0 +1,28 @@
+From 975fc9223d7496a03106cc9266b150e746819862 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Mon, 25 Nov 2024 17:19:34 +0100
+Subject: [PATCH 18/18] xen pcd lib override
+
+---
+ OvmfPkg/OvmfXen.dsc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/OvmfPkg/OvmfXen.dsc b/OvmfPkg/OvmfXen.dsc
+index 5e845e5f91f5..8af01968be2d 100644
+--- a/OvmfPkg/OvmfXen.dsc
++++ b/OvmfPkg/OvmfXen.dsc
+@@ -530,7 +530,10 @@ [Components]
+   #
+   # PEI Phase modules
+   #
+-  MdeModulePkg/Core/Pei/PeiMain.inf
++  MdeModulePkg/Core/Pei/PeiMain.inf {
++    <LibraryClasses>
++      PcdLib|MdePkg/Library/PeiPcdLib/PeiPcdLib.inf
++  }
+   MdeModulePkg/Universal/PCD/Pei/Pcd.inf  {
+     <LibraryClasses>
+       PcdLib|MdePkg/Library/BasePcdLibNull/BasePcdLibNull.inf
+-- 
+2.47.0
+
