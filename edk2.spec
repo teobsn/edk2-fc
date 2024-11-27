@@ -24,7 +24,7 @@
 %define PLATFORMS_COMMIT 7dad9da43942
 
 %define OPENSSL_VER    3.0.7
-%define OPENSSL_COMMIT db0287935122edceb91dcda8dfb53b4090734e22
+%define OPENSSL_COMMIT 8e5beb77088bfec064d60506b1e76ddb0ac417fe
 
 %define DBXDATE        20230509
 
