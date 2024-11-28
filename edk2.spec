@@ -52,6 +52,9 @@
 %define cross %{defined fedora}
 %define disable_werror %{defined fedora}
 
+%if 0%{?copr_projectname:1}
+  %define dist %{buildtag}
+%endif
 
 Name:       edk2
 Version:    %{GITDATE}
