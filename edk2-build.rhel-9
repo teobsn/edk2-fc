@@ -36,6 +36,7 @@ PcdUse5LevelPageTable    = TRUE
 [pcds.nx.strict]
 PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD5
 PcdUninstallMemAttrProtocol    = FALSE
+PcdNullPointerDetectionPropertyMask = 0x03
 
 [pcds.nx.broken.shim.grub]
 # grub.efi uses EfiLoaderData for code
@@ -68,6 +69,7 @@ opts = ovmf.common
        ovmf.4m
        ovmf.sb.smm
 pcds = la57
+       nx.strict
 plat = OvmfX64
 dest = RHEL-9/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE.secboot.fd
@@ -95,6 +97,7 @@ opts = ovmf.common
        ovmf.4m
        ovmf.sb.stateless
 pcds = la57
+       nx.strict
 plat = IntelTdx
 dest = RHEL-9/ovmf
 cpy1 = FV/OVMF.fd OVMF.inteltdx.fd

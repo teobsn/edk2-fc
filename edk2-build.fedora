@@ -47,17 +47,21 @@ TPM2_CONFIG_ENABLE       = FALSE
 PcdUse5LevelPageTable    = TRUE
 
 [pcds.nx.strict]
-PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD5
-PcdImageProtectionPolicy       = 0x03
-PcdSetNxForStack               = TRUE
-# Default is FALSE, so there no need to actually set it.
-#PcdUninstallMemAttrProtocol    = FALSE
+PcdDxeNxMemoryProtectionPolicy      = 0xC000000000007FD5
+PcdImageProtectionPolicy            = 0x03
+PcdSetNxForStack                    = TRUE
+PcdNullPointerDetectionPropertyMask = 0x03
+PcdUninstallMemAttrProtocol         = TRUE
 
-[pcds.nx.broken.shim.grub]
-# grub.efi uses EfiLoaderData for code
-PcdDxeNxMemoryProtectionPolicy = 0xC000000000007FD1
-# shim.efi has broken MemAttr code
-PcdUninstallMemAttrProtocol    = TRUE
+[pcds.nx.compat.aa64]
+# workaround for bugs in shim.efi and grub.efi
+PcdDxeNxMemoryProtectionPolicy      = 0xC000000000007FD1
+PcdUninstallMemAttrProtocol         = TRUE
+
+[pcds.nx.compat.x64]
+# workaround for bugs in shim.efi and grub.efi
+PcdDxeNxMemoryProtectionPolicy      = 0
+PcdUninstallMemAttrProtocol         = TRUE
 
 
 #####################################################################
@@ -69,7 +73,8 @@ conf = OvmfPkg/OvmfPkgX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.2m
-pcds = la57
+pcds = nx.compat.x64
+       la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd
@@ -82,7 +87,8 @@ conf = OvmfPkg/OvmfPkgX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.4m
-pcds = la57
+pcds = nx.compat.x64
+       la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.fd
@@ -95,7 +101,8 @@ arch = X64
 opts = ovmf.common
        ovmf.2m
        ovmf.sb.smm
-pcds = la57
+pcds = nx.strict
+       la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE.secboot.fd
@@ -108,7 +115,8 @@ arch = X64
 opts = ovmf.common
        ovmf.4m
        ovmf.sb.smm
-pcds = la57
+pcds = nx.strict
+       la57
 plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.fd
@@ -123,7 +131,8 @@ conf = OvmfPkg/Microvm/MicrovmX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.2m
-pcds = la57
+pcds = nx.compat.x64
+       la57
 plat = MicrovmX64
 dest = Fedora/ovmf
 cpy1 = FV/MICROVM.fd
@@ -134,6 +143,7 @@ conf = OvmfPkg/OvmfXen.dsc
 arch = X64
 opts = ovmf.common
        ovmf.2m
+pcds = nx.compat.x64
 plat = OvmfXen
 dest = Fedora/xen
 cpy1 = FV/OVMF.fd
@@ -144,6 +154,7 @@ conf = OvmfPkg/AmdSev/AmdSevX64.dsc
 arch = X64
 opts = ovmf.common
        ovmf.2m
+pcds = nx.strict
 plat = AmdSev
 dest = Fedora/ovmf
 cpy1 = FV/OVMF.fd OVMF.amdsev.fd
@@ -155,7 +166,8 @@ arch = X64
 opts = ovmf.common
        ovmf.2m
        ovmf.sb.stateless
-pcds = la57
+pcds = nx.strict
+       la57
 plat = IntelTdx
 dest = Fedora/ovmf
 cpy1 = FV/OVMF.fd OVMF.inteltdx.fd
@@ -170,7 +182,7 @@ conf = ArmVirtPkg/ArmVirtQemu.dsc
 arch = AARCH64
 opts = ovmf.common
        armvirt.verbose
-pcds = nx.broken.shim.grub
+pcds = nx.compat.aa64
 plat = ArmVirtQemu-AARCH64
 dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd
@@ -186,7 +198,7 @@ conf = ArmVirtPkg/ArmVirtQemu.dsc
 arch = AARCH64
 opts = ovmf.common
        armvirt.silent
-pcds = nx.broken.shim.grub
+pcds = nx.compat.aa64
 plat = ArmVirtQemu-AARCH64
 dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.silent.fd
@@ -200,7 +212,7 @@ arch = AARCH64
 opts = ovmf.common
        armvirt.silent
        armvirt.kernel
-pcds = nx.broken.shim.grub
+pcds = nx.compat.aa64
 plat = ArmVirtQemuKernel-AARCH64
 dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.kernel.fd
@@ -244,6 +256,7 @@ conf = OvmfPkg/OvmfPkgIa32.dsc
 arch = IA32
 opts = ovmf.common
        ovmf.2m
+pcds = nx.compat.x64
 plat = OvmfIa32
 dest = Fedora/ovmf-ia32
 cpy1 = FV/OVMF_CODE.fd
@@ -257,6 +270,7 @@ arch = IA32
 opts = ovmf.common
        ovmf.2m
        ovmf.sb.smm
+pcds = nx.strict
 plat = OvmfIa32
 dest = Fedora/ovmf-ia32
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE.secboot.fd
@@ -273,23 +287,11 @@ arch = X64
 opts = ovmf.common
        ovmf.4m
        ovmf.sb.stateless
-pcds = la57
-plat = OvmfX64
-dest = Fedora/experimental
-cpy1 = FV/OVMF.fd OVMF.stateless.fd
-
-[build.ovmf.strict.nx]
-desc = ovmf build (64-bit, 4MB, q35 only, needs smm, secure boot, strict nx)
-conf = OvmfPkg/OvmfPkgX64.dsc
-arch = X64
-opts = ovmf.common
-       ovmf.4m
-       ovmf.sb.smm
 pcds = nx.strict
        la57
 plat = OvmfX64
 dest = Fedora/experimental
-cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.strictnx.fd
+cpy1 = FV/OVMF.fd OVMF.stateless.fd
 
 [build.armvirt.aa64.strict.nx]
 desc = ArmVirt build for qemu, 64-bit (arm v8), verbose
