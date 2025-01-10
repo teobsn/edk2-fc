@@ -445,7 +445,7 @@ build_iso Fedora/ovmf-ia32
 cp DBXUpdate-%{DBXDATE}.x64.bin Fedora/ovmf
 cp DBXUpdate-%{DBXDATE}.ia32.bin Fedora/ovmf-ia32
 
-for raw in */{ovmf,experimental}/*_4M*.fd; do
+for raw in */ovmf/*_4M*.fd; do
     qcow2="${raw%.fd}.qcow2"
     qemu-img convert -f raw -O qcow2 -o cluster_size=4096 -S 4096 "$raw" "$qcow2"
     rm -f "$raw"
@@ -767,7 +767,6 @@ done
 %if %{build_aarch64}
 %{_datadir}/%{name}/experimental/*.raw
 %endif
-%{_datadir}/%{name}/experimental/*.qcow2
 %{_datadir}/%{name}/experimental/*.pcrlock
 
 %files ovmf-xen
