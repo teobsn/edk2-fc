@@ -32,6 +32,13 @@
 %define silent --silent
 
 %if %{defined rhel}
+%if %{rhel} < 10
+  %define rhelcfg rhel-9
+  %define RHELCFG RHEL-9
+%else
+  %define rhelcfg rhel-10
+  %define RHELCFG RHEL-10
+%endif
 %define build_ovmf 0
 %define build_aarch64 0
 %ifarch x86_64
@@ -104,6 +111,7 @@ Source80: edk2-build.py
 Source81: edk2-build.fedora
 Source82: edk2-build.fedora.platforms
 Source83: edk2-build.rhel-9
+Source84: edk2-build.rhel-10
 
 Source90: DBXUpdate-%{DBXDATE}.x64.bin
 Source91: DBXUpdate-%{DBXDATE}.ia32.bin
@@ -357,7 +365,7 @@ cp -a -- \
    %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} \
    %{SOURCE50} \
    %{SOURCE60} \
-   %{SOURCE80} %{SOURCE81} %{SOURCE82} %{SOURCE83} \
+   %{SOURCE80} %{SOURCE81} %{SOURCE82} %{SOURCE83} %{SOURCE84} \
    %{SOURCE90} %{SOURCE91} \
    .
 
@@ -408,17 +416,17 @@ python3 CryptoPkg/Library/OpensslLib/configure.py
 %if %{build_ovmf}
 %if %{defined rhel}
 
-./edk2-build.py --config edk2-build.rhel-9 %{?silent} --release-date "$RELEASE_DATE" -m ovmf
-virt-fw-vars --input   RHEL-9/ovmf/OVMF_VARS.fd \
-             --output  RHEL-9/ovmf/OVMF_VARS.secboot.fd \
+./edk2-build.py --config edk2-build.%{rhelcfg} %{?silent} --release-date "$RELEASE_DATE" -m ovmf
+virt-fw-vars --input   %{RHELCFG}/ovmf/OVMF_VARS.fd \
+             --output  %{RHELCFG}/ovmf/OVMF_VARS.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
              --enroll-redhat --secure-boot
-virt-fw-vars --input   RHEL-9/ovmf/OVMF.inteltdx.fd \
-             --output  RHEL-9/ovmf/OVMF.inteltdx.secboot.fd \
+virt-fw-vars --input   %{RHELCFG}/ovmf/OVMF.inteltdx.fd \
+             --output  %{RHELCFG}/ovmf/OVMF.inteltdx.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
              --enroll-redhat --secure-boot
-build_iso RHEL-9/ovmf
-cp DBXUpdate-%{DBXDATE}.x64.bin RHEL-9/ovmf
+build_iso %{RHELCFG}/ovmf
+cp DBXUpdate-%{DBXDATE}.x64.bin %{RHELCFG}/ovmf
 
 %else
 
@@ -480,7 +488,7 @@ done
 
 %if %{build_aarch64}
 %if %{defined rhel}
-./edk2-build.py --config edk2-build.rhel-9 %{?silent} --release-date "$RELEASE_DATE" -m armvirt
+./edk2-build.py --config edk2-build.%{rhelcfg} %{?silent} --release-date "$RELEASE_DATE" -m armvirt
 %else
 ./edk2-build.py --config edk2-build.fedora %{?silent} --release-date "$RELEASE_DATE" -m armvirt
 ./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m aa64
@@ -535,7 +543,7 @@ install BaseTools/Scripts/GccBase.lds \
 # install firmware images
 mkdir -p %{buildroot}%{_datadir}/%{name}
 %if %{defined rhel}
-cp -av RHEL-9/* %{buildroot}%{_datadir}/%{name}
+cp -av %{RHELCFG}/* %{buildroot}%{_datadir}/%{name}
 %else
 cp -av Fedora/* %{buildroot}%{_datadir}/%{name}
 %endif
