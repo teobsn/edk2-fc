@@ -128,6 +128,8 @@ Patch0016: 0016-OvmfPkg-PlatformInitLib-enable-x2apic-mode-if-needed.patch
 Patch0017: 0017-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
 Patch0018: 0018-xen-pcd-lib-override.patch
+Patch0019: 0019-MdePkg-BaseFdtLib-fix-build-with-gcc-15.patch
+Patch0020: 0020-BaseTools-Pccts-set-C-standard.patch
 
 
 # needed by %prep
