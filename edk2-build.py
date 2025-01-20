@@ -51,7 +51,7 @@ def get_toolchain(cfg, build):
         return cfg[build]['tool']
     if cfg.has_option('global', 'tool'):
         return cfg['global']['tool']
-    return 'GCC5'
+    return 'GCC'
 
 def get_hostarch():
     mach = os.uname().machine
