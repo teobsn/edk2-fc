@@ -1,0 +1,29 @@
+From 9a96bc5af679cd5617331ffb16a5659d8e2c0606 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Mon, 27 Jan 2025 17:43:06 +0100
+Subject: [PATCH 22/22] OvmfPkg: make legacy direct kernel loader code nx clean
+
+kernel pages are code not data.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit 18984b68fed23fbf3460fa58daddeace33c7c6f2)
+---
+ OvmfPkg/Library/LoadLinuxLib/Linux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/OvmfPkg/Library/LoadLinuxLib/Linux.c b/OvmfPkg/Library/LoadLinuxLib/Linux.c
+index ce3d760380f7..0bc8e156d780 100644
+--- a/OvmfPkg/Library/LoadLinuxLib/Linux.c
++++ b/OvmfPkg/Library/LoadLinuxLib/Linux.c
+@@ -168,7 +168,7 @@ LoadLinuxAllocateKernelPages (
+                       );
+     Status = gBS->AllocatePages (
+                     AllocateAddress,
+-                    EfiLoaderData,
++                    EfiLoaderCode,
+                     Pages,
+                     &KernelAddress
+                     );
+-- 
+2.48.1
+

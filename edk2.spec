@@ -135,9 +135,11 @@ Patch0016: 0016-OvmfPkg-PlatformInitLib-enable-x2apic-mode-if-needed.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
 Patch0017: 0017-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
-Patch0018: 0018-xen-pcd-lib-override.patch
-Patch0019: 0019-MdePkg-BaseFdtLib-fix-build-with-gcc-15.patch
-Patch0020: 0020-BaseTools-Pccts-set-C-standard.patch
+Patch0018: 0018-MdePkg-BaseFdtLib-fix-build-with-gcc-15.patch
+Patch0019: 0019-BaseTools-Pccts-set-C-standard.patch
+Patch0020: 0020-OvmfPkg-OvmfXen-use-PeiPcdLib-for-PEI_CORE.patch
+Patch0021: 0021-OvmfPkg-MicroVM-use-PeiPcdLib-for-PEI_CORE.patch
+Patch0022: 0022-OvmfPkg-make-legacy-direct-kernel-loader-code-nx-cle.patch
 
 
 # needed by %prep

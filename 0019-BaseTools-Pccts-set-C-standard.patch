@@ -1,13 +1,14 @@
-From 4b744925f95f15143c4a0658535fe40a9ce1a51f Mon Sep 17 00:00:00 2001
+From c3ad61be030cf7395b38f340085013d56469a298 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 20 Jan 2025 09:40:31 +0100
-Subject: [PATCH 20/20] BaseTools/Pccts: set C standard
+Subject: [PATCH 19/22] BaseTools/Pccts: set C standard
 
 The prehistoric code base doesn't build with ISO C23.  Set the C
 standard to C11 (for both clang and gcc) so it continues to build with
 gcc 15 (which uses C23 by default).
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit e063f8b8a53861043b9872cc35b08a3dc03b0942)
 ---
  BaseTools/Source/C/VfrCompile/Pccts/antlr/makefile | 2 +-
  BaseTools/Source/C/VfrCompile/Pccts/dlg/makefile   | 2 +-

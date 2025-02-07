@@ -1,13 +1,14 @@
-From 5fa1193bcb32e0dab49f116876685255f83d68b2 Mon Sep 17 00:00:00 2001
+From 3c0e71aa8009696617ac0861d23e1807b84466a1 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 20 Jan 2025 09:24:16 +0100
-Subject: [PATCH 19/20] MdePkg/BaseFdtLib: fix build with gcc 15
+Subject: [PATCH 18/22] MdePkg/BaseFdtLib: fix build with gcc 15
 
 gcc 15 switched to use the new ISO C23 standard by default.
 'bool', 'true' and 'false' are keywords in C23, so do not
 try to define them.
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit c0796335d3c6362b563844410499ff241d42ac63)
 ---
  MdePkg/Library/BaseFdtLib/LibFdtSupport.h | 20 ++++++++++++--------
  1 file changed, 12 insertions(+), 8 deletions(-)
