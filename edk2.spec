@@ -138,6 +138,7 @@ Patch0017: 0017-Revert-CryptoPkg-BaseCryptLib-add-next-parameter-to-.patch
 Patch0018: 0018-Revert-CryptoPkg-add-openssl-providers-fips-include-.patch
 Patch0019: 0019-Revert-openssl-add-more-stubs-for-openssl-3.2.x.patch
 Patch0020: 0020-Revert-openssl-adapt-stubs-to-openssl-3.2.x.patch
+Patch0021: 0021-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
 
 
 # needed by %prep
