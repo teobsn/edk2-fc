@@ -12,10 +12,9 @@ OVMF.stateless.secboot.pcr
 
 OVMF_CODE.4m.secboot.strictnx.fd
 
-  OVMF build with strict NX configuration (using r-x for code, rw- for
-  data).  Known to not work with some grub and linux kernel versions
-  because they use the wrong memory type for allocations and run into
-  NX faults.  Useful for bootloader development and CI.
+  Removed in Fedora 42 and newer, the standard secure boot builds have
+  the strict NX configuration turned on now.
+  See also https://fedoraproject.org/wiki/Changes/Edk2Security
 
 QEMU_EFI.strictnx.fd
 QEMU_EFI-strictnx-pflash.raw
