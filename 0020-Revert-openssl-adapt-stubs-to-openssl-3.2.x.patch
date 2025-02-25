@@ -1,0 +1,960 @@
+From da0ab1e7c86ea6b794a46b0ac1c2e83253075f9b Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Tue, 25 Feb 2025 12:12:59 +0100
+Subject: [PATCH 20/20] Revert "openssl: adapt stubs to openssl 3.2.x"
+
+This reverts commit 53cea8efd1c8697ba8293a6cfa4fc5508f8f3504.
+---
+ .../OpensslLib/OpensslStub/SslExtServNull.c   | 374 +++++++++---------
+ .../OpensslLib/OpensslStub/SslStatServNull.c  | 115 +++---
+ 2 files changed, 245 insertions(+), 244 deletions(-)
+
+diff --git a/CryptoPkg/Library/OpensslLib/OpensslStub/SslExtServNull.c b/CryptoPkg/Library/OpensslLib/OpensslStub/SslExtServNull.c
+index 1e7136eee815..e3b3aa26ec12 100644
+--- a/CryptoPkg/Library/OpensslLib/OpensslStub/SslExtServNull.c
++++ b/CryptoPkg/Library/OpensslLib/OpensslStub/SslExtServNull.c
+@@ -13,11 +13,11 @@
+ 
+ int
+ tls_parse_ctos_renegotiate (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return -1;
+@@ -25,11 +25,11 @@ tls_parse_ctos_renegotiate (
+ 
+ int
+ tls_parse_ctos_server_name (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -37,11 +37,11 @@ tls_parse_ctos_server_name (
+ 
+ int
+ tls_parse_ctos_maxfragmentlen (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -50,11 +50,11 @@ tls_parse_ctos_maxfragmentlen (
+ #ifndef OPENSSL_NO_SRP
+ int
+ tls_parse_ctos_srp (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -64,11 +64,11 @@ tls_parse_ctos_srp (
+ 
+ int
+ tls_parse_ctos_ec_pt_formats (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -76,11 +76,11 @@ tls_parse_ctos_ec_pt_formats (
+ 
+ int
+ tls_parse_ctos_session_ticket (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -88,7 +88,7 @@ tls_parse_ctos_session_ticket (
+ 
+ int
+ tls_parse_ctos_sig_algs_cert (
+-  SSL_CONNECTION            *s,
++  SSL                       *s,
+   PACKET                    *pkt,
+   ossl_unused unsigned int  context,
+   ossl_unused X509          *x,
+@@ -100,11 +100,11 @@ tls_parse_ctos_sig_algs_cert (
+ 
+ int
+ tls_parse_ctos_sig_algs (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -113,11 +113,11 @@ tls_parse_ctos_sig_algs (
+ #ifndef OPENSSL_NO_OCSP
+ int
+ tls_parse_ctos_status_request (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -128,11 +128,11 @@ tls_parse_ctos_status_request (
+ #ifndef OPENSSL_NO_NEXTPROTONEG
+ int
+ tls_parse_ctos_npn (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -146,11 +146,11 @@ tls_parse_ctos_npn (
+  */
+ int
+ tls_parse_ctos_alpn (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -159,11 +159,11 @@ tls_parse_ctos_alpn (
+ #ifndef OPENSSL_NO_SRTP
+ int
+ tls_parse_ctos_use_srtp (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -173,11 +173,11 @@ tls_parse_ctos_use_srtp (
+ 
+ int
+ tls_parse_ctos_etm (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -189,11 +189,11 @@ tls_parse_ctos_etm (
+  */
+ int
+ tls_parse_ctos_psk_kex_modes (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -205,11 +205,11 @@ tls_parse_ctos_psk_kex_modes (
+  */
+ int
+ tls_parse_ctos_key_share (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -217,11 +217,11 @@ tls_parse_ctos_key_share (
+ 
+ int
+ tls_parse_ctos_cookie (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -229,11 +229,11 @@ tls_parse_ctos_cookie (
+ 
+ int
+ tls_parse_ctos_supported_groups (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -241,11 +241,11 @@ tls_parse_ctos_supported_groups (
+ 
+ int
+ tls_parse_ctos_ems (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -253,11 +253,11 @@ tls_parse_ctos_ems (
+ 
+ int
+ tls_parse_ctos_early_data (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -265,11 +265,11 @@ tls_parse_ctos_early_data (
+ 
+ int
+ tls_parse_ctos_psk (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  PACKET        *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return 0;
+@@ -277,7 +277,7 @@ tls_parse_ctos_psk (
+ 
+ int
+ tls_parse_ctos_post_handshake_auth (
+-  SSL_CONNECTION            *s,
++  SSL                       *s,
+   PACKET                    *pkt,
+   ossl_unused unsigned int  context,
+   ossl_unused X509          *x,
+@@ -292,11 +292,11 @@ tls_parse_ctos_post_handshake_auth (
+  */
+ EXT_RETURN
+ tls_construct_stoc_renegotiate (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -304,11 +304,11 @@ tls_construct_stoc_renegotiate (
+ 
+ EXT_RETURN
+ tls_construct_stoc_server_name (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -317,11 +317,11 @@ tls_construct_stoc_server_name (
+ /* Add/include the server's max fragment len extension into ServerHello */
+ EXT_RETURN
+ tls_construct_stoc_maxfragmentlen (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -329,11 +329,11 @@ tls_construct_stoc_maxfragmentlen (
+ 
+ EXT_RETURN
+ tls_construct_stoc_ec_pt_formats (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -341,11 +341,11 @@ tls_construct_stoc_ec_pt_formats (
+ 
+ EXT_RETURN
+ tls_construct_stoc_supported_groups (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -353,11 +353,11 @@ tls_construct_stoc_supported_groups (
+ 
+ EXT_RETURN
+ tls_construct_stoc_session_ticket (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -366,11 +366,11 @@ tls_construct_stoc_session_ticket (
+ #ifndef OPENSSL_NO_OCSP
+ EXT_RETURN
+ tls_construct_stoc_status_request (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -381,11 +381,11 @@ tls_construct_stoc_status_request (
+ #ifndef OPENSSL_NO_NEXTPROTONEG
+ EXT_RETURN
+ tls_construct_stoc_next_proto_neg (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -395,11 +395,11 @@ tls_construct_stoc_next_proto_neg (
+ 
+ EXT_RETURN
+ tls_construct_stoc_alpn (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -408,11 +408,11 @@ tls_construct_stoc_alpn (
+ #ifndef OPENSSL_NO_SRTP
+ EXT_RETURN
+ tls_construct_stoc_use_srtp (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -422,11 +422,11 @@ tls_construct_stoc_use_srtp (
+ 
+ EXT_RETURN
+ tls_construct_stoc_etm (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -434,11 +434,11 @@ tls_construct_stoc_etm (
+ 
+ EXT_RETURN
+ tls_construct_stoc_ems (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -446,11 +446,11 @@ tls_construct_stoc_ems (
+ 
+ EXT_RETURN
+ tls_construct_stoc_supported_versions (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -458,11 +458,11 @@ tls_construct_stoc_supported_versions (
+ 
+ EXT_RETURN
+ tls_construct_stoc_key_share (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -470,11 +470,11 @@ tls_construct_stoc_key_share (
+ 
+ EXT_RETURN
+ tls_construct_stoc_cookie (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -482,11 +482,11 @@ tls_construct_stoc_cookie (
+ 
+ EXT_RETURN
+ tls_construct_stoc_cryptopro_bug (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -494,11 +494,11 @@ tls_construct_stoc_cryptopro_bug (
+ 
+ EXT_RETURN
+ tls_construct_stoc_early_data (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+@@ -506,11 +506,11 @@ tls_construct_stoc_early_data (
+ 
+ EXT_RETURN
+ tls_construct_stoc_psk (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt,
+-  unsigned int    context,
+-  X509            *x,
+-  size_t          chainidx
++  SSL           *s,
++  WPACKET       *pkt,
++  unsigned int  context,
++  X509          *x,
++  size_t        chainidx
+   )
+ {
+   return EXT_RETURN_FAIL;
+diff --git a/CryptoPkg/Library/OpensslLib/OpensslStub/SslStatServNull.c b/CryptoPkg/Library/OpensslLib/OpensslStub/SslStatServNull.c
+index 82a95f50d512..878f9e1a0b11 100644
+--- a/CryptoPkg/Library/OpensslLib/OpensslStub/SslStatServNull.c
++++ b/CryptoPkg/Library/OpensslLib/OpensslStub/SslStatServNull.c
+@@ -15,8 +15,8 @@
+ 
+ int
+ ossl_statem_server_read_transition (
+-  SSL_CONNECTION  *s,
+-  int             mt
++  SSL  *s,
++  int  mt
+   )
+ {
+   return 0;
+@@ -31,7 +31,7 @@ ossl_statem_server_read_transition (
+  */
+ int
+ send_certificate_request (
+-  SSL_CONNECTION  *s
++  SSL  *s
+   )
+ {
+   return 0;
+@@ -43,7 +43,7 @@ send_certificate_request (
+  */
+ WRITE_TRAN
+ ossl_statem_server_write_transition (
+-  SSL_CONNECTION  *s
++  SSL  *s
+   )
+ {
+   return WRITE_TRAN_ERROR;
+@@ -51,8 +51,8 @@ ossl_statem_server_write_transition (
+ 
+ WORK_STATE
+ ossl_statem_server_pre_work (
+-  SSL_CONNECTION  *s,
+-  WORK_STATE      wst
++  SSL         *s,
++  WORK_STATE  wst
+   )
+ {
+   return WORK_ERROR;
+@@ -64,8 +64,8 @@ ossl_statem_server_pre_work (
+  */
+ WORK_STATE
+ ossl_statem_server_post_work (
+-  SSL_CONNECTION  *s,
+-  WORK_STATE      wst
++  SSL         *s,
++  WORK_STATE  wst
+   )
+ {
+   return WORK_ERROR;
+@@ -81,9 +81,10 @@ ossl_statem_server_post_work (
+  */
+ int
+ ossl_statem_server_construct_message (
+-  SSL_CONNECTION  *s,
+-  confunc_f       *confunc,
+-  int             *mt
++  SSL        *s,
++  WPACKET    *pkt,
++  confunc_f  *confunc,
++  int        *mt
+   )
+ {
+   return 0;
+@@ -95,7 +96,7 @@ ossl_statem_server_construct_message (
+  */
+ size_t
+ ossl_statem_server_max_message_size (
+-  SSL_CONNECTION  *s
++  SSL  *s
+   )
+ {
+   return 0;
+@@ -106,8 +107,8 @@ ossl_statem_server_max_message_size (
+  */
+ MSG_PROCESS_RETURN
+ ossl_statem_server_process_message (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt
++  SSL     *s,
++  PACKET  *pkt
+   )
+ {
+   return MSG_PROCESS_ERROR;
+@@ -119,8 +120,8 @@ ossl_statem_server_process_message (
+  */
+ WORK_STATE
+ ossl_statem_server_post_process_message (
+-  SSL_CONNECTION  *s,
+-  WORK_STATE      wst
++  SSL         *s,
++  WORK_STATE  wst
+   )
+ {
+   return WORK_ERROR;
+@@ -136,10 +137,10 @@ dtls_raw_hello_verify_request (
+   return 0;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ dtls_construct_hello_verify_request (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+@@ -147,8 +148,8 @@ dtls_construct_hello_verify_request (
+ 
+ MSG_PROCESS_RETURN
+ tls_process_client_hello (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt
++  SSL     *s,
++  PACKET  *pkt
+   )
+ {
+   return MSG_PROCESS_ERROR;
+@@ -160,7 +161,7 @@ tls_process_client_hello (
+  */
+ int
+ tls_handle_alpn (
+-  SSL_CONNECTION  *s
++  SSL  *s
+   )
+ {
+   return 0;
+@@ -168,44 +169,44 @@ tls_handle_alpn (
+ 
+ WORK_STATE
+ tls_post_process_client_hello (
+-  SSL_CONNECTION  *s,
+-  WORK_STATE      wst
++  SSL         *s,
++  WORK_STATE  wst
+   )
+ {
+   return WORK_ERROR;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_server_hello (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_server_done (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_server_key_exchange (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_certificate_request (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+@@ -213,8 +214,8 @@ tls_construct_certificate_request (
+ 
+ MSG_PROCESS_RETURN
+ tls_process_client_key_exchange (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt
++  SSL     *s,
++  PACKET  *pkt
+   )
+ {
+   return MSG_PROCESS_ERROR;
+@@ -222,8 +223,8 @@ tls_process_client_key_exchange (
+ 
+ WORK_STATE
+ tls_post_process_client_key_exchange (
+-  SSL_CONNECTION  *s,
+-  WORK_STATE      wst
++  SSL         *s,
++  WORK_STATE  wst
+   )
+ {
+   return WORK_ERROR;
+@@ -231,26 +232,26 @@ tls_post_process_client_key_exchange (
+ 
+ MSG_PROCESS_RETURN
+ tls_process_client_certificate (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt
++  SSL     *s,
++  PACKET  *pkt
+   )
+ {
+   return MSG_PROCESS_ERROR;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_server_certificate (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_new_session_ticket (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+@@ -262,17 +263,17 @@ tls_construct_new_session_ticket (
+  */
+ int
+ tls_construct_cert_status_body (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+ }
+ 
+-CON_FUNC_RETURN
++int
+ tls_construct_cert_status (
+-  SSL_CONNECTION  *s,
+-  WPACKET         *pkt
++  SSL      *s,
++  WPACKET  *pkt
+   )
+ {
+   return 0;
+@@ -286,8 +287,8 @@ tls_construct_cert_status (
+  */
+ MSG_PROCESS_RETURN
+ tls_process_next_proto (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt
++  SSL     *s,
++  PACKET  *pkt
+   )
+ {
+   return MSG_PROCESS_ERROR;
+@@ -297,8 +298,8 @@ tls_process_next_proto (
+ 
+ MSG_PROCESS_RETURN
+ tls_process_end_of_early_data (
+-  SSL_CONNECTION  *s,
+-  PACKET          *pkt
++  SSL     *s,
++  PACKET  *pkt
+   )
+ {
+   return MSG_PROCESS_ERROR;
+-- 
+2.48.1
+
