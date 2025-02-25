@@ -1,7 +1,7 @@
-From e76c01fd6eeb467e427f5e76f3c45ed098de4d3d Mon Sep 17 00:00:00 2001
+From c007f3ab16458e818064479e1392f917281efb8f Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Wed, 24 Jun 2020 11:31:36 +0200
-Subject: [PATCH 11/17] OvmfPkg/QemuKernelLoaderFsDxe: suppress error on no
+Subject: [PATCH 11/16] OvmfPkg/QemuKernelLoaderFsDxe: suppress error on no
  "-kernel" in silent aa64 build (RH)
 
 Notes about the RHEL-8.3/20200603-ca407c7246bf [edk2-stable202005] ->
@@ -32,7 +32,7 @@ Signed-off-by: Miroslav Rezanina <mrezanin@redhat.com>
  2 files changed, 19 insertions(+)
 
 diff --git a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
-index 7b35adb8e034..e0331c6e2cbc 100644
+index a2f44bbca1b4..44454073ca25 100644
 --- a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
 +++ b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
 @@ -28,6 +28,7 @@ [LibraryClasses]
@@ -42,9 +42,9 @@ index 7b35adb8e034..e0331c6e2cbc 100644
 +  DebugPrintErrorLevelLib
    DevicePathLib
    MemoryAllocationLib
-   QemuFwCfgLib
+   PrintLib
 diff --git a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c
-index 3c12085f6c1e..e473c0b57345 100644
+index df6364cc314b..b84d49e4b8b3 100644
 --- a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c
 +++ b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c
 @@ -19,6 +19,7 @@
@@ -54,10 +54,10 @@ index 3c12085f6c1e..e473c0b57345 100644
 +#include <Library/DebugPrintErrorLevelLib.h>
  #include <Library/DevicePathLib.h>
  #include <Library/MemoryAllocationLib.h>
- #include <Library/QemuFwCfgLib.h>
-@@ -1081,6 +1082,23 @@ QemuKernelLoaderFsDxeEntrypoint (
- 
-   if (KernelBlob->Data == NULL) {
+ #include <Library/PrintLib.h>
+@@ -1224,6 +1225,23 @@ QemuKernelLoaderFsDxeEntrypoint (
+   if ((Blob == NULL) && (mKernelNamedBlobCount == 0)) {
+     DEBUG ((DEBUG_INFO, "%a: no kernel and no named blobs present -> quit\n", __func__));
      Status = EFI_NOT_FOUND;
 + #if defined (MDE_CPU_AARCH64)
 +    //
@@ -80,5 +80,5 @@ index 3c12085f6c1e..e473c0b57345 100644
    }
  
 -- 
-2.45.0
+2.48.1
 
