@@ -1,0 +1,42 @@
+From 294d32814d9d5ea8cc2b7e072c3690a717b9f4e6 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Tue, 25 Feb 2025 12:01:43 +0100
+Subject: [PATCH 17/18] Revert "CryptoPkg/BaseCryptLib: add next parameter to
+ SHA3_squeeze"
+
+This reverts commit 9895fe25ac9579cfd85327c7b6d8ee271539c0e5.
+---
+ CryptoPkg/Library/BaseCryptLib/Hash/CryptParallelHash.h | 3 +--
+ CryptoPkg/Library/BaseCryptLib/Hash/CryptSha3.c         | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/CryptoPkg/Library/BaseCryptLib/Hash/CryptParallelHash.h b/CryptoPkg/Library/BaseCryptLib/Hash/CryptParallelHash.h
+index c65bffa85d9e..03a1a58cb8e7 100644
+--- a/CryptoPkg/Library/BaseCryptLib/Hash/CryptParallelHash.h
++++ b/CryptoPkg/Library/BaseCryptLib/Hash/CryptParallelHash.h
+@@ -66,8 +66,7 @@ SHA3_squeeze (
+   uint64_t       A[5][5],
+   unsigned char  *out,
+   size_t         len,
+-  size_t         r,
+-  int            next
++  size_t         r
+   );
+ 
+ /**
+diff --git a/CryptoPkg/Library/BaseCryptLib/Hash/CryptSha3.c b/CryptoPkg/Library/BaseCryptLib/Hash/CryptSha3.c
+index f996778706a7..6abafc3c00e6 100644
+--- a/CryptoPkg/Library/BaseCryptLib/Hash/CryptSha3.c
++++ b/CryptoPkg/Library/BaseCryptLib/Hash/CryptSha3.c
+@@ -160,7 +160,7 @@ Sha3Final (
+ 
+   (void)SHA3_absorb (Context->A, Context->buf, BlockSize, BlockSize);
+ 
+-  SHA3_squeeze (Context->A, MessageDigest, Context->md_size, BlockSize, 0);
++  SHA3_squeeze (Context->A, MessageDigest, Context->md_size, BlockSize);
+ 
+   return 1;
+ }
+-- 
+2.48.1
+

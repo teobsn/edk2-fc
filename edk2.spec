@@ -134,6 +134,8 @@ Patch0015: 0015-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
 Patch0016: 0016-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
+Patch0017: 0017-Revert-CryptoPkg-BaseCryptLib-add-next-parameter-to-.patch
+Patch0018: 0018-Revert-CryptoPkg-add-openssl-providers-fips-include-.patch
 
 
 # needed by %prep
