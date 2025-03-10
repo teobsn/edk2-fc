@@ -115,6 +115,7 @@ Source84: edk2-build.rhel-10
 
 Source90: DBXUpdate-%{DBXDATE}.x64.bin
 Source91: DBXUpdate-%{DBXDATE}.ia32.bin
+Source92: DBXUpdate-%{DBXDATE}.aa64.bin
 
 Patch0001: 0001-BaseTools-do-not-build-BrotliCompress-RH-only.patch
 Patch0002: 0002-MdeModulePkg-remove-package-private-Brotli-include-p.patch
@@ -367,7 +368,7 @@ cp -a -- \
    %{SOURCE50} \
    %{SOURCE60} \
    %{SOURCE80} %{SOURCE81} %{SOURCE82} %{SOURCE83} %{SOURCE84} \
-   %{SOURCE90} %{SOURCE91} \
+   %{SOURCE90} %{SOURCE91} %{SOURCE92} \
    .
 
 %build
