@@ -26,7 +26,7 @@
 %define OPENSSL_VER    3.0.7
 %define OPENSSL_COMMIT 0205b589887203b065154ddc8e8107c4ac8625a1
 
-%define DBXDATE        20230509
+%define DBXDATE        20250224
 
 # Undefine this to get *HUGE* (50MB+) verbose build logs
 %define silent --silent
@@ -495,6 +495,7 @@ done
 ./edk2-build.py --config edk2-build.fedora.platforms %{?silent} -m aa64
 virt-fw-vars --input   Fedora/aarch64/vars-template-pflash.raw \
              --output  Fedora/experimental/vars-template-secboot-testonly-pflash.raw \
+             --set-dbx DBXUpdate-%{DBXDATE}.aa64.bin \
              --enroll-redhat --secure-boot --distro-keys rhel
 %endif
 for raw in */aarch64/*.raw; do
