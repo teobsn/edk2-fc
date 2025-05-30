@@ -16,12 +16,12 @@
 %global debug_package %{nil}
 %endif
 
-# edk2-stable202502
-%define GITDATE        20250221
-%define GITCOMMIT      fbe0805b2091
+# edk2-stable202505
+%define GITDATE        20250523
+%define GITCOMMIT      6951dfe7d59d
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT af45588a998c
+%define PLATFORMS_COMMIT b715b3c400ac
 
 %define OPENSSL_VER    3.0.7
 %define OPENSSL_COMMIT 0205b589887203b065154ddc8e8107c4ac8625a1
@@ -140,7 +140,7 @@ Patch0018: 0018-Revert-CryptoPkg-add-openssl-providers-fips-include-.patch
 Patch0019: 0019-Revert-openssl-add-more-stubs-for-openssl-3.2.x.patch
 Patch0020: 0020-Revert-openssl-adapt-stubs-to-openssl-3.2.x.patch
 Patch0021: 0021-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
-Patch0022: 0022-OvmfPkg-PlatformInitLib-fix-typo.patch
+Patch0022: 0022-openssl-silence-unused-variable-warning.patch
 
 
 # needed by %prep

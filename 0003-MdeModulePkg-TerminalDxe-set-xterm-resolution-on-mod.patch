@@ -1,7 +1,7 @@
-From 83b44bcbad5cb3e8df5505ea0cdc6d5d319b3612 Mon Sep 17 00:00:00 2001
+From 2cefc1445bdb3a5e40b46f322f18f339d8320efd Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Tue, 25 Feb 2014 22:40:01 +0100
-Subject: [PATCH 03/17] MdeModulePkg: TerminalDxe: set xterm resolution on mode
+Subject: [PATCH 03/21] MdeModulePkg: TerminalDxe: set xterm resolution on mode
  change (RH only)
 
 Notes about the RHEL-8.3/20200603-ca407c7246bf [edk2-stable202005] ->
@@ -87,12 +87,12 @@ Signed-off-by: Laszlo Ersek <lersek@redhat.com>
  3 files changed, 35 insertions(+)
 
 diff --git a/MdeModulePkg/MdeModulePkg.dec b/MdeModulePkg/MdeModulePkg.dec
-index badb93238ff1..5ee6db534d41 100644
+index 5250d77ecc2b..5a4808c26780 100644
 --- a/MdeModulePkg/MdeModulePkg.dec
 +++ b/MdeModulePkg/MdeModulePkg.dec
-@@ -2222,6 +2222,10 @@ [PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
-   # @Prompt The value is use for Usb Network rate limiting supported.
-   gEfiMdeModulePkgTokenSpaceGuid.PcdUsbNetworkRateLimitingFactor|100|UINT32|0x10000028
+@@ -2287,6 +2287,10 @@ [PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
+   # @Prompt Conduit to use in ArmFfaLib.
+   gEfiMdeModulePkgTokenSpaceGuid.PcdFfaLibConduitSmc|TRUE|BOOLEAN|0x10000029
  
 +  ## Controls whether TerminalDxe outputs an XTerm resize sequence on terminal
 +  #  mode change.
@@ -122,10 +122,10 @@ index b2a8aeba8510..eff625346539 100644
  # [Event]
  # # Relative timer event set by UnicodeToEfiKey(), used to be one 2 seconds input timeout.
 diff --git a/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c b/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c
-index 7809869e7d49..496849458db4 100644
+index eb8658c892e6..96c4cb3a61dd 100644
 --- a/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c
 +++ b/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c
-@@ -7,6 +7,8 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
+@@ -8,6 +8,8 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
  
  **/
  
@@ -134,7 +134,7 @@ index 7809869e7d49..496849458db4 100644
  #include "Terminal.h"
  
  //
-@@ -80,6 +82,15 @@ CHAR16  mSetCursorPositionString[] = { ESC, '[', '0', '0', ';', '0', '0', 'H', 0
+@@ -82,6 +84,15 @@ CHAR16  mSetCursorPositionString[] = { ESC, '[', '0', '0', ';', '0', '0', 'H', 0
  CHAR16  mCursorForwardString[]     = { ESC, '[', '0', '0', 'C', 0 };
  CHAR16  mCursorBackwardString[]    = { ESC, '[', '0', '0', 'D', 0 };
  
@@ -150,7 +150,7 @@ index 7809869e7d49..496849458db4 100644
  //
  // Body of the ConOut functions
  //
-@@ -498,6 +509,24 @@ TerminalConOutSetMode (
+@@ -521,6 +532,24 @@ TerminalConOutSetMode (
      return EFI_DEVICE_ERROR;
    }
  
@@ -176,5 +176,5 @@ index 7809869e7d49..496849458db4 100644
  
    Status = This->ClearScreen (This);
 -- 
-2.45.0
+2.49.0
 

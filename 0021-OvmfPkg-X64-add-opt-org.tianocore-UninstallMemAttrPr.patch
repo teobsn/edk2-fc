@@ -1,4 +1,4 @@
-From 21091686d50e88a4cb7597ac4a2cb582e0f4d389 Mon Sep 17 00:00:00 2001
+From e52e40e89f0b531199fc0c48a9b35ebb1a691943 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Thu, 16 Jan 2025 17:20:38 +0100
 Subject: [PATCH 21/21] OvmfPkg/X64: add
@@ -14,10 +14,10 @@ Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
  2 files changed, 65 insertions(+)
 
 diff --git a/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf b/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
-index 1a422ebb0edd..73190a35c4b2 100644
+index 8257862662db..51c9b88d105f 100644
 --- a/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
 +++ b/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
-@@ -63,6 +63,7 @@ [Pcd]
+@@ -64,6 +64,7 @@ [Pcd]
    gUefiOvmfPkgTokenSpaceGuid.PcdOvmfFlashVariablesEnable
    gUefiOvmfPkgTokenSpaceGuid.PcdOvmfHostBridgePciDevId
    gUefiOvmfPkgTokenSpaceGuid.PcdBootRestrictToFirmware
@@ -25,7 +25,7 @@ index 1a422ebb0edd..73190a35c4b2 100644
    gEfiMdeModulePkgTokenSpaceGuid.PcdAcpiS3Enable
    gEfiMdePkgTokenSpaceGuid.PcdPlatformBootTimeOut
    gEfiMdePkgTokenSpaceGuid.PcdUartDefaultBaudRate         ## CONSUMES
-@@ -81,6 +82,7 @@ [Protocols]
+@@ -82,6 +83,7 @@ [Protocols]
    gEfiDxeSmmReadyToLockProtocolGuid             # PROTOCOL SOMETIMES_PRODUCED
    gEfiLoadedImageProtocolGuid                   # PROTOCOL SOMETIMES_PRODUCED
    gEfiFirmwareVolume2ProtocolGuid               # PROTOCOL SOMETIMES_CONSUMED
@@ -34,10 +34,10 @@ index 1a422ebb0edd..73190a35c4b2 100644
  [Guids]
    gEfiEndOfDxeEventGroupGuid
 diff --git a/OvmfPkg/Library/PlatformBootManagerLib/BdsPlatform.c b/OvmfPkg/Library/PlatformBootManagerLib/BdsPlatform.c
-index e66693879d34..f4ae8dc41df3 100644
+index b696f1b3389b..9fc422c00a7b 100644
 --- a/OvmfPkg/Library/PlatformBootManagerLib/BdsPlatform.c
 +++ b/OvmfPkg/Library/PlatformBootManagerLib/BdsPlatform.c
-@@ -1836,6 +1836,49 @@ SaveS3BootScript (
+@@ -1596,6 +1596,49 @@ SaveS3BootScript (
    ASSERT_EFI_ERROR (Status);
  }
  
@@ -87,7 +87,7 @@ index e66693879d34..f4ae8dc41df3 100644
  /**
    Do the platform specific action after the console is ready
  
-@@ -1856,6 +1899,7 @@ PlatformBootManagerAfterConsole (
+@@ -1616,6 +1659,7 @@ PlatformBootManagerAfterConsole (
    )
  {
    EFI_BOOT_MODE  BootMode;
@@ -95,7 +95,7 @@ index e66693879d34..f4ae8dc41df3 100644
  
    DEBUG ((DEBUG_INFO, "PlatformBootManagerAfterConsole\n"));
  
-@@ -1900,6 +1944,25 @@ PlatformBootManagerAfterConsole (
+@@ -1660,6 +1704,25 @@ PlatformBootManagerAfterConsole (
    //
    StoreQemuBootOrder ();
  
@@ -122,5 +122,5 @@ index e66693879d34..f4ae8dc41df3 100644
    // Process QEMU's -kernel command line option
    //
 -- 
-2.48.1
+2.49.0
 
