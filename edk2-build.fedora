@@ -23,6 +23,11 @@ SECURE_BOOT_ENABLE       = TRUE
 SMM_REQUIRE              = TRUE
 BUILD_SHELL              = FALSE
 
+[opts.ovmf.qemu.vars]
+QEMU_PV_VARS             = TRUE
+SECURE_BOOT_ENABLE       = TRUE
+BUILD_SHELL              = FALSE
+
 # requires edk2 2022-11 or newer
 [opts.ovmf.sb.stateless]
 SECURE_BOOT_ENABLE       = TRUE
@@ -121,6 +126,19 @@ plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.secboot.fd
 
+[build.ovmf.qemu.vars]
+desc = ovmf build (64-bit, 4MB, qemu vars, secure boot)
+conf = OvmfPkg/OvmfPkgX64.dsc
+arch = X64
+opts = ovmf.common
+       ovmf.4m
+       ovmf.qemu.vars
+pcds = nx.strict
+       la57
+plat = OvmfX64
+dest = Fedora/ovmf
+cpy1 = FV/OVMF.fd OVMF.qemuvars.fd
+
 
 #####################################################################
 # stateless ovmf builds (firmware in rom or r/o flash)
@@ -204,6 +222,20 @@ dest = Fedora/aarch64
 cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.silent.fd
 cpy2 = FV/QEMU_EFI.fd  QEMU_EFI-silent-pflash.raw
 pad2 = QEMU_EFI-silent-pflash.raw 64m
+
+[build.armvirt.aa64.qemu.vars]
+desc = ArmVirt build for qemu, 64-bit (arm v8), qemu vars, secure boot
+conf = ArmVirtPkg/ArmVirtQemu.dsc
+arch = AARCH64
+opts = ovmf.common
+       ovmf.qemu.vars
+       armvirt.silent
+pcds = nx.strict
+plat = ArmVirtQemu-AARCH64
+dest = Fedora/aarch64
+cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.qemuvars.fd
+cpy2 = FV/QEMU_EFI.fd  QEMU_EFI-qemuvars-pflash.raw
+pad2 = QEMU_EFI-qemuvars-pflash.raw 64m
 
 [build.armvirt.aa64.kernel]
 desc = ArmVirt build for qemu, 64-bit (arm v8)

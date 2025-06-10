@@ -35,9 +35,11 @@
 %if %{rhel} < 10
   %define rhelcfg rhel-9
   %define RHELCFG RHEL-9
+  %define qemuvars 0
 %else
   %define rhelcfg rhel-10
   %define RHELCFG RHEL-10
+  %define qemuvars 1
 %endif
 %define build_ovmf 0
 %define build_aarch64 0
@@ -54,6 +56,7 @@
 %define build_aarch64 1
 %define build_riscv64 1
 %define build_loongarch64 1
+%define qemuvars 1
 %endif
 
 %define cross %{defined fedora}
@@ -694,6 +697,9 @@ done
 %{_datadir}/qemu/firmware/51-edk2-ovmf-2m-raw-x64-nosb.json
 %{_datadir}/qemu/firmware/60-edk2-ovmf-x64-amdsev.json
 %{_datadir}/qemu/firmware/60-edk2-ovmf-x64-inteltdx.json
+%if %{qemuvars}
+%{_datadir}/%{name}/ovmf/OVMF.qemuvars.fd
+%endif
 %if %{defined fedora}
 %{_datadir}/%{name}/ovmf/MICROVM.fd
 %{_datadir}/qemu/firmware/50-edk2-ovmf-x64-microvm.json
@@ -720,6 +726,10 @@ done
 %{_datadir}/%{name}/aarch64/QEMU_EFI.fd
 %{_datadir}/%{name}/aarch64/QEMU_EFI.silent.fd
 %{_datadir}/%{name}/aarch64/QEMU_VARS.fd
+%if %{qemuvars}
+%{_datadir}/%{name}/aarch64/QEMU_EFI-qemuvars-pflash.*
+%{_datadir}/%{name}/aarch64/QEMU_EFI.qemuvars.fd
+%endif
 %if %{defined fedora}
 %{_datadir}/%{name}/aarch64/QEMU_EFI.kernel.fd
 %endif

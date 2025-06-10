@@ -147,7 +147,7 @@ def build_run(cmdline, name, section, silent = False, nologs = False):
             print(f'### exit code: {result.returncode}')
         else:
             secs = int(time.time() - start)
-            print(f'### OK ({int(secs/60)}:{secs%60:02d})')
+            print(f'### OK ({int(secs)}sec)')
     else:
         print(cmdline, flush = True)
         result = subprocess.run(cmdline, check = False)
