@@ -17,6 +17,9 @@ FD_SIZE_4MB              = TRUE
 FD_SIZE_2MB              = TRUE
 NETWORK_ISCSI_ENABLE     = FALSE
 NETWORK_TLS_ENABLE       = FALSE
+CC_MEASUREMENT_ENABLE    = FALSE
+TPM2_ENABLE              = FALSE
+#BUILD_SHELL              = FALSE
 
 [opts.ovmf.sb.smm]
 SECURE_BOOT_ENABLE       = TRUE
@@ -84,7 +87,6 @@ plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd
 cpy2 = FV/OVMF_VARS.fd
-cpy3 = X64/Shell.efi
 
 [build.ovmf.4m.default]
 desc = ovmf build (64-bit, 4MB)
@@ -98,6 +100,7 @@ plat = OvmfX64
 dest = Fedora/ovmf
 cpy1 = FV/OVMF_CODE.fd OVMF_CODE_4M.fd
 cpy2 = FV/OVMF_VARS.fd OVMF_VARS_4M.fd
+cpy3 = X64/Shell.efi
 
 [build.ovmf.2m.sb.smm]
 desc = ovmf build (64-bit, 2MB, q35 only, needs smm, secure boot)

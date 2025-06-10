@@ -1,7 +1,7 @@
-From 045defe0d7eb86f8a7b160480375c7e67af3fb82 Mon Sep 17 00:00:00 2001
+From 3354c553a4fe6202279059a1a9c31c72bccf8a09 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Fri, 30 May 2025 12:54:58 +0200
-Subject: [PATCH 22/22] openssl: silence unused-variable warning
+Subject: [PATCH 18/21] openssl: silence unused-variable warning
 
 ---
  CryptoPkg/Library/OpensslLib/OpensslLib.inf          | 12 ++++++------

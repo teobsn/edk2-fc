@@ -1,0 +1,31 @@
+From 0ac6b430107273d2cec2494ab74452318f6dcd38 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Thu, 24 Apr 2025 17:21:04 +0200
+Subject: [PATCH 21/21] CryptoPkg/CrtLib: explicitly define INT32* constants
+
+Avoids openssl-3.5 trying to figure automatically with some macro
+magic, which happens to not work with the microsoft compiler.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ CryptoPkg/Library/Include/CrtLibSupport.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/CryptoPkg/Library/Include/CrtLibSupport.h b/CryptoPkg/Library/Include/CrtLibSupport.h
+index 21780780f046..f344691d0dbc 100644
+--- a/CryptoPkg/Library/Include/CrtLibSupport.h
++++ b/CryptoPkg/Library/Include/CrtLibSupport.h
+@@ -80,6 +80,10 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
+ #define CHAR_BIT      8               /* Number of bits in a char */
+ #define SIZE_MAX      0xFFFFFFFF      /* Maximum unsigned size_t */
+ 
++#define INT32_MIN   INT_MIN
++#define INT32_MAX   INT_MAX
++#define UINT32_MAX  UINT_MAX
++
+ //
+ // Address families.
+ //
+-- 
+2.49.0
+

@@ -23,8 +23,8 @@
 
 %define PLATFORMS_COMMIT b715b3c400ac
 
-%define OPENSSL_VER    3.0.7
-%define OPENSSL_COMMIT 0205b589887203b065154ddc8e8107c4ac8625a1
+%define OPENSSL_VER    3.5.0
+%define OPENSSL_COMMIT 63b528e6476ff36efcf2cda5c083f3f3d7cf9210
 
 %define DBXDATE        20250224
 
@@ -138,12 +138,12 @@ Patch0015: 0015-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
 Patch0016: 0016-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
-Patch0017: 0017-Revert-CryptoPkg-BaseCryptLib-add-next-parameter-to-.patch
-Patch0018: 0018-Revert-CryptoPkg-add-openssl-providers-fips-include-.patch
-Patch0019: 0019-Revert-openssl-add-more-stubs-for-openssl-3.2.x.patch
-Patch0020: 0020-Revert-openssl-adapt-stubs-to-openssl-3.2.x.patch
-Patch0021: 0021-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
-Patch0022: 0022-openssl-silence-unused-variable-warning.patch
+Patch0017: 0017-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
+Patch0018: 0018-openssl-silence-unused-variable-warning.patch
+Patch0019: 0019-CryptoPkg-openssl-add-ossl_bio_print_labeled_buf-stu.patch
+Patch0020: 0020-CryptoPkg-CrtLib-add-strpbrk-implementation.patch
+Patch0021: 0021-CryptoPkg-CrtLib-explicitly-define-INT32-constants.patch
+Patch0022: 0022-CryptoPkg-openssl-disable-some-features-support.patch
 
 
 # needed by %prep

@@ -5,12 +5,6 @@
 /softfloat-20180726-gitb64af41.tar.xz
 /qemu-ovmf-secureboot-20190521-gitf158f12.tar.xz
 /qemu-ovmf-secureboot-20200228-gitc3e16b3.tar.xz
-/openssl-rhel-a75722161d20fd632f8875585d3aa066ec5fea93.tar.xz
-/openssl-rhel-bdd048e929dcfcf2f046d74e812e0e3d5fc58504.tar.xz
-/openssl-rhel-740e53ace8f6771c205bf84780e26bcd7a3275df.tar.xz
+/openssl-rhel-*.tar.xz
 /jansson-2.13.1.tar.bz2
-/openssl-rhel-3adb22b68e9fe61fc4863c2d2dc6cc6fc094b005.tar.xz
-/openssl-rhel-db0287935122edceb91dcda8dfb53b4090734e22.tar.xz
 /dtc-1.7.0.tar.xz
-/openssl-rhel-8e5beb77088bfec064d60506b1e76ddb0ac417fe.tar.xz
-/openssl-rhel-0205b589887203b065154ddc8e8107c4ac8625a1.tar.xz

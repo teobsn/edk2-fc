@@ -1,7 +1,7 @@
-From e52e40e89f0b531199fc0c48a9b35ebb1a691943 Mon Sep 17 00:00:00 2001
+From 026b722d415b11edcc04e46bbd394b18b61e554d Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Thu, 16 Jan 2025 17:20:38 +0100
-Subject: [PATCH 21/21] OvmfPkg/X64: add
+Subject: [PATCH 17/21] OvmfPkg/X64: add
  opt/org.tianocore/UninstallMemAttrProtocol support
 
 Add support for opt/org.tianocore/UninstallMemAttrProtocol, to allow
