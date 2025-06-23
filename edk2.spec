@@ -144,6 +144,7 @@ Patch0019: 0019-CryptoPkg-openssl-add-ossl_bio_print_labeled_buf-stu.patch
 Patch0020: 0020-CryptoPkg-CrtLib-add-strpbrk-implementation.patch
 Patch0021: 0021-CryptoPkg-CrtLib-explicitly-define-INT32-constants.patch
 Patch0022: 0022-CryptoPkg-openssl-disable-some-features-support.patch
+Patch0023: 0023-OvmfPkg-PlatformDxe-register-page-fault-handler-for-.patch
 
 
 # needed by %prep
