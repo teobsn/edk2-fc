@@ -59,7 +59,7 @@ PcdDxeNxMemoryProtectionPolicy      = 0xC000000000007FD5
 PcdImageProtectionPolicy            = 0x03
 PcdSetNxForStack                    = TRUE
 PcdNullPointerDetectionPropertyMask = 0x03
-PcdUninstallMemAttrProtocol         = TRUE
+PcdUninstallMemAttrProtocol         = FALSE
 
 [pcds.nx.compat.aa64]
 # workaround for bugs in shim.efi and grub.efi
