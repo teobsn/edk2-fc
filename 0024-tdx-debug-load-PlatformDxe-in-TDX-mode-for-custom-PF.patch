@@ -1,0 +1,33 @@
+From 45ed47357d64a83622aef5b50b0325d1e6e0a5c7 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Tue, 8 Jul 2025 12:26:52 +0200
+Subject: [PATCH 24/25] [tdx debug] load PlatformDxe in TDX mode for custom PF
+ handler
+
+---
+ OvmfPkg/IntelTdx/IntelTdxX64.fdf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/OvmfPkg/IntelTdx/IntelTdxX64.fdf b/OvmfPkg/IntelTdx/IntelTdxX64.fdf
+index c05761abeaa0..d309b904c927 100644
+--- a/OvmfPkg/IntelTdx/IntelTdxX64.fdf
++++ b/OvmfPkg/IntelTdx/IntelTdxX64.fdf
+@@ -244,6 +244,7 @@ [FV.DXEFV]
+ INF OvmfPkg/TdxDxe/TdxDxe.inf
+ 
+ INF  OvmfPkg/IoMmuDxe/IoMmuDxe.inf
++INF  OvmfPkg/PlatformDxe/Platform.inf
+ 
+ #
+ # Variable driver stack (non-SMM)
+@@ -328,7 +329,6 @@ [FV.NCCFV]
+ 
+ INF  OvmfPkg/QemuRamfbDxe/QemuRamfbDxe.inf
+ INF  OvmfPkg/VirtioGpuDxe/VirtioGpu.inf
+-INF  OvmfPkg/PlatformDxe/Platform.inf
+ 
+ !include OvmfPkg/Include/Fdf/ShellDxe.fdf.inc
+ !include OvmfPkg/Include/Fdf/OvmfRngDxe.fdf.inc
+-- 
+2.50.0
+
