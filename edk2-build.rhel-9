@@ -127,6 +127,7 @@ cpy1 = FV/QEMU_EFI.fd
 cpy2 = FV/QEMU_VARS.fd
 cpy3 = FV/QEMU_EFI.fd  QEMU_EFI-pflash.raw
 cpy4 = FV/QEMU_VARS.fd vars-template-pflash.raw
+cpy5 = AARCH64/Shell.efi
 pad3 = QEMU_EFI-pflash.raw      64m
 pad4 = vars-template-pflash.raw 64m
 

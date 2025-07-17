@@ -210,6 +210,7 @@ cpy1 = FV/QEMU_EFI.fd
 cpy2 = FV/QEMU_VARS.fd
 cpy3 = FV/QEMU_EFI.fd  QEMU_EFI-pflash.raw
 cpy4 = FV/QEMU_VARS.fd vars-template-pflash.raw
+cpy5 = AARCH64/Shell.efi
 pad3 = QEMU_EFI-pflash.raw      64m
 pad4 = vars-template-pflash.raw 64m
 
@@ -265,6 +266,7 @@ cpy1 = FV/RISCV_VIRT_CODE.fd
 cpy2 = FV/RISCV_VIRT_CODE.fd RISCV_VIRT_CODE.raw
 cpy3 = FV/RISCV_VIRT_VARS.fd
 cpy4 = FV/RISCV_VIRT_VARS.fd RISCV_VIRT_VARS.raw
+cpy5 = RISCV64/Shell.efi
 pad1 = RISCV_VIRT_CODE.raw 32m
 pad2 = RISCV_VIRT_VARS.raw 32m
 
@@ -280,6 +282,7 @@ plat = LoongArchVirtQemu
 dest = Fedora/loongarch64
 cpy1 = FV/QEMU_EFI.fd
 cpy2 = FV/QEMU_VARS.fd
+cpy3 = LOONGARCH64/Shell.efi
 
 
 #####################################################################
