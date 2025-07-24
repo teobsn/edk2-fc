@@ -207,6 +207,7 @@ Summary:    UEFI firmware for x86_64 virtual machines
 BuildArch:  noarch
 Provides:   OVMF = %{version}-%{release}
 Obsoletes:  OVMF < 20180508-100.gitee3198e672e2.el7
+Recommends: edk2-shell-x64
 
 # need libvirt version with qcow2 support
 Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
@@ -225,11 +226,20 @@ Virtual Machines. This package contains a sample 64-bit UEFI firmware for QEMU
 and KVM.
 
 
+%package shell-x64
+Summary:        EFI Shell for x64
+BuildArch:      noarch
+
+%description shell-x64
+EFI Shell for x64
+
+
 %package aarch64
 Summary:    UEFI firmware for aarch64 virtual machines
 BuildArch:  noarch
 Provides:   AAVMF = %{version}-%{release}
 Obsoletes:  AAVMF < 20180508-100.gitee3198e672e2.el7
+Recommends: edk2-shell-aa64
 
 # need libvirt version with qcow2 support
 Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
@@ -245,6 +255,14 @@ URL:        https://github.com/tianocore/tianocore.github.io/wiki/ArmVirtPkg
 AAVMF (ARM Architecture Virtual Machine Firmware) is an EFI Development Kit II
 platform that enables UEFI support for QEMU/KVM ARM Virtual Machines. This
 package contains a 64-bit build.
+
+
+%package shell-aa64
+Summary:        EFI Shell for aa64
+BuildArch:      noarch
+
+%description shell-aa64
+EFI Shell for aa64
 
 
 %package tools
@@ -270,10 +288,18 @@ build EFI executables and ROMs using the GNU tools.
 Summary:        Open Virtual Machine Firmware
 License:        Apache-2.0 AND BSD-2-Clause-Patent AND BSD-4-Clause AND ISC AND LicenseRef-Fedora-Public-Domain
 Provides:       bundled(openssl)
+Recommends:     shell-ia32
 BuildArch:      noarch
 %description ovmf-ia32
 EFI Development Kit II
 Open Virtual Machine Firmware (ia32)
+
+%package shell-ia32
+Summary:        EFI Shell for ia32
+BuildArch:      noarch
+
+%description shell-ia32
+EFI Shell for ia32
 
 %package ovmf-xen
 Summary:        Open Virtual Machine Firmware, Xen build
@@ -298,6 +324,7 @@ Open Virtual Machine Firmware (experimental builds)
 Summary:        RISC-V Virtual Machine Firmware
 BuildArch:      noarch
 License:        Apache-2.0 AND (BSD-2-Clause OR GPL-2.0-or-later) AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+Recommends:     shell-riscv64
 
 # need libvirt version with qcow2 support
 Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
@@ -306,10 +333,18 @@ Conflicts:  libvirt-daemon-driver-qemu < 9.7.0
 EFI Development Kit II
 RISC-V UEFI Firmware
 
+%package shell-riscv64
+Summary:        EFI Shell for riscv64
+BuildArch:      noarch
+
+%description shell-riscv64
+EFI Shell for riscv64
+
 %package loongarch64
 Summary:        loongarch Virtual Machine Firmware
 BuildArch:      noarch
 License:        Apache-2.0 AND (BSD-2-Clause OR GPL-2.0-or-later) AND BSD-2-Clause-Patent AND LicenseRef-Fedora-Public-Domain
+Recommends:     shell-loongarch64
 
 %description loongarch64
 EFI Development Kit II
@@ -323,6 +358,13 @@ BuildArch:      noarch
 EFI Development Kit II
 Ext4 filesystem driver
 
+%package shell-loongarch64
+Summary:        EFI Shell for loongarch64
+BuildArch:      noarch
+
+%description shell-loongarch64
+EFI Shell for loongarch64
+
 %package tools-python
 Summary:        EFI Development Kit II Tools
 Requires:       python3
@@ -332,6 +374,7 @@ BuildArch:      noarch
 This package provides tools that are needed to build EFI executables
 and ROMs using the GNU tools.  You do not need to install this package;
 you probably want to install edk2-tools only.
+
 # endif fedora
 %endif
 
@@ -690,7 +733,6 @@ done
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.fd
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.secboot.fd
 %{_datadir}/%{name}/ovmf/UefiShell.iso
-%{_datadir}/%{name}/ovmf/Shell.efi
 %{_datadir}/%{name}/ovmf/EnrollDefaultKeys.efi
 %{_datadir}/%{name}/ovmf/DBXUpdate*.bin
 %{_datadir}/qemu/firmware/30-edk2-ovmf-4m-qcow2-x64-sb-enrolled.json
@@ -713,6 +755,8 @@ done
 %{_datadir}/%{name}/ovmf/OVMF_VARS_4M.secboot.qcow2
 %{_datadir}/%{name}/ovmf/*.pcrlock
 %endif
+%files shell-x64
+%{_datadir}/%{name}/ovmf/Shell.efi
 # endif build_ovmf
 %endif
 
@@ -730,7 +774,6 @@ done
 %{_datadir}/%{name}/aarch64/QEMU_EFI.fd
 %{_datadir}/%{name}/aarch64/QEMU_EFI.silent.fd
 %{_datadir}/%{name}/aarch64/QEMU_VARS.fd
-%{_datadir}/%{name}/aarch64/Shell.efi
 %{_datadir}/%{name}/aarch64/DBXUpdate*.bin
 %if %{qemuvars}
 %{_datadir}/%{name}/aarch64/QEMU_EFI-qemuvars-pflash.*
@@ -743,6 +786,8 @@ done
 %{_datadir}/qemu/firmware/51-edk2-aarch64-raw.json
 %{_datadir}/qemu/firmware/52-edk2-aarch64-verbose-qcow2.json
 %{_datadir}/qemu/firmware/53-edk2-aarch64-verbose-raw.json
+%files shell-aa64
+%{_datadir}/%{name}/aarch64/Shell.efi
 # endif build_aarch64
 %endif
 
@@ -780,12 +825,14 @@ done
 %{_datadir}/%{name}/ovmf-ia32/OVMF_CODE.secboot.fd
 %{_datadir}/%{name}/ovmf-ia32/OVMF_VARS.fd
 %{_datadir}/%{name}/ovmf-ia32/OVMF_VARS.secboot.fd
-%{_datadir}/%{name}/ovmf-ia32/Shell.efi
 %{_datadir}/%{name}/ovmf-ia32/UefiShell.iso
 %{_datadir}/%{name}/ovmf-ia32/DBXUpdate*.bin
 %{_datadir}/qemu/firmware/30-edk2-ovmf-ia32-sb-enrolled.json
 %{_datadir}/qemu/firmware/40-edk2-ovmf-ia32-sb.json
 %{_datadir}/qemu/firmware/50-edk2-ovmf-ia32-nosb.json
+
+%files shell-ia32
+%{_datadir}/%{name}/ovmf-ia32/Shell.efi
 
 %files experimental
 %common_files
@@ -809,18 +856,22 @@ done
 %dir %{_datadir}/%{name}/riscv
 %{_datadir}/%{name}/riscv/*.fd
 %{_datadir}/%{name}/riscv/*.qcow2
-%{_datadir}/%{name}/riscv/Shell.efi
 %{_datadir}/qemu/firmware/50-edk2-riscv-qcow2.json
 %endif
+
+%files shell-riscv64
+%{_datadir}/%{name}/riscv/Shell.efi
 
 %if %{build_loongarch64}
 %files loongarch64
 %common_files
 %dir %{_datadir}/%{name}/loongarch64
 %{_datadir}/%{name}/loongarch64/*.fd
-%{_datadir}/%{name}/loongarch64/Shell.efi
 %{_datadir}/qemu/firmware/50-edk2-loongarch64.json
 %endif
+
+%files shell-loongarch64
+%{_datadir}/%{name}/loongarch64/Shell.efi
 
 %files ext4
 %common_files
