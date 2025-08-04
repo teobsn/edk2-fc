@@ -182,6 +182,11 @@ BuildRequires:  xorriso
 # enrolled.
 BuildRequires:  python3-virt-firmware >= 24.2
 
+%if %{defined fedora}
+# generate igvm files
+BuildRequires:  /usr/bin/igvm-wrap
+%endif
+
 # endif build_ovmf
 %endif
 
@@ -504,6 +509,10 @@ build_iso Fedora/ovmf-ia32
 cp DBXUpdate-%{DBXDATE}.x64.bin Fedora/ovmf
 cp DBXUpdate-%{DBXDATE}.ia32.bin Fedora/ovmf-ia32
 
+igvm-wrap --input Fedora/ovmf/OVMF_CODE_4M.fd \
+          --output Fedora/ovmf/OVMF.igvm \
+          --meta --inspect --snp
+
 for raw in */ovmf/*_4M*.fd; do
     qcow2="${raw%.fd}.qcow2"
     qemu-img convert -f raw -O qcow2 -o cluster_size=4096 -S 4096 "$raw" "$qcow2"
@@ -748,6 +757,7 @@ done
 %endif
 %if %{defined fedora}
 %{_datadir}/%{name}/ovmf/MICROVM.fd
+%{_datadir}/%{name}/ovmf/OVMF.igvm
 %{_datadir}/qemu/firmware/50-edk2-ovmf-x64-microvm.json
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.secboot.qcow2
