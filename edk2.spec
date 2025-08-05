@@ -103,7 +103,8 @@ Source44: 50-edk2-ovmf-x64-microvm.json
 Source45: 50-edk2-ovmf-4m-qcow2-x64-nosb.json
 Source46: 51-edk2-ovmf-2m-raw-x64-nosb.json
 Source47: 60-edk2-ovmf-x64-amdsev.json
-Source48: 60-edk2-ovmf-x64-inteltdx.json
+Source48: 60-edk2-ovmf-x64-amdsevsnp.json
+Source49: 60-edk2-ovmf-x64-inteltdx.json
 
 Source50: 50-edk2-riscv-qcow2.json
 
@@ -418,7 +419,7 @@ cp -a -- \
    %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} \
    %{SOURCE30} %{SOURCE31} %{SOURCE32} \
    %{SOURCE40} %{SOURCE41} %{SOURCE42} %{SOURCE43} %{SOURCE44} \
-   %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} \
+   %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} %{SOURCE49} \
    %{SOURCE50} \
    %{SOURCE60} \
    %{SOURCE80} %{SOURCE81} %{SOURCE82} %{SOURCE83} %{SOURCE84} \
@@ -633,6 +634,7 @@ install -m 0644 \
         50-edk2-ovmf-4m-qcow2-x64-nosb.json \
         51-edk2-ovmf-2m-raw-x64-nosb.json \
         60-edk2-ovmf-x64-amdsev.json \
+        60-edk2-ovmf-x64-amdsevsnp.json \
         60-edk2-ovmf-x64-inteltdx.json \
         %{buildroot}%{_datadir}/qemu/firmware
 %if %{defined fedora}
@@ -751,6 +753,7 @@ done
 %{_datadir}/qemu/firmware/50-edk2-ovmf-4m-qcow2-x64-nosb.json
 %{_datadir}/qemu/firmware/51-edk2-ovmf-2m-raw-x64-nosb.json
 %{_datadir}/qemu/firmware/60-edk2-ovmf-x64-amdsev.json
+%{_datadir}/qemu/firmware/60-edk2-ovmf-x64-amdsevsnp.json
 %{_datadir}/qemu/firmware/60-edk2-ovmf-x64-inteltdx.json
 %if %{qemuvars}
 %{_datadir}/%{name}/ovmf/OVMF.qemuvars.fd
