@@ -184,8 +184,8 @@ BuildRequires:  xorriso
 BuildRequires:  python3-virt-firmware >= 24.2
 
 %if %{defined fedora}
-# generate igvm files
-BuildRequires:  /usr/bin/igvm-wrap
+# generate igvm files (using igvm-wrap)
+BuildRequires:  virt-firmware-rs >= 25.8
 %endif
 
 # endif build_ovmf
@@ -511,6 +511,7 @@ cp DBXUpdate-%{DBXDATE}.x64.bin Fedora/ovmf
 cp DBXUpdate-%{DBXDATE}.ia32.bin Fedora/ovmf-ia32
 
 igvm-wrap --input Fedora/ovmf/OVMF_CODE_4M.fd \
+          --vars Fedora/ovmf/OVMF_VARS_4M.fd \
           --output Fedora/ovmf/OVMF.igvm \
           --meta --inspect --snp
 
