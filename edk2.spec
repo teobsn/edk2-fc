@@ -17,11 +17,11 @@
 %endif
 
 # edk2-stable202505
-%define GITDATE        20250523
-%define GITCOMMIT      6951dfe7d59d
+%define GITDATE        20250812
+%define GITCOMMIT      d46aa46c8361
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT b715b3c400ac
+%define PLATFORMS_COMMIT 09876ff4b365
 
 %define OPENSSL_VER    3.5.0
 %define OPENSSL_COMMIT 63b528e6476ff36efcf2cda5c083f3f3d7cf9210
@@ -141,12 +141,8 @@ Patch0016: 0016-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
 Patch0017: 0017-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
 Patch0018: 0018-openssl-silence-unused-variable-warning.patch
-Patch0019: 0019-CryptoPkg-openssl-add-ossl_bio_print_labeled_buf-stu.patch
-Patch0020: 0020-CryptoPkg-CrtLib-add-strpbrk-implementation.patch
-Patch0021: 0021-CryptoPkg-CrtLib-explicitly-define-INT32-constants.patch
-Patch0022: 0022-CryptoPkg-openssl-disable-some-features-support.patch
-Patch0023: 0023-OvmfPkg-PlatformDxe-register-page-fault-handler-for-.patch
-Patch0024: 0024-tdx-debug-load-PlatformDxe-in-TDX-mode-for-custom-PF.patch
+Patch0019: 0019-OvmfPkg-PlatformDxe-register-page-fault-handler-for-.patch
+Patch0020: 0020-tdx-debug-load-PlatformDxe-in-TDX-mode-for-custom-PF.patch
 
 
 # needed by %prep

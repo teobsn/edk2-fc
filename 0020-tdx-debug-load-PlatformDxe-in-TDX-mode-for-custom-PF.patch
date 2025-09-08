@@ -1,7 +1,7 @@
-From 45ed47357d64a83622aef5b50b0325d1e6e0a5c7 Mon Sep 17 00:00:00 2001
+From 49fcf0e051a85bb5ad85add1863b9fa6878e57e9 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Tue, 8 Jul 2025 12:26:52 +0200
-Subject: [PATCH 24/25] [tdx debug] load PlatformDxe in TDX mode for custom PF
+Subject: [PATCH 20/20] [tdx debug] load PlatformDxe in TDX mode for custom PF
  handler
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 24/25] [tdx debug] load PlatformDxe in TDX mode for custom PF
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/OvmfPkg/IntelTdx/IntelTdxX64.fdf b/OvmfPkg/IntelTdx/IntelTdxX64.fdf
-index c05761abeaa0..d309b904c927 100644
+index da48f67fb342..884b1d1ed8b3 100644
 --- a/OvmfPkg/IntelTdx/IntelTdxX64.fdf
 +++ b/OvmfPkg/IntelTdx/IntelTdxX64.fdf
 @@ -244,6 +244,7 @@ [FV.DXEFV]
@@ -20,7 +20,7 @@ index c05761abeaa0..d309b904c927 100644
  
  #
  # Variable driver stack (non-SMM)
-@@ -328,7 +329,6 @@ [FV.NCCFV]
+@@ -319,7 +320,6 @@ [FV.NCCFV]
  
  INF  OvmfPkg/QemuRamfbDxe/QemuRamfbDxe.inf
  INF  OvmfPkg/VirtioGpuDxe/VirtioGpu.inf
@@ -29,5 +29,5 @@ index c05761abeaa0..d309b904c927 100644
  !include OvmfPkg/Include/Fdf/ShellDxe.fdf.inc
  !include OvmfPkg/Include/Fdf/OvmfRngDxe.fdf.inc
 -- 
-2.50.0
+2.51.0
 
