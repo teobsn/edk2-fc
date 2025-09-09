@@ -12,6 +12,7 @@ CAVIUM_ERRATUM_27456     = TRUE
 
 [opts.ovmf.4m]
 FD_SIZE_4MB              = TRUE
+DEBUG_TO_MEM             = TRUE
 
 [opts.ovmf.2m]
 FD_SIZE_2MB              = TRUE
@@ -39,6 +40,7 @@ BUILD_SHELL              = FALSE
 
 [opts.armvirt.verbose]
 DEBUG_PRINT_ERROR_LEVEL  = 0x8040004F
+DEBUG_TO_MEM             = TRUE
 
 [opts.armvirt.silent]
 DEBUG_PRINT_ERROR_LEVEL  = 0x80000000
