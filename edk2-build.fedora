@@ -288,36 +288,6 @@ cpy3 = LOONGARCH64/Shell.efi
 
 
 #####################################################################
-# 32-bit builds
-
-[build.ovmf.ia32.default]
-desc = ovmf build (32-bit, 2MB)
-conf = OvmfPkg/OvmfPkgIa32.dsc
-arch = IA32
-opts = ovmf.common
-       ovmf.2m
-pcds = nx.compat.x64
-plat = OvmfIa32
-dest = Fedora/ovmf-ia32
-cpy1 = FV/OVMF_CODE.fd
-cpy2 = FV/OVMF_VARS.fd
-cpy3 = IA32/Shell.efi
-
-[build.ovmf.ia32.sb.smm]
-desc = ovmf build (32-bit, 2MB, q35 only, needs smm, secure boot)
-conf = OvmfPkg/OvmfPkgIa32.dsc
-arch = IA32
-opts = ovmf.common
-       ovmf.2m
-       ovmf.sb.smm
-pcds = nx.strict
-plat = OvmfIa32
-dest = Fedora/ovmf-ia32
-cpy1 = FV/OVMF_CODE.fd OVMF_CODE.secboot.fd
-cpy2 = IA32/EnrollDefaultKeys.efi
-
-
-#####################################################################
 # experimental builds
 
 [build.ovmf.sb.stateless]
