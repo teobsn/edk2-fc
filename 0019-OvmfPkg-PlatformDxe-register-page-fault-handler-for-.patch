@@ -1,20 +1,41 @@
-From 3a5b858965752683f46de78569750b7d907ef133 Mon Sep 17 00:00:00 2001
+From 0f68686e690a3598bcb1416d2cc0251f691a922c Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Fri, 20 Jun 2025 11:52:43 +0200
-Subject: [PATCH 19/20] OvmfPkg/PlatformDxe: register page fault handler for NX
+Subject: [PATCH 19/19] OvmfPkg/PlatformDxe: register page fault handler for NX
  fixups
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 ---
- OvmfPkg/PlatformDxe/Platform.inf     |   8 +-
+ OvmfPkg/IntelTdx/IntelTdxX64.fdf     |   2 +-
+ OvmfPkg/PlatformDxe/Platform.inf     |   9 +-
  OvmfPkg/PlatformDxe/PlatformConfig.h |   5 +
- OvmfPkg/PlatformDxe/PageFault.c      | 322 +++++++++++++++++++++++++++
+ OvmfPkg/PlatformDxe/PageFault.c      | 371 +++++++++++++++++++++++++++
  OvmfPkg/PlatformDxe/Platform.c       |   1 +
- 4 files changed, 335 insertions(+), 1 deletion(-)
+ 5 files changed, 386 insertions(+), 2 deletions(-)
  create mode 100644 OvmfPkg/PlatformDxe/PageFault.c
 
+diff --git a/OvmfPkg/IntelTdx/IntelTdxX64.fdf b/OvmfPkg/IntelTdx/IntelTdxX64.fdf
+index da48f67fb342..884b1d1ed8b3 100644
+--- a/OvmfPkg/IntelTdx/IntelTdxX64.fdf
++++ b/OvmfPkg/IntelTdx/IntelTdxX64.fdf
+@@ -244,6 +244,7 @@ [FV.DXEFV]
+ INF OvmfPkg/TdxDxe/TdxDxe.inf
+ 
+ INF  OvmfPkg/IoMmuDxe/IoMmuDxe.inf
++INF  OvmfPkg/PlatformDxe/Platform.inf
+ 
+ #
+ # Variable driver stack (non-SMM)
+@@ -319,7 +320,6 @@ [FV.NCCFV]
+ 
+ INF  OvmfPkg/QemuRamfbDxe/QemuRamfbDxe.inf
+ INF  OvmfPkg/VirtioGpuDxe/VirtioGpu.inf
+-INF  OvmfPkg/PlatformDxe/Platform.inf
+ 
+ !include OvmfPkg/Include/Fdf/ShellDxe.fdf.inc
+ !include OvmfPkg/Include/Fdf/OvmfRngDxe.fdf.inc
 diff --git a/OvmfPkg/PlatformDxe/Platform.inf b/OvmfPkg/PlatformDxe/Platform.inf
-index 4b5a2557bf04..fbe45520a0a1 100644
+index 4b5a2557bf04..a13ef10076fb 100644
 --- a/OvmfPkg/PlatformDxe/Platform.inf
 +++ b/OvmfPkg/PlatformDxe/Platform.inf
 @@ -18,6 +18,7 @@ [Defines]
@@ -40,11 +61,12 @@ index 4b5a2557bf04..fbe45520a0a1 100644
    UefiBootServicesTableLib
    UefiHiiServicesLib
    UefiLib
-@@ -50,12 +53,14 @@ [Pcd]
+@@ -50,12 +53,15 @@ [Pcd]
    gEfiMdeModulePkgTokenSpaceGuid.PcdVideoVerticalResolution
    gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoHorizontalResolution
    gEfiMdeModulePkgTokenSpaceGuid.PcdSetupVideoVerticalResolution
 +  gEfiMdeModulePkgTokenSpaceGuid.PcdDxeNxMemoryProtectionPolicy
++  gEfiMdePkgTokenSpaceGuid.PcdConfidentialComputingGuestAttr
    gUefiOvmfPkgTokenSpaceGuid.PcdVideoResolutionSource
  
  [Protocols]
@@ -55,7 +77,7 @@ index 4b5a2557bf04..fbe45520a0a1 100644
  
  [Guids]
    gEfiIfrTianoGuid
-@@ -66,4 +71,5 @@ [Depex]
+@@ -66,4 +72,5 @@ [Depex]
    gEfiHiiConfigRoutingProtocolGuid  AND
    gEfiHiiDatabaseProtocolGuid       AND
    gEfiVariableArchProtocolGuid      AND
@@ -78,10 +100,10 @@ index 93d06a9a6b1a..4c4c54c11032 100644
  #endif // _PLATFORM_CONFIG_H_
 diff --git a/OvmfPkg/PlatformDxe/PageFault.c b/OvmfPkg/PlatformDxe/PageFault.c
 new file mode 100644
-index 000000000000..86415b516586
+index 000000000000..50482d0c993d
 --- /dev/null
 +++ b/OvmfPkg/PlatformDxe/PageFault.c
-@@ -0,0 +1,322 @@
+@@ -0,0 +1,371 @@
 +/** @file
 +  custom page fault handler to fixup nx faults
 +
@@ -200,17 +222,33 @@ index 000000000000..86415b516586
 +
 +/*
 + * Fix page tables, clear NX, set RW, using 1G pages, lowest 512G.
++ *
++ * Background:
++ *
++ * Sometimes NX/RW faults happen with the kernel still running on the EFI page
++ * tables, but after the kernel installed its own page fault handler.
++ *
++ * Sometimes the kernel handler fails to deal with the faults -> BOOM.
++ *
++ * So lets tweak the EFI page table to allow everything if our heuristics
++ * indicate this is a good idea.
 + */
 +VOID
 +EFIAPI
 +PageFaultFixMap (
-+  VOID
++  CHAR8 *Reason
 +  )
 +{
 +  UINT64  Idx;
 +  UINT64  *Pd3;
 +
-+  DEBUG ((DEBUG_INFO, "%a: global RW+NX fixup\n", __func__, Pd3));
++  if (PcdGet64 (PcdConfidentialComputingGuestAttr) != 0) {
++    /* switching to 1G pages will break things */
++    DEBUG ((DEBUG_INFO, "%a: skip global RW+NX fixup in CVM\n", __func__));
++    return;
++  }
++
++  DEBUG ((DEBUG_INFO, "%a: global RW+NX fixup (%a)\n", __func__, Reason));
 +
 +  Pd3 = PageFaultGetPd3 (0);
 +  DEBUG ((DEBUG_VERBOSE, "%a:    pd3 at 0x%lx [global RW+NX fixup]\n", __func__, Pd3));
@@ -329,9 +367,33 @@ index 000000000000..86415b516586
 +  IN  VOID       *Context
 +  )
 +{
++  STATIC EFI_GUID  SHIM_LOCK_GUID = {
++    0x605dab50, 0xe046, 0x4300, { 0xab, 0xb6, 0x3d, 0xd8, 0x10, 0xdd, 0x8b, 0x23 }
++  };
++  STATIC EFI_GUID  SHIM_IMAGE_LOADER_GUID = {
++    0x1f492041, 0xfadb, 0x4e59, { 0x9e, 0x57, 0x7c, 0xaf, 0xe7, 0x3a, 0x55, 0xab }
++  };
++  VOID             *ShimLock   = NULL;
++  VOID             *ShimLoader = NULL;
++  BOOLEAN          MessageWait = FALSE;
++  BOOLEAN          HaveOldShim;
++
++  gBS->LocateProtocol (&SHIM_LOCK_GUID, NULL, &ShimLock);
++  gBS->LocateProtocol (&SHIM_IMAGE_LOADER_GUID, NULL, &ShimLoader);
++  HaveOldShim = (ShimLock != NULL) && (ShimLoader == NULL);
++
++  DEBUG ((
++      DEBUG_INFO,
++      "%a: shim protocols: lock=%a, loader=%a -> old-shim=%a\n",
++      __func__,
++      (ShimLock != NULL) ? "yes" : "no",
++      (ShimLoader != NULL) ? "yes" : "no",
++      (HaveOldShim) ? "yes" : "no"
++      ));
 +  DEBUG ((DEBUG_INFO, "%a: fixups: %d NX, %d RW\n", __func__, mFixupNX, mFixupRW));
 +
 +  if (mFixupNX || mFixupRW) {
++    /* we had to fixup NX or RW faults -> broken behavior -> report it */
 +    AsciiPrint (
 +      "%a: Page fault fixups needed (NX: %d, RW: %d).\n"
 +      "%a: The guest OS boot chain is not NX clean.\n",
@@ -340,18 +402,27 @@ index 000000000000..86415b516586
 +      mFixupRW,
 +      __func__
 +      );
++    MessageWait = TRUE;
++  }
 +
-+    if (mFixupNX) {
-+      AsciiPrint (
-+        "%a: Applying global page table fixup.\n",
-+        __func__,
-+        mFixupNX,
-+        mFixupRW,
-+        __func__
-+        );
-+      PageFaultFixMap ();
-+    }
++  if (mFixupNX) {
++    /* we had to fixup NX faults -> apply global fixup as precaution + report it */
++    AsciiPrint (
++      "%a: Applying global page table fixup (saw NX faults).\n",
++      __func__
++      );
++    PageFaultFixMap ("nx-fault");
 +
++  } else if (HaveOldShim) {
++    /* we detected shim older than v16 -> apply global fixup as precaution + report it */
++    AsciiPrint (
++      "%a: Applying global page table fixup (shim is older than v16).\n",
++      __func__
++      );
++    PageFaultFixMap ("old-shim");
++  }
++
++  if (MessageWait) {
 +    gBS->Stall (3000000);
 +  }
 +}
