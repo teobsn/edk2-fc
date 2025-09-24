@@ -60,7 +60,7 @@ PcdUse5LevelPageTable    = TRUE
 PcdDxeNxMemoryProtectionPolicy      = 0xC000000000007FD5
 PcdImageProtectionPolicy            = 0x03
 PcdSetNxForStack                    = TRUE
-#PcdNullPointerDetectionPropertyMask = 0x03
+PcdNullPointerDetectionPropertyMask = 0x03
 PcdUninstallMemAttrProtocol         = FALSE
 
 [pcds.nx.compat.aa64]
