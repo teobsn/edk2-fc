@@ -138,6 +138,10 @@ Patch0017: 0017-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
 Patch0018: 0018-openssl-silence-unused-variable-warning.patch
 Patch0019: 0019-OvmfPkg-PlatformDxe-register-page-fault-handler-for-.patch
 Patch0020: 0020-SecurityPkg-Tpm2DeviceLibDTpm-Remove-global-variable.patch
+Patch0021: 0021-OvmfPkg-MemFd-move-MEMFD-config-from-OvmfPkgX64-to-i.patch
+Patch0022: 0022-OvmfPkg-MemFd-add-AmdSev-changes-switch-AmdSev-build.patch
+Patch0023: 0023-OvmfPkg-MemFD-swap-memory-log-buffer-and-pei-firmwar.patch
+Patch0024: 0024-UefiCpuPkg-CpuDxe-fix-page-table-walk-in-confidentia.patch
 
 
 # needed by %prep

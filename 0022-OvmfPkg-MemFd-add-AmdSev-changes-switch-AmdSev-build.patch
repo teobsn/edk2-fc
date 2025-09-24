@@ -1,0 +1,127 @@
+From bcd0dd71cde5842b9cbd80ac669da71f42742f45 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Thu, 11 Sep 2025 14:00:36 +0200
+Subject: [PATCH 22/24] OvmfPkg/MemFd: add AmdSev changes, switch AmdSev build
+ to include
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+(cherry picked from commit 4b1711d431a7605eb73c4c9c4f88ca8bf59750e9)
+---
+ OvmfPkg/AmdSev/AmdSevX64.fdf      | 65 +------------------------------
+ OvmfPkg/Include/Fdf/MemFd.fdf.inc | 16 +++++++-
+ 2 files changed, 15 insertions(+), 66 deletions(-)
+
+diff --git a/OvmfPkg/AmdSev/AmdSevX64.fdf b/OvmfPkg/AmdSev/AmdSevX64.fdf
+index 89b49ea7682f..dbb733310e7e 100644
+--- a/OvmfPkg/AmdSev/AmdSevX64.fdf
++++ b/OvmfPkg/AmdSev/AmdSevX64.fdf
+@@ -34,70 +34,7 @@ [FD.OVMF]
+ 
+ ################################################################################
+ 
+-[FD.MEMFD]
+-BaseAddress   = $(MEMFD_BASE_ADDRESS)
+-Size          = 0xE00000
+-ErasePolarity = 1
+-BlockSize     = 0x10000
+-NumBlocks     = 0xE0
+-
+-0x000000|0x006000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPageTablesBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPageTablesSize
+-
+-0x006000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfLockBoxStorageBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfLockBoxStorageSize
+-
+-0x007000|0x001000
+-gEfiMdePkgTokenSpaceGuid.PcdGuidedExtractHandlerTableAddress|gUefiOvmfPkgTokenSpaceGuid.PcdGuidedExtractHandlerTableSize
+-
+-0x008000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecGhcbPageTableBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecGhcbPageTableSize
+-
+-0x009000|0x002000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecGhcbBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecGhcbSize
+-
+-0x00B000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfWorkAreaBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfWorkAreaSize
+-
+-0x00C000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecGhcbBackupBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecGhcbBackupSize
+-
+-0x00D000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSnpSecretsBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSnpSecretsSize
+-
+-0x00E000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfCpuidBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfCpuidSize
+-
+-0x00F000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecSvsmCaaBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecSvsmCaaSize
+-
+-0x010000|0x000C00
+-gUefiOvmfPkgTokenSpaceGuid.PcdSevLaunchSecretBase|gUefiOvmfPkgTokenSpaceGuid.PcdSevLaunchSecretSize
+-
+-0x010C00|0x000400
+-gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableBase|gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableSize
+-
+-0x011000|0x001000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecApicPageTableBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecApicPageTableSize
+-
+-0x012000|0x00E000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamSize
+-
+-0x020000|0x0E0000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfPeiMemFvBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfPeiMemFvSize
+-FV = PEIFV
+-
+-0x100000|0xD00000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfDxeMemFvBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfDxeMemFvSize
+-FV = DXEFV
+-
+-##########################################################################################
+-# Set the SEV-ES specific work area PCDs (used for all forms of SEV since the
+-# the SEV STATUS MSR is now saved in the work area)
+-#
+-SET gUefiCpuPkgTokenSpaceGuid.PcdSevEsWorkAreaBase = $(MEMFD_BASE_ADDRESS) +  gUefiOvmfPkgTokenSpaceGuid.PcdOvmfWorkAreaBase + gUefiOvmfPkgTokenSpaceGuid.PcdOvmfConfidentialComputingWorkAreaHeader
+-SET gUefiCpuPkgTokenSpaceGuid.PcdSevEsWorkAreaSize = gUefiOvmfPkgTokenSpaceGuid.PcdOvmfWorkAreaSize - gUefiOvmfPkgTokenSpaceGuid.PcdOvmfConfidentialComputingWorkAreaHeader
+-##########################################################################################
++!include OvmfPkg/Include/Fdf/MemFd.fdf.inc
+ 
+ ################################################################################
+ 
+diff --git a/OvmfPkg/Include/Fdf/MemFd.fdf.inc b/OvmfPkg/Include/Fdf/MemFd.fdf.inc
+index 52cbde8c081b..1c9a4df6ae1a 100644
+--- a/OvmfPkg/Include/Fdf/MemFd.fdf.inc
++++ b/OvmfPkg/Include/Fdf/MemFd.fdf.inc
+@@ -80,16 +80,28 @@ [FD.MEMFD]
+ 0x00F000|0x001000
+ gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecSvsmCaaBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecSvsmCaaSize
+ 
++#
++# SEV-SNP: pass secrets from host (qemu) to guest
++#
++0x010000|0x000C00
++gUefiOvmfPkgTokenSpaceGuid.PcdSevLaunchSecretBase|gUefiOvmfPkgTokenSpaceGuid.PcdSevLaunchSecretSize
++
++#
++# SEV-SNP: pass hashes for kernel/initrd/cmdline from host (qemu) to guest
++#
++0x010C00|0x000400
++gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableBase|gUefiOvmfPkgTokenSpaceGuid.PcdQemuHashTableSize
++
+ #
+ # page table, for 2M -> 4k split when mapping APIC
+ #
+-0x010000|0x001000
++0x011000|0x001000
+ gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecApicPageTableBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecApicPageTableSize
+ 
+ #
+ # initial memory for SEC+PEI
+ #
+-0x011000|0x00F000
++0x012000|0x00E000
+ gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamSize
+ 
+ #
+-- 
+2.51.0
+

@@ -1,0 +1,53 @@
+From ef7ddd068d0662d20a4ab85d36dcf016b5b2b0c5 Mon Sep 17 00:00:00 2001
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Tue, 23 Sep 2025 06:36:46 -0400
+Subject: [PATCH 24/24] UefiCpuPkg/CpuDxe: fix page table walk in confidential
+ VM
+
+`PageStartAddress` variable was not set correctly because the encryption bit
+was not considered, which broke the page walk logic.
+
+Get the bitmask and mask the encryption bit.
+
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+
+[ PR pending: https://github.com/tianocore/edk2/pull/11546 ]
+---
+ UefiCpuPkg/CpuDxe/CpuPageTable.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/UefiCpuPkg/CpuDxe/CpuPageTable.c b/UefiCpuPkg/CpuDxe/CpuPageTable.c
+index 9a519bcb7ec0..433316b4de82 100644
+--- a/UefiCpuPkg/CpuDxe/CpuPageTable.c
++++ b/UefiCpuPkg/CpuDxe/CpuPageTable.c
+@@ -975,6 +975,7 @@ RefreshGcdMemoryAttributesFromPaging (
+   UINT64                           Capabilities;
+   UINT64                           NewAttributes;
+   UINTN                            Index;
++  UINT64                           AddressEncMask;
+ 
+   //
+   // Assuming that memory space map returned is sorted already; otherwise sort
+@@ -1055,10 +1056,18 @@ RefreshGcdMemoryAttributesFromPaging (
+           break;
+         }
+ 
++        //
++        // Get the mask for the memory encryption bit for Tdx and Sev
++        //
++        AddressEncMask = PcdGet64 (PcdPteMemoryEncryptionAddressOrMask);
++        if (AddressEncMask == 0) {
++          AddressEncMask = PcdGet64 (PcdTdxSharedBitMask);
++        }
++
+         //
+         // Note current memory space might start in the middle of a page
+         //
+-        PageStartAddress = (*PageEntry) & (UINT64)PageAttributeToMask (PageAttribute);
++        PageStartAddress = (*PageEntry) & (UINT64)PageAttributeToMask (PageAttribute) & ~AddressEncMask;
+         PageLength       = PageAttributeToLength (PageAttribute) - (BaseAddress - PageStartAddress);
+         Attributes       = GetAttributesFromPageEntry (PageEntry);
+       }
+-- 
+2.51.0
+

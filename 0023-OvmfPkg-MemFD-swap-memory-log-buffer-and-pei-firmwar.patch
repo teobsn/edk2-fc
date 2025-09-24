@@ -1,0 +1,53 @@
+From 7fc65b37ab48c3b0115435ff74465a62892199c0 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Mon, 22 Sep 2025 08:15:14 +0200
+Subject: [PATCH 23/24] OvmfPkg/MemFD: swap memory log buffer and pei firmware
+ volume
+
+This places the memory log buffer next to initial memory for heap and
+stack (TempRamBase) and includes it in the memory descriptor #3 for
+SEV-SNP (SNP_SEC_MEM_{BASE,SIZE}_DESC_3).  This makes sure the memory
+is pre-validated at launch time, which is needed to make memory debug
+logging work in SEV-SNP mode.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+
+[ PR pending: https://github.com/tianocore/edk2/pull/11540 ]
+---
+ OvmfPkg/Include/Fdf/MemFd.fdf.inc | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/OvmfPkg/Include/Fdf/MemFd.fdf.inc b/OvmfPkg/Include/Fdf/MemFd.fdf.inc
+index 1c9a4df6ae1a..468e35125a19 100644
+--- a/OvmfPkg/Include/Fdf/MemFd.fdf.inc
++++ b/OvmfPkg/Include/Fdf/MemFd.fdf.inc
+@@ -104,19 +104,19 @@ [FD.MEMFD]
+ 0x012000|0x00E000
+ gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfSecPeiTempRamSize
+ 
++#
++# memory debug log buffer for early boot phase
++#
++0x020000|0x10000
++gUefiOvmfPkgTokenSpaceGuid.PcdOvmfEarlyMemDebugLogBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfEarlyMemDebugLogSize
++
+ #
+ # PEI firmware volume is uncompressed to this area
+ #
+-0x020000|0x0D0000
++0x030000|0x0D0000
+ gUefiOvmfPkgTokenSpaceGuid.PcdOvmfPeiMemFvBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfPeiMemFvSize
+ FV = PEIFV
+ 
+-#
+-# memory debug log buffer for early boot phase
+-#
+-0x0F0000|0x10000
+-gUefiOvmfPkgTokenSpaceGuid.PcdOvmfEarlyMemDebugLogBase|gUefiOvmfPkgTokenSpaceGuid.PcdOvmfEarlyMemDebugLogSize
+-
+ #
+ # DXE firmware volume is uncompressed to this area
+ #
+-- 
+2.51.0
+
