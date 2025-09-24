@@ -300,7 +300,7 @@ opts = ovmf.common
 pcds = nx.strict
        la57
 plat = OvmfX64
-dest = Fedora/experimental
+dest = Fedora/ovmf
 cpy1 = FV/OVMF.fd OVMF.stateless.fd
 
 [build.armvirt.aa64.strict.nx]

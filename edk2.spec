@@ -492,9 +492,9 @@ for raw in */ovmf/*_4M*.fd; do
     rm -f "$raw"
 done
 
-# experimental stateless builds
-virt-fw-vars --input   Fedora/experimental/OVMF.stateless.fd \
-             --output  Fedora/experimental/OVMF.stateless.secboot.fd \
+# stateless builds
+virt-fw-vars --input   Fedora/ovmf/OVMF.stateless.fd \
+             --output  Fedora/ovmf/OVMF.stateless.secboot.fd \
              --set-dbx DBXUpdate-%{DBXDATE}.x64.bin \
              --enroll-redhat --secure-boot \
              --set-fallback-no-reboot
@@ -502,7 +502,7 @@ virt-fw-vars --input   Fedora/experimental/OVMF.stateless.fd \
 for image in \
 	Fedora/ovmf/OVMF_CODE.secboot.fd \
 	Fedora/ovmf/OVMF_CODE_4M.secboot.qcow2 \
-	Fedora/experimental/OVMF.stateless.secboot.fd \
+	Fedora/ovmf/OVMF.stateless.secboot.fd \
 ; do
 	pcr="${image}"
 	pcr="${pcr%.fd}"
@@ -712,6 +712,8 @@ done
 %{_datadir}/%{name}/ovmf/OVMF.amdsev.fd
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.fd
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.secboot.fd
+%{_datadir}/%{name}/ovmf/OVMF.stateless.fd
+%{_datadir}/%{name}/ovmf/OVMF.stateless.secboot.fd
 %{_datadir}/%{name}/ovmf/UefiShell.iso
 %{_datadir}/%{name}/ovmf/EnrollDefaultKeys.efi
 %{_datadir}/%{name}/ovmf/DBXUpdate*.bin
@@ -807,7 +809,6 @@ done
 %if %{build_aarch64}
 %{_datadir}/%{name}/experimental/*.raw
 %endif
-%{_datadir}/%{name}/experimental/*.pcrlock
 
 %files ovmf-xen
 %common_files
