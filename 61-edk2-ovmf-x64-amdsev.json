@@ -1,5 +1,5 @@
 {
-    "description": "OVMF with SEV-ES support",
+    "description": "OVMF with AMD SEV-* support, direct kernel boot",
     "interface-types": [
         "uefi"
     ],
