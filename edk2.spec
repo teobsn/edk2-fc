@@ -605,13 +605,13 @@ install -m 0644 \
         41-edk2-ovmf-2m-raw-x64-sb.json \
         50-edk2-ovmf-4m-qcow2-x64-nosb.json \
         51-edk2-ovmf-2m-raw-x64-nosb.json \
-        60-edk2-ovmf-x64-stateless.json \
         61-edk2-ovmf-x64-amdsev.json \
         61-edk2-ovmf-x64-inteltdx.json \
         %{buildroot}%{_datadir}/qemu/firmware
 %if %{defined fedora}
 install -m 0644 \
         50-edk2-ovmf-x64-microvm.json \
+        60-edk2-ovmf-x64-stateless.json \
         %{buildroot}%{_datadir}/qemu/firmware
 %endif
 
@@ -712,8 +712,6 @@ done
 %{_datadir}/%{name}/ovmf/OVMF.amdsev.fd
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.fd
 %{_datadir}/%{name}/ovmf/OVMF.inteltdx.secboot.fd
-%{_datadir}/%{name}/ovmf/OVMF.stateless.fd
-%{_datadir}/%{name}/ovmf/OVMF.stateless.secboot.fd
 %{_datadir}/%{name}/ovmf/UefiShell.iso
 %{_datadir}/%{name}/ovmf/EnrollDefaultKeys.efi
 %{_datadir}/%{name}/ovmf/DBXUpdate*.bin
@@ -723,7 +721,6 @@ done
 %{_datadir}/qemu/firmware/41-edk2-ovmf-2m-raw-x64-sb.json
 %{_datadir}/qemu/firmware/50-edk2-ovmf-4m-qcow2-x64-nosb.json
 %{_datadir}/qemu/firmware/51-edk2-ovmf-2m-raw-x64-nosb.json
-%{_datadir}/qemu/firmware/60-edk2-ovmf-x64-stateless.json
 %{_datadir}/qemu/firmware/61-edk2-ovmf-x64-amdsev.json
 %{_datadir}/qemu/firmware/61-edk2-ovmf-x64-inteltdx.json
 %if %{qemuvars}
@@ -732,7 +729,10 @@ done
 %if %{defined fedora}
 %{_datadir}/%{name}/ovmf/MICROVM.fd
 %{_datadir}/%{name}/ovmf/OVMF.igvm
+%{_datadir}/%{name}/ovmf/OVMF.stateless.fd
+%{_datadir}/%{name}/ovmf/OVMF.stateless.secboot.fd
 %{_datadir}/qemu/firmware/50-edk2-ovmf-x64-microvm.json
+%{_datadir}/qemu/firmware/60-edk2-ovmf-x64-stateless.json
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.secboot.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_VARS_4M.qcow2
