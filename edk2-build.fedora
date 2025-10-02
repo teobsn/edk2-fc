@@ -195,6 +195,19 @@ plat = IntelTdx
 dest = Fedora/ovmf
 cpy1 = FV/OVMF.fd OVMF.inteltdx.fd
 
+[build.ovmf.sb.stateless]
+desc = ovmf build (64-bit, stateless secure boot)
+conf = OvmfPkg/OvmfPkgX64.dsc
+arch = X64
+opts = ovmf.common
+       ovmf.4m
+       ovmf.sb.stateless
+pcds = nx.strict
+       la57
+plat = OvmfX64
+dest = Fedora/ovmf
+cpy1 = FV/OVMF.fd OVMF.stateless.fd
+
 
 #####################################################################
 # armvirt builds
@@ -289,19 +302,6 @@ cpy3 = LOONGARCH64/Shell.efi
 
 #####################################################################
 # experimental builds
-
-[build.ovmf.sb.stateless]
-desc = ovmf build (64-bit, stateless secure boot)
-conf = OvmfPkg/OvmfPkgX64.dsc
-arch = X64
-opts = ovmf.common
-       ovmf.4m
-       ovmf.sb.stateless
-pcds = nx.strict
-       la57
-plat = OvmfX64
-dest = Fedora/ovmf
-cpy1 = FV/OVMF.fd OVMF.stateless.fd
 
 [build.armvirt.aa64.strict.nx]
 desc = ArmVirt build for qemu, 64-bit (arm v8), verbose
