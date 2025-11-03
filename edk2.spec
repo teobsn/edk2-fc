@@ -145,6 +145,7 @@ Patch0024: 0024-UefiCpuPkg-CpuDxe-fix-page-table-walk-in-confidentia.patch
 Patch0025: 0025-OvmfPkg-PlatformDxe-add-check-for-1g-page-support.patch
 Patch0026: 0026-MdeModulePkg-Fix-malformed-terminal-control-sequence.patch
 Patch0027: 0027-OvmfPkg-IoMmuDxe-Fix-1M-and-2M-buffer-handling.patch
+Patch0028: 0028-UefiCpuPkg-CpuExceptionHandlerLib-fix-push-instructi.patch
 
 
 # needed by %prep
