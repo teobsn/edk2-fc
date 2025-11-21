@@ -1,7 +1,7 @@
-From 7cb925d8dad6be9e9b749c7331fe0b0da8fd5e1c Mon Sep 17 00:00:00 2001
+From 2fc3b220ea8270fa9b28cc7fd41e0ad2b6877bf2 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Wed, 24 Jun 2020 11:40:09 +0200
-Subject: [PATCH 12/17] SecurityPkg/Tcg2Dxe: suppress error on no swtpm in
+Subject: [PATCH 12/21] SecurityPkg/Tcg2Dxe: suppress error on no swtpm in
  silent aa64 build (RH)
 
 Notes about the RHEL-8.3/20200603-ca407c7246bf [edk2-stable202005] ->
@@ -43,7 +43,7 @@ index a645474bf3cd..57795bd8d512 100644
    PrintLib
    UefiLib
 diff --git a/SecurityPkg/Tcg/Tcg2Dxe/Tcg2Dxe.c b/SecurityPkg/Tcg/Tcg2Dxe/Tcg2Dxe.c
-index b55b6c12d2c5..4028cd0e1be3 100644
+index 85a852842d50..01977018fa88 100644
 --- a/SecurityPkg/Tcg/Tcg2Dxe/Tcg2Dxe.c
 +++ b/SecurityPkg/Tcg/Tcg2Dxe/Tcg2Dxe.c
 @@ -29,6 +29,7 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
@@ -54,7 +54,7 @@ index b55b6c12d2c5..4028cd0e1be3 100644
  #include <Library/BaseMemoryLib.h>
  #include <Library/UefiRuntimeServicesTableLib.h>
  #include <Library/UefiDriverEntryPoint.h>
-@@ -2743,6 +2744,22 @@ DriverEntry (
+@@ -2753,6 +2754,22 @@ DriverEntry (
        CompareGuid (PcdGetPtr (PcdTpmInstanceGuid), &gEfiTpmDeviceInstanceTpm12Guid))
    {
      DEBUG ((DEBUG_INFO, "No TPM2 instance required!\n"));
@@ -78,5 +78,5 @@ index b55b6c12d2c5..4028cd0e1be3 100644
    }
  
 -- 
-2.45.0
+2.51.1
 

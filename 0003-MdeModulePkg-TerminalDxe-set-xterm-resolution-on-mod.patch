@@ -1,4 +1,4 @@
-From 2cefc1445bdb3a5e40b46f322f18f339d8320efd Mon Sep 17 00:00:00 2001
+From 1226cc00d235423fd871e8eb97374fd0df2cc277 Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Tue, 25 Feb 2014 22:40:01 +0100
 Subject: [PATCH 03/21] MdeModulePkg: TerminalDxe: set xterm resolution on mode
@@ -87,10 +87,10 @@ Signed-off-by: Laszlo Ersek <lersek@redhat.com>
  3 files changed, 35 insertions(+)
 
 diff --git a/MdeModulePkg/MdeModulePkg.dec b/MdeModulePkg/MdeModulePkg.dec
-index 5250d77ecc2b..5a4808c26780 100644
+index 0d981111edd9..77d8aa49df28 100644
 --- a/MdeModulePkg/MdeModulePkg.dec
 +++ b/MdeModulePkg/MdeModulePkg.dec
-@@ -2287,6 +2287,10 @@ [PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
+@@ -2300,6 +2300,10 @@ [PcdsFixedAtBuild, PcdsPatchableInModule, PcdsDynamic, PcdsDynamicEx]
    # @Prompt Conduit to use in ArmFfaLib.
    gEfiMdeModulePkgTokenSpaceGuid.PcdFfaLibConduitSmc|TRUE|BOOLEAN|0x10000029
  
@@ -122,10 +122,10 @@ index b2a8aeba8510..eff625346539 100644
  # [Event]
  # # Relative timer event set by UnicodeToEfiKey(), used to be one 2 seconds input timeout.
 diff --git a/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c b/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c
-index eb8658c892e6..96c4cb3a61dd 100644
+index 10d6695397b9..748aee2a6009 100644
 --- a/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c
 +++ b/MdeModulePkg/Universal/Console/TerminalDxe/TerminalConOut.c
-@@ -8,6 +8,8 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
+@@ -9,6 +9,8 @@ SPDX-License-Identifier: BSD-2-Clause-Patent
  
  **/
  
@@ -134,9 +134,9 @@ index eb8658c892e6..96c4cb3a61dd 100644
  #include "Terminal.h"
  
  //
-@@ -82,6 +84,15 @@ CHAR16  mSetCursorPositionString[] = { ESC, '[', '0', '0', ';', '0', '0', 'H', 0
- CHAR16  mCursorForwardString[]     = { ESC, '[', '0', '0', 'C', 0 };
- CHAR16  mCursorBackwardString[]    = { ESC, '[', '0', '0', 'D', 0 };
+@@ -83,6 +85,15 @@ CHAR16  mSetCursorPositionString[] = { ESC, '[', '0', '0', '0', ';', '0', '0', '
+ CHAR16  mCursorForwardString[]     = { ESC, '[', '0', '0', '0', 'C', 0 };
+ CHAR16  mCursorBackwardString[]    = { ESC, '[', '0', '0', '0', 'D', 0 };
  
 +//
 +// Note that this is an ASCII format string, taking two INT32 arguments:
@@ -150,7 +150,7 @@ index eb8658c892e6..96c4cb3a61dd 100644
  //
  // Body of the ConOut functions
  //
-@@ -521,6 +532,24 @@ TerminalConOutSetMode (
+@@ -533,6 +544,24 @@ TerminalConOutSetMode (
      return EFI_DEVICE_ERROR;
    }
  
@@ -176,5 +176,5 @@ index eb8658c892e6..96c4cb3a61dd 100644
  
    Status = This->ClearScreen (This);
 -- 
-2.49.0
+2.51.1
 

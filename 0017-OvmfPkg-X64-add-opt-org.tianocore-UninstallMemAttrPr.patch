@@ -1,4 +1,4 @@
-From 026b722d415b11edcc04e46bbd394b18b61e554d Mon Sep 17 00:00:00 2001
+From 06cf132d990e77af4e3533e81405df9825905aaa Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Thu, 16 Jan 2025 17:20:38 +0100
 Subject: [PATCH 17/21] OvmfPkg/X64: add
@@ -14,7 +14,7 @@ Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
  2 files changed, 65 insertions(+)
 
 diff --git a/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf b/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
-index 8257862662db..51c9b88d105f 100644
+index 9675eb081f56..cc5959c370e5 100644
 --- a/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
 +++ b/OvmfPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
 @@ -64,6 +64,7 @@ [Pcd]
@@ -122,5 +122,5 @@ index b696f1b3389b..9fc422c00a7b 100644
    // Process QEMU's -kernel command line option
    //
 -- 
-2.49.0
+2.51.1
 

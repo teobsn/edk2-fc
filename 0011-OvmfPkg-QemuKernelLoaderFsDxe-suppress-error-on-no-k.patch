@@ -1,7 +1,7 @@
-From c007f3ab16458e818064479e1392f917281efb8f Mon Sep 17 00:00:00 2001
+From 540f402c8707302da0ec2db436fc2c5d118f9a6b Mon Sep 17 00:00:00 2001
 From: Laszlo Ersek <lersek@redhat.com>
 Date: Wed, 24 Jun 2020 11:31:36 +0200
-Subject: [PATCH 11/16] OvmfPkg/QemuKernelLoaderFsDxe: suppress error on no
+Subject: [PATCH 11/21] OvmfPkg/QemuKernelLoaderFsDxe: suppress error on no
  "-kernel" in silent aa64 build (RH)
 
 Notes about the RHEL-8.3/20200603-ca407c7246bf [edk2-stable202005] ->
@@ -32,7 +32,7 @@ Signed-off-by: Miroslav Rezanina <mrezanin@redhat.com>
  2 files changed, 19 insertions(+)
 
 diff --git a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
-index a2f44bbca1b4..44454073ca25 100644
+index d24bd17c600e..b18345555b9c 100644
 --- a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
 +++ b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.inf
 @@ -28,6 +28,7 @@ [LibraryClasses]
@@ -41,21 +41,21 @@ index a2f44bbca1b4..44454073ca25 100644
    DebugLib
 +  DebugPrintErrorLevelLib
    DevicePathLib
+   HobLib
    MemoryAllocationLib
-   PrintLib
 diff --git a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c
-index df6364cc314b..b84d49e4b8b3 100644
+index 4598233ec176..d80f1f67c78f 100644
 --- a/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c
 +++ b/OvmfPkg/QemuKernelLoaderFsDxe/QemuKernelLoaderFsDxe.c
-@@ -19,6 +19,7 @@
+@@ -20,6 +20,7 @@
  #include <Library/BaseMemoryLib.h>
  #include <Library/BlobVerifierLib.h>
  #include <Library/DebugLib.h>
 +#include <Library/DebugPrintErrorLevelLib.h>
  #include <Library/DevicePathLib.h>
+ #include <Library/HobLib.h>
  #include <Library/MemoryAllocationLib.h>
- #include <Library/PrintLib.h>
-@@ -1224,6 +1225,23 @@ QemuKernelLoaderFsDxeEntrypoint (
+@@ -1304,6 +1305,23 @@ QemuKernelLoaderFsDxeEntrypoint (
    if ((Blob == NULL) && (mKernelNamedBlobCount == 0)) {
      DEBUG ((DEBUG_INFO, "%a: no kernel and no named blobs present -> quit\n", __func__));
      Status = EFI_NOT_FOUND;
@@ -80,5 +80,5 @@ index df6364cc314b..b84d49e4b8b3 100644
    }
  
 -- 
-2.48.1
+2.51.1
 

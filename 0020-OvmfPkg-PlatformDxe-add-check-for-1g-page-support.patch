@@ -1,7 +1,7 @@
-From 962f1873c356bcb22ad778e06483b7e61c4d5e5a Mon Sep 17 00:00:00 2001
+From bbb05bcf8f8385e5e7a65ae61a34278f256d0858 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 6 Oct 2025 09:11:59 +0200
-Subject: [PATCH 25/25] OvmfPkg/PlatformDxe: add check for 1g page support
+Subject: [PATCH 20/21] OvmfPkg/PlatformDxe: add check for 1g page support
 
 ---
  OvmfPkg/PlatformDxe/PageFault.c | 72 ++++++++++++++++++++-------------
@@ -117,5 +117,5 @@ index 50482d0c993d..ef24933d8644 100644
  
    if (MessageWait) {
 -- 
-2.51.0
+2.51.1
 

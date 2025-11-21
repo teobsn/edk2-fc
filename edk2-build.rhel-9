@@ -121,7 +121,7 @@ arch = AARCH64
 opts = ovmf.common
        armvirt.verbose
 pcds = nx.compat.aa64
-plat = ArmVirtQemu-AARCH64
+plat = ArmVirtQemu-AArch64
 dest = RHEL-9/aarch64
 cpy1 = FV/QEMU_EFI.fd
 cpy2 = FV/QEMU_VARS.fd
@@ -138,7 +138,7 @@ arch = AARCH64
 opts = ovmf.common
        armvirt.silent
 pcds = nx.compat.aa64
-plat = ArmVirtQemu-AARCH64
+plat = ArmVirtQemu-AArch64
 dest = RHEL-9/aarch64
 cpy1 = FV/QEMU_EFI.fd  QEMU_EFI.silent.fd
 cpy2 = FV/QEMU_EFI.fd  QEMU_EFI-silent-pflash.raw

@@ -1,7 +1,7 @@
-From 0f68686e690a3598bcb1416d2cc0251f691a922c Mon Sep 17 00:00:00 2001
+From ba35b0e5d493048ceab46781e637255ef4cf55b1 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Fri, 20 Jun 2025 11:52:43 +0200
-Subject: [PATCH 19/19] OvmfPkg/PlatformDxe: register page fault handler for NX
+Subject: [PATCH 19/21] OvmfPkg/PlatformDxe: register page fault handler for NX
  fixups
 
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
@@ -488,5 +488,5 @@ index aee5a397b324..b768d544cc79 100644
    return EFI_SUCCESS;
  
 -- 
-2.51.0
+2.51.1
 

@@ -1,7 +1,7 @@
-From 3acbaa11ba1374459443feeef5371814963f90fb Mon Sep 17 00:00:00 2001
+From ac1ddb29b43aafcfbade0672c674be745fd8ea08 Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Mon, 3 Nov 2025 09:56:52 +0100
-Subject: [PATCH 28/28] UefiCpuPkg/CpuExceptionHandlerLib: fix push
+Subject: [PATCH 21/21] UefiCpuPkg/CpuExceptionHandlerLib: fix push
  instructions
 
 Nasm 3.0 complains about 'dword' being invalid.  The comment talks about
