@@ -141,6 +141,7 @@ Patch0020: 0020-OvmfPkg-PlatformDxe-add-check-for-1g-page-support.patch
 Patch0021: 0021-UefiCpuPkg-CpuExceptionHandlerLib-fix-push-instructi.patch
 Patch0022: 0022-OvmfPkg-PlatformPei-Do-not-enable-S3-support-for-con.patch
 Patch0023: 0023-OvmfPkg-MemDebugLogLib-use-AcquireSpinLockOrFail.patch
+Patch0024: 0024-BaseTools-EfiRom-fix-compiler-warning.patch
 
 
 # needed by %prep
