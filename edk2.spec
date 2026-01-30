@@ -150,6 +150,7 @@ Patch0029: 0029-MdeModulePkg-SmbiosMeasurementDxe-fix-gcc-16-warning.patch
 Patch0030: 0030-MdeModulePkg-DisplayEngineDxe-fix-gcc-16-warning.patch
 Patch0031: 0031-MdeModulePkg-VarCheckHiiLib-fix-gcc-16-warning.patch
 Patch0032: 0032-MdeModulePkg-CapsuleOnDiskLoadPei-fix-gcc-16-warning.patch
+Patch0033: 0033-SecurityPkg-Remove-unused-variable.patch
 
 
 # needed by %prep
