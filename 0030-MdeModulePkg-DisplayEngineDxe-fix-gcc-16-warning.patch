@@ -1,0 +1,43 @@
+From 5faf10bcae7ec2fb7f0d9a99e2b2f2356e284292 Mon Sep 17 00:00:00 2001
+From: Gerd Hoffmann <kraxel@redhat.com>
+Date: Thu, 29 Jan 2026 09:38:27 +0100
+Subject: [PATCH 30/32] MdeModulePkg/DisplayEngineDxe: fix gcc 16 warning
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c: In function ‘CreateSharedPopUp’:
+MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c:590:11: error: variable ‘Count’ set but not used [-Werror=unused-but-set-variable=]
+  590 |   UINTN   Count;
+      |           ^~~~~
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c b/MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c
+index 0d4cfa4cf06f..ae5891d69120 100644
+--- a/MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c
++++ b/MdeModulePkg/Universal/DisplayEngineDxe/ProcessOptions.c
+@@ -587,7 +587,6 @@ CreateSharedPopUp (
+   )
+ {
+   UINTN   Index;
+-  UINTN   Count;
+   CHAR16  Character;
+   UINTN   Start;
+   UINTN   End;
+@@ -627,8 +626,7 @@ CreateSharedPopUp (
+   PrintCharAt ((UINTN)-1, (UINTN)-1, Character);
+   Character = BOXDRAW_VERTICAL;
+ 
+-  Count = 0;
+-  for (Index = Top; Index + 2 < Bottom; Index++, Count++) {
++  for (Index = Top; Index + 2 < Bottom; Index++) {
+     String = VA_ARG (Marker, CHAR16 *);
+ 
+     //
+-- 
+2.52.0
+
