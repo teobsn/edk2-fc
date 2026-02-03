@@ -162,6 +162,7 @@ BuildRequires:  perl(IPC::Cmd)
 BuildRequires:  perl(File::Compare)
 BuildRequires:  perl(File::Copy)
 BuildRequires:  perl(JSON)
+BuildRequires:  perl(Time::Piece)
 
 %if %{build_ovmf}
 # Only OVMF includes 80x86 assembly files (*.nasm*).
