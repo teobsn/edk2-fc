@@ -16,12 +16,12 @@
 %global debug_package %{nil}
 %endif
 
-# edk2-stable202511
-%define GITDATE        20251119
-%define GITCOMMIT      46548b1adac8
+# edk2-stable202602
+%define GITDATE        20260213
+%define GITCOMMIT      b7a715f7c03c
 %define TOOLCHAIN      GCC
 
-%define PLATFORMS_COMMIT 1e64c1109ae2
+%define PLATFORMS_COMMIT c3efe816e1bb
 
 %define OPENSSL_VER    3.5.5
 
@@ -132,29 +132,13 @@ Patch0009: 0009-OvmfPkg-QemuRamfbDxe-Do-not-report-DXE-failure-on-Aa.patch
 Patch0010: 0010-OvmfPkg-silence-EFI_D_VERBOSE-0x00400000-in-NvmExpre.patch
 Patch0011: 0011-OvmfPkg-QemuKernelLoaderFsDxe-suppress-error-on-no-k.patch
 Patch0012: 0012-SecurityPkg-Tcg2Dxe-suppress-error-on-no-swtpm-in-si.patch
-Patch0013: 0013-CryptoPkg-CrtLib-add-stat.h.patch
-Patch0014: 0014-CryptoPkg-CrtLib-add-access-open-read-write-close-sy.patch
-Patch0015: 0015-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
+Patch0013: 0013-OvmfPkg-set-PcdVariableStoreSize-PcdMaxVolatileVaria.patch
 %if 0%{?fedora} >= 38 || 0%{?rhel} >= 10
-Patch0016: 0016-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
+Patch0014: 0014-silence-.-has-a-LOAD-segment-with-RWX-permissions-wa.patch
 %endif
-Patch0017: 0017-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
-Patch0018: 0018-openssl-silence-unused-variable-warning.patch
-Patch0019: 0019-OvmfPkg-PlatformDxe-register-page-fault-handler-for-.patch
-Patch0020: 0020-OvmfPkg-PlatformDxe-add-check-for-1g-page-support.patch
-Patch0021: 0021-UefiCpuPkg-CpuExceptionHandlerLib-fix-push-instructi.patch
-Patch0022: 0022-OvmfPkg-PlatformPei-Do-not-enable-S3-support-for-con.patch
-Patch0023: 0023-OvmfPkg-MemDebugLogLib-use-AcquireSpinLockOrFail.patch
-Patch0024: 0024-BaseTools-EfiRom-fix-compiler-warning.patch
-Patch0025: 0025-OvmfPkg-PlatformInitLib-reserve-igvm-parameter-area.patch
-Patch0026: 0026-OvmfPkg-X86QemuLoadImageLib-flip-default-for-EnableL.patch
-Patch0027: 0027-BaseTools-StringFuncs-fix-gcc-16-warning.patch
-Patch0028: 0028-MdeModulePkg-CustomizedDisplayLib-fix-gcc-16-warning.patch
-Patch0029: 0029-MdeModulePkg-SmbiosMeasurementDxe-fix-gcc-16-warning.patch
-Patch0030: 0030-MdeModulePkg-DisplayEngineDxe-fix-gcc-16-warning.patch
-Patch0031: 0031-MdeModulePkg-VarCheckHiiLib-fix-gcc-16-warning.patch
-Patch0032: 0032-MdeModulePkg-CapsuleOnDiskLoadPei-fix-gcc-16-warning.patch
-Patch0033: 0033-SecurityPkg-Remove-unused-variable.patch
+Patch0015: 0015-OvmfPkg-X64-add-opt-org.tianocore-UninstallMemAttrPr.patch
+Patch0016: 0016-OvmfPkg-PlatformDxe-register-page-fault-handler-for-.patch
+Patch0017: 0017-OvmfPkg-PlatformDxe-add-check-for-1g-page-support.patch
 
 
 # needed by %prep

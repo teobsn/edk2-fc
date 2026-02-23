@@ -1,7 +1,7 @@
-From d6b15e927f626a30ce6042fd21e73b3f0db8a46f Mon Sep 17 00:00:00 2001
+From 11011b3745e3afb5fb84128d81a552130e150f05 Mon Sep 17 00:00:00 2001
 From: Paolo Bonzini <pbonzini@redhat.com>
 Date: Tue, 21 Nov 2017 00:57:46 +0100
-Subject: [PATCH 07/21] OvmfPkg: silence DEBUG_VERBOSE (0x00400000) in
+Subject: [PATCH 07/17] OvmfPkg: silence DEBUG_VERBOSE (0x00400000) in
  QemuVideoDxe/QemuRamfbDxe (RH)
 
 Notes about the RHEL-8.3/20200603-ca407c7246bf [edk2-stable202005] ->
@@ -81,10 +81,10 @@ Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
  3 files changed, 24 insertions(+), 6 deletions(-)
 
 diff --git a/OvmfPkg/AmdSev/AmdSevX64.dsc b/OvmfPkg/AmdSev/AmdSevX64.dsc
-index 15b72ecf69ee..b5dad6b9c330 100644
+index 0830070d479b..ac8263c83c5b 100644
 --- a/OvmfPkg/AmdSev/AmdSevX64.dsc
 +++ b/OvmfPkg/AmdSev/AmdSevX64.dsc
-@@ -683,8 +683,14 @@ [Components]
+@@ -706,8 +706,14 @@ [Components]
    MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
    MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
  
@@ -102,10 +102,10 @@ index 15b72ecf69ee..b5dad6b9c330 100644
  
    #
 diff --git a/OvmfPkg/OvmfPkgIa32X64.dsc b/OvmfPkg/OvmfPkgIa32X64.dsc
-index db2abc7cd323..935cbab30d63 100644
+index d7b896fb8d28..071095c17c7f 100644
 --- a/OvmfPkg/OvmfPkgIa32X64.dsc
 +++ b/OvmfPkg/OvmfPkgIa32X64.dsc
-@@ -848,8 +848,14 @@ [Components.X64]
+@@ -856,8 +856,14 @@ [Components.X64]
    MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
    MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
  
@@ -123,12 +123,12 @@ index db2abc7cd323..935cbab30d63 100644
    OvmfPkg/VirtHstiDxe/VirtHstiDxe.inf
  
 diff --git a/OvmfPkg/OvmfPkgX64.dsc b/OvmfPkg/OvmfPkgX64.dsc
-index 75768c37c66e..c27cf21debf3 100644
+index d4500588227b..92fd63704481 100644
 --- a/OvmfPkg/OvmfPkgX64.dsc
 +++ b/OvmfPkg/OvmfPkgX64.dsc
-@@ -979,8 +979,14 @@ [Components]
-   MdeModulePkg/Universal/SetupBrowserDxe/SetupBrowserDxe.inf
+@@ -988,8 +988,14 @@ [Components]
    MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe.inf
+   MdeModulePkg/Universal/Acpi/S3SaveStateDxe/S3SaveStateDxe.inf
  
 -  OvmfPkg/QemuVideoDxe/QemuVideoDxe.inf
 -  OvmfPkg/QemuRamfbDxe/QemuRamfbDxe.inf
@@ -144,5 +144,5 @@ index 75768c37c66e..c27cf21debf3 100644
    OvmfPkg/VirtHstiDxe/VirtHstiDxe.inf
  
 -- 
-2.51.1
+2.53.0
 

@@ -1,7 +1,7 @@
-From 06cf132d990e77af4e3533e81405df9825905aaa Mon Sep 17 00:00:00 2001
+From 28e96c8545b949b9e039964df1e85fcb79f5706c Mon Sep 17 00:00:00 2001
 From: Gerd Hoffmann <kraxel@redhat.com>
 Date: Thu, 16 Jan 2025 17:20:38 +0100
-Subject: [PATCH 17/21] OvmfPkg/X64: add
+Subject: [PATCH 15/17] OvmfPkg/X64: add
  opt/org.tianocore/UninstallMemAttrProtocol support
 
 Add support for opt/org.tianocore/UninstallMemAttrProtocol, to allow
@@ -122,5 +122,5 @@ index b696f1b3389b..9fc422c00a7b 100644
    // Process QEMU's -kernel command line option
    //
 -- 
-2.51.1
+2.53.0
 
