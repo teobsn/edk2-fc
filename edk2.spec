@@ -94,6 +94,7 @@ Source20: 90-edk2-ovmf-qemuvars-x64-sb-enrolled.json
 Source21: 91-edk2-ovmf-qemuvars-x64-sb.json
 Source22: 90-edk2-aarch64-qemuvars-sb-enrolled.json
 Source23: 91-edk2-aarch64-qemuvars-sb.json
+Source24: 92-edk2-ovmf-igvm-x64-nosb.json
 
 Source40: 30-edk2-ovmf-4m-qcow2-x64-sb-enrolled.json
 Source41: 31-edk2-ovmf-2m-raw-x64-sb-enrolled.json
@@ -393,7 +394,7 @@ chmod -Rf a+rX,u+w,g-w,o-w .
 cp -a -- \
    %{SOURCE9} \
    %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} \
-   %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} \
+   %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} \
    %{SOURCE40} %{SOURCE41} %{SOURCE42} %{SOURCE43} %{SOURCE44} \
    %{SOURCE45} %{SOURCE46} %{SOURCE47} %{SOURCE48} %{SOURCE49} \
    %{SOURCE50} \
@@ -641,6 +642,7 @@ install -m 0644 \
 install -m 0644 \
         50-edk2-ovmf-x64-microvm.json \
         60-edk2-ovmf-x64-stateless.json \
+        92-edk2-ovmf-igvm-x64-nosb.json \
         %{buildroot}%{_datadir}/qemu/firmware
 %endif
 
@@ -771,6 +773,7 @@ done
 %{_datadir}/%{name}/ovmf/OVMF.stateless.secboot.fd
 %{_datadir}/qemu/firmware/50-edk2-ovmf-x64-microvm.json
 %{_datadir}/qemu/firmware/60-edk2-ovmf-x64-stateless.json
+%{_datadir}/qemu/firmware/92-edk2-ovmf-igvm-x64-nosb.json
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_CODE_4M.secboot.qcow2
 %{_datadir}/%{name}/ovmf/OVMF_VARS_4M.qcow2
