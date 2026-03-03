@@ -484,7 +484,7 @@ cp DBXUpdate-%{DBXDATE}.x64.bin Fedora/ovmf
 igvm-wrap --input Fedora/ovmf/OVMF_CODE_4M.fd \
           --vars Fedora/ovmf/OVMF_VARS_4M.fd \
           --output Fedora/ovmf/OVMF.igvm \
-          --meta --inspect --snp
+          --meta --inspect --snp --no-params
 
 for raw in */ovmf/*_4M*.fd; do
     qcow2="${raw%.fd}.qcow2"
