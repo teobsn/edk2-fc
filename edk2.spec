@@ -11,7 +11,7 @@
 # firmware binaries land in all arch repos).  On unsupported archs
 # the 'build' and 'install' phases do nothing though.
 #
-%define build_arches x86_64 aarch64 riscv64
+%define build_arches x86_64
 %ifnarch %{build_arches}
 %global debug_package %{nil}
 %endif
